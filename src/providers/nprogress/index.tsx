@@ -1,27 +1,33 @@
 'use client'
 
-import { Router } from 'next/router'
 import NProgress from 'nprogress'
-import { Fragment } from 'react'
+import { usePathname, useSearchParams } from 'next/navigation'
+import { Fragment, Suspense, useEffect } from 'react'
 
-Router.events.on('routeChangeStart', () => {
-  NProgress.start()
-})
+function NavigationProgress() {
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
 
-Router.events.on('routeChangeComplete', () => {
-  NProgress.done()
-})
+  useEffect(() => {
+    NProgress.done()
+  }, [pathname, searchParams])
 
-Router.events.on('routeChangeError', () => {
-  NProgress.done()
-})
+  return null
+}
 
 type Props = {
   children: React.ReactNode
 }
 
-const NprogressProvider = (props: Props) => {
-  return <Fragment>{props.children}</Fragment>
+const NprogressProvider = ({ children }: Props) => {
+  return (
+    <Fragment>
+      <Suspense fallback={null}>
+        <NavigationProgress />
+      </Suspense>
+      {children}
+    </Fragment>
+  )
 }
 
 export default NprogressProvider

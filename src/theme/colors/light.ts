@@ -1,4 +1,4 @@
-module.exports = {
+const themeLight = {
   colors: {
     background: '#F9FAFE',
     foreground: '#333333',
@@ -94,3 +94,5 @@ module.exports = {
     }
   }
 }
+
+export default themeLight

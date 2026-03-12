@@ -1,6 +1,6 @@
 'use client'
 
-import { useRouter } from 'next/router'
+import { usePathname, useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 
 type Props = {
@@ -10,6 +10,7 @@ type Props = {
 
 const AuthGuard = (props: Props) => {
   const router = useRouter()
+  const pathname = usePathname()
   const [isLoading, setLoading] = useState(true)
 
   const handleCheckAuth = () => {
@@ -23,12 +24,12 @@ const AuthGuard = (props: Props) => {
 
   useEffect(() => {
     handleCheckAuth()
-  }, [router.asPath])
+  }, [pathname])
 
   if (isLoading) {
     return null // Or you can return a loading
   } else {
-    return props.children
+    return <>{props.children}</>
   }
 }
 

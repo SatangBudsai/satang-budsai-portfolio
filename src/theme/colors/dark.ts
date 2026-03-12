@@ -1,4 +1,4 @@
-module.exports = {
+const themeDark = {
   colors: {
     background: '#0d0c0d',
     foreground: '#ECEDEE',
@@ -99,3 +99,5 @@ module.exports = {
     }
   }
 }
+
+export default themeDark
