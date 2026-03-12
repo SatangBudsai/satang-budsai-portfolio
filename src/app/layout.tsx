@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Prompt } from 'next/font/google'
+import { Prompt, Press_Start_2P } from 'next/font/google'
 import Providers from './providers'
 import '@/styles/globals.css'
 import 'swiper/css'
@@ -14,6 +14,13 @@ const prompt = Prompt({
   display: 'swap'
 })
 
+const pressStart2P = Press_Start_2P({
+  weight: '400',
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-press-start'
+})
+
 export const metadata: Metadata = {
   title: process.env.NEXT_PUBLIC_PROJECT_NAME ?? 'Portfolio',
   description: '',
@@ -23,7 +30,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang='en' suppressHydrationWarning>
-      <body className={prompt.className}>
+      <body className={`${prompt.className} ${pressStart2P.variable}`}>
         <Providers>{children}</Providers>
       </body>
     </html>

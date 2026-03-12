@@ -10,7 +10,7 @@ export default function HeroUIProvider({ children }: { children: React.ReactNode
   return (
     <NextProvider navigate={router.push}>
       <ToastProvider />
-      <ThemeProvider attribute='class' defaultTheme='light'>
+      <ThemeProvider attribute='class' defaultTheme='dark'>
         {children}
       </ThemeProvider>
     </NextProvider>

@@ -96,6 +96,44 @@ const themeDark = {
       950: '#fcfaea',
       foreground: '#3d1d0b',
       DEFAULT: '#d79b19'
+    },
+    portfolio: {
+      bg: {
+        base: '#0a0a0f',
+        panel: '#12121a',
+        overlay: '#1a1a2e',
+        surface: 'rgba(18,18,26,0.85)'
+      },
+      accent: {
+        gold: '#FFD700',
+        orange: '#FF6B00',
+        cyan: '#00F5FF',
+        pink: '#FF2D55',
+        green: '#39FF14',
+        purple: '#7B2FBE'
+      },
+      text: {
+        primary: '#F0F0F0',
+        secondary: '#A0A0B0',
+        heading: '#FFD700',
+        code: '#00F5FF',
+        muted: '#505060'
+      },
+      border: {
+        default: '#FFD700',
+        active: '#00F5FF',
+        subtle: '#2a2a3a'
+      },
+      status: {
+        completed: '#39FF14',
+        inProgress: '#FFD700',
+        archived: '#505060'
+      },
+      cursor: {
+        default: '#FFD700',
+        hover: '#00F5FF',
+        active: '#FF2D55'
+      }
     }
   }
 }

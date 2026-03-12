@@ -1,12 +1,20 @@
-import MainLayout from '@/layouts/main-layout'
+import HeroSection from '@/views/portfolio/HeroSection'
+import AboutSection from '@/views/portfolio/AboutSection'
+import SkillsSection from '@/views/portfolio/SkillsSection'
+import ProjectsSection from '@/views/portfolio/ProjectsSection'
+import ContactSection from '@/views/portfolio/ContactSection'
+import { getAllProjects } from '@/lib/projects'
 
-export default function Home() {
+export default async function Home() {
+  const projects = await getAllProjects()
+
   return (
-    <MainLayout>
-      <div className='flex min-h-dvh flex-col items-center justify-center gap-4'>
-        <h1 className='text-4xl font-bold'>Home</h1>
-        <p className='text-default-500'>หน้าแรก Portfolio</p>
-      </div>
-    </MainLayout>
+    <main>
+      <HeroSection />
+      <AboutSection />
+      <SkillsSection />
+      <ProjectsSection projects={projects} />
+      <ContactSection />
+    </main>
   )
 }

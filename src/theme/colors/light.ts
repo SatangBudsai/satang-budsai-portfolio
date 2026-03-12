@@ -91,6 +91,44 @@ const themeLight = {
       900: '#312107',
       foreground: '#fefce8',
       DEFAULT: '#f5a524'
+    },
+    portfolio: {
+      bg: {
+        base: '#F5F0E8',
+        panel: '#EDE8DC',
+        overlay: '#DDD8CC',
+        surface: 'rgba(237,232,220,0.92)'
+      },
+      accent: {
+        gold: '#C8860A',
+        orange: '#D4500A',
+        cyan: '#0080A0',
+        pink: '#C0002A',
+        green: '#1A7A00',
+        purple: '#5A1A8E'
+      },
+      text: {
+        primary: '#1A1A2E',
+        secondary: '#4A4A6A',
+        heading: '#C8860A',
+        code: '#0080A0',
+        muted: '#9090A0'
+      },
+      border: {
+        default: '#C8860A',
+        active: '#0080A0',
+        subtle: '#C8C0B0'
+      },
+      status: {
+        completed: '#1A7A00',
+        inProgress: '#C8860A',
+        archived: '#9090A0'
+      },
+      cursor: {
+        default: '#C8860A',
+        hover: '#0080A0',
+        active: '#C0002A'
+      }
     }
   }
 }

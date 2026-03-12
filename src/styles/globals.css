@@ -24,3 +24,277 @@
     vertical-align: sub;
   }
 }
+
+/* ─────────────────────────────────────────────────────────────
+   PIXEL PORTFOLIO — CSS Variables
+   ───────────────────────────────────────────────────────────── */
+
+/* Default (dark) */
+:root {
+  --px-bg-base:    #0a0a0f;
+  --px-bg-panel:   #12121a;
+  --px-bg-overlay: #1a1a2e;
+  --px-bg-surface: rgba(18,18,26,0.85);
+
+  --px-gold:   #FFD700;
+  --px-orange: #FF6B00;
+  --px-cyan:   #00F5FF;
+  --px-pink:   #FF2D55;
+  --px-green:  #39FF14;
+  --px-purple: #7B2FBE;
+
+  --px-text-primary:   #F0F0F0;
+  --px-text-secondary: #A0A0B0;
+  --px-text-heading:   #FFD700;
+  --px-text-code:      #00F5FF;
+  --px-text-muted:     #505060;
+
+  --px-border:        #FFD700;
+  --px-border-active: #00F5FF;
+  --px-border-subtle: #2a2a3a;
+
+  --px-shadow:        4px 4px 0 #FF6B00;
+  --px-shadow-lg:     6px 6px 0 #FF6B00;
+  --px-shadow-active: 2px 2px 0 #FF6B00;
+}
+
+:root[data-theme="dark"],
+.dark {
+  --px-bg-base:    #0a0a0f;
+  --px-bg-panel:   #12121a;
+  --px-bg-overlay: #1a1a2e;
+  --px-bg-surface: rgba(18,18,26,0.85);
+
+  --px-gold:   #FFD700;
+  --px-orange: #FF6B00;
+  --px-cyan:   #00F5FF;
+  --px-pink:   #FF2D55;
+  --px-green:  #39FF14;
+  --px-purple: #7B2FBE;
+
+  --px-text-primary:   #F0F0F0;
+  --px-text-secondary: #A0A0B0;
+  --px-text-heading:   #FFD700;
+  --px-text-code:      #00F5FF;
+  --px-text-muted:     #505060;
+
+  --px-border:        #FFD700;
+  --px-border-active: #00F5FF;
+  --px-border-subtle: #2a2a3a;
+
+  --px-shadow:        4px 4px 0 #FF6B00;
+  --px-shadow-lg:     6px 6px 0 #FF6B00;
+  --px-shadow-active: 2px 2px 0 #FF6B00;
+}
+
+:root[data-theme="light"],
+.light {
+  --px-bg-base:    #F5F0E8;
+  --px-bg-panel:   #EDE8DC;
+  --px-bg-overlay: #DDD8CC;
+  --px-bg-surface: rgba(237,232,220,0.92);
+
+  --px-gold:   #C8860A;
+  --px-orange: #D4500A;
+  --px-cyan:   #0080A0;
+  --px-pink:   #C0002A;
+  --px-green:  #1A7A00;
+  --px-purple: #5A1A8E;
+
+  --px-text-primary:   #1A1A2E;
+  --px-text-secondary: #4A4A6A;
+  --px-text-heading:   #C8860A;
+  --px-text-code:      #0080A0;
+  --px-text-muted:     #9090A0;
+
+  --px-border:        #C8860A;
+  --px-border-active: #0080A0;
+  --px-border-subtle: #C8C0B0;
+
+  --px-shadow:        4px 4px 0 #D4500A;
+  --px-shadow-lg:     6px 6px 0 #D4500A;
+  --px-shadow-active: 2px 2px 0 #D4500A;
+}
+
+/* ─── Keyframes ───────────────────────────────────────────── */
+
+@keyframes px-blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+@keyframes px-bounce {
+  0%   { transform: translateY(0); }
+  25%  { transform: translateY(6px); }
+  50%  { transform: translateY(0); }
+  75%  { transform: translateY(3px); }
+  100% { transform: translateY(0); }
+}
+
+@keyframes px-wave {
+  0%   { transform: rotate(0deg); }
+  25%  { transform: rotate(-12deg); }
+  75%  { transform: rotate(12deg); }
+  100% { transform: rotate(0deg); }
+}
+
+@keyframes px-glitch {
+  0%   { text-shadow: 2px 0 #FF2D55, -2px 0 #00F5FF; }
+  33%  { text-shadow: -3px 0 #FF2D55,  3px 0 #00F5FF; }
+  66%  { text-shadow:  3px 2px #FF2D55, -3px -2px #00F5FF; }
+  100% { text-shadow: none; }
+}
+
+@keyframes px-tag-blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.4; }
+}
+
+/* ─── Custom cursor ───────────────────────────────────────── */
+
+/* Default: pixel sword — 32×32 */
+* {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' shape-rendering='crispEdges'%3E%3Crect x='2' y='2' width='4' height='4' fill='%23FFD700'/%3E%3Crect x='6' y='6' width='4' height='4' fill='%23FFD700'/%3E%3Crect x='10' y='10' width='4' height='4' fill='%23FFD700'/%3E%3Crect x='14' y='14' width='4' height='4' fill='%23FFD700'/%3E%3Crect x='10' y='14' width='12' height='4' fill='%23A0A0B0'/%3E%3Crect x='18' y='18' width='4' height='8' fill='%238B6914'/%3E%3Crect x='18' y='26' width='4' height='4' fill='%23A0A0B0'/%3E%3C/svg%3E") 2 2, auto;
+}
+
+/* Hover: pixel SELECT cursor — gold hand */
+a, button, [role="button"], [tabindex]:not([tabindex="-1"]),
+.px-btn-primary, .px-btn-secondary, .px-card-link, .px-social-btn,
+.px-skill-slot, .px-tag {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' shape-rendering='crispEdges'%3E%3Crect x='8' y='2' width='4' height='16' fill='%23FFD700'/%3E%3Crect x='12' y='6' width='4' height='12' fill='%23FFD700'/%3E%3Crect x='16' y='8' width='4' height='10' fill='%23FFD700'/%3E%3Crect x='4' y='14' width='4' height='10' fill='%23FFD700'/%3E%3Crect x='4' y='24' width='16' height='4' fill='%23FFD700'/%3E%3Crect x='20' y='18' width='4' height='4' fill='%2300F5FF'/%3E%3C/svg%3E") 8 2, pointer;
+}
+
+/* ─── Project card hover ──────────────────────────────────── */
+
+.px-card-link:hover .px-card {
+  transform: translate(4px, 4px);
+  box-shadow: 2px 2px 0 var(--px-orange);
+  border-color: var(--px-border-active);
+}
+
+.px-card-link:hover .px-card-img {
+  filter: grayscale(0) !important;
+}
+
+/* ─── Tag hover ───────────────────────────────────────────── */
+
+.px-tag:hover {
+  animation: px-tag-blink 0.4s steps(2) 2 forwards;
+}
+
+/* ─── Nav button hover / active ──────────────────────────── */
+
+.px-btn-primary:hover {
+  transform: translate(4px, 4px);
+  box-shadow: var(--px-shadow-active);
+}
+
+.px-btn-secondary:hover {
+  transform: translate(4px, 4px);
+  box-shadow: var(--px-shadow-active);
+}
+
+/* ─── Social button hover ────────────────────────────────── */
+
+.px-social-btn:hover {
+  background: var(--social-color, var(--px-gold)) !important;
+}
+
+.px-social-btn:hover span {
+  color: var(--px-bg-base) !important;
+}
+
+/* ─── Heading glitch on hover ─────────────────────────────── */
+
+h1:hover, h2:hover {
+  animation: px-glitch 0.3s steps(3) forwards;
+}
+
+/* ─── Focus visible (accessibility) ──────────────────────── */
+
+:focus-visible {
+  outline: 3px solid var(--px-gold);
+  outline-offset: 2px;
+}
+
+/* ─── Prose (project detail) ──────────────────────────────── */
+
+.px-prose {
+  color: var(--px-text-secondary);
+  font-size: 14px;
+  line-height: 2;
+}
+
+.px-prose h2 {
+  font-family: var(--font-press-start);
+  font-size: 11px;
+  color: var(--px-gold);
+  margin: 24px 0 12px;
+}
+
+.px-prose h3 {
+  font-family: var(--font-press-start);
+  font-size: 9px;
+  color: var(--px-cyan);
+  margin: 20px 0 10px;
+}
+
+.px-prose p {
+  margin-bottom: 16px;
+  color: var(--px-text-primary);
+}
+
+.px-prose ul, .px-prose ol {
+  padding-left: 20px;
+  margin-bottom: 16px;
+}
+
+.px-prose li {
+  margin-bottom: 8px;
+}
+
+.px-prose code {
+  font-family: monospace;
+  color: var(--px-text-code);
+  background: var(--px-bg-overlay);
+  padding: 2px 6px;
+  border: 1px solid var(--px-border-subtle);
+}
+
+.px-prose strong {
+  color: var(--px-gold);
+  font-weight: 700;
+}
+
+/* ─── About section responsive ───────────────────────────── */
+
+@media (max-width: 640px) {
+  .px-about-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ─── Reduced motion ──────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+
+  canvas {
+    display: none !important;
+  }
+}
+
+/* ─── Touch devices: disable custom cursor ────────────────── */
+
+@media (hover: none) and (pointer: coarse) {
+  * {
+    cursor: auto;
+  }
+
+  a, button, [role="button"] {
+    cursor: pointer;
+  }
+}
