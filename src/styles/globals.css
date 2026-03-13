@@ -3,8 +3,6 @@
 @import url(animation.css);
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Silkscreen&display=swap');
 
-
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -27,17 +25,21 @@
     vertical-align: sub;
   }
 
-  body, * {
-    cursor: url('/images/cursor.svg') 2 2, auto !important;
+  body,
+  * {
+    cursor:
+      url('/images/cursor.svg') 2 2,
+      auto !important;
   }
-  a, button, [role="button"], input[type="submit"], .pixel-btn, .cursor-pointer {
-    cursor: url('/images/cursor-pointer.svg') 8 2, pointer !important;
-  }
-}
-
-@layer base {
-  html, body {
-    cursor: url('/images/sword-cursor.png'), auto;
+  a,
+  button,
+  [role='button'],
+  input[type='submit'],
+  .pixel-btn,
+  .cursor-pointer {
+    cursor:
+      url('/images/cursor-pointer.svg') 8 2,
+      pointer !important;
   }
 }
 
@@ -45,32 +47,34 @@
   /* สีพื้นฐานของปุ่ม */
   background-color: #6a829f;
   color: #ffffff;
-  
+
   /* การจัดวาง */
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 12px;
   padding: 12px 20px;
-  
+
   /* ฟอนต์ */
   font-family: 'Silkscreen', sans-serif;
   font-size: 18px;
   line-height: 1;
   letter-spacing: 1px;
-  
+
   /* เส้นขอบและมุม */
   border: 4px solid #222635;
   border-radius: 6px;
   cursor: pointer;
-  
+
   /* แสงและเงาแบบ Pixel */
-  box-shadow: 
-      inset 4px 4px 0px #a4b8cd,
-      inset -4px -8px 0px #435a74;
-      
+  box-shadow:
+    inset 4px 4px 0px #a4b8cd,
+    inset -4px -8px 0px #435a74;
+
   /* อนิเมชั่นตอนกดและชี้ */
-  transition: transform 0.05s ease, filter 0.2s;
+  transition:
+    transform 0.05s ease,
+    filter 0.2s;
 }
 
 .pixel-btn:hover {
@@ -79,12 +83,13 @@
 
 .pixel-btn:active {
   transform: translateY(4px);
-  box-shadow: 
-      inset 4px 8px 0px #435a74, 
-      inset -4px -4px 0px #a4b8cd;
+  box-shadow:
+    inset 4px 8px 0px #435a74,
+    inset -4px -4px 0px #a4b8cd;
 }
 
-.pixel-btn, .pixel-icon {
+.pixel-btn,
+.pixel-icon {
   user-select: none;
   -webkit-user-select: none;
 }
@@ -102,7 +107,9 @@
   border: 3px solid;
   border-color: #e0d8c8 #a8a090 #a8a090 #e0d8c8;
   box-shadow: 4px 4px 0 #c8c0b0;
-  transition: transform .2s, box-shadow .2s;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
 }
 
 .pixel-card:hover {
@@ -121,17 +128,28 @@
 .skill-bar-fill {
   height: 100%;
   position: relative;
-  transition: width 1.5s cubic-bezier(.16, 1, .3, 1);
+  transition: width 1.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .skill-bar-fill::after {
   content: '';
   position: absolute;
-  top: 0; left: 0; right: 0; height: 50%;
-  background: linear-gradient(180deg, rgba(255,255,255,0.3), transparent);
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.3), transparent);
 }
 
-.skill-bar-fill.fe { background: linear-gradient(90deg, #e85090, #f070a0); }
-.skill-bar-fill.be { background: linear-gradient(90deg, #3388dd, #50aaff); }
-.skill-bar-fill.db { background: linear-gradient(90deg, #e8a020, #ffc040); }
-.skill-bar-fill.dv { background: linear-gradient(90deg, #44bb44, #66dd66); }
+.skill-bar-fill.fe {
+  background: linear-gradient(90deg, #e85090, #f070a0);
+}
+.skill-bar-fill.be {
+  background: linear-gradient(90deg, #3388dd, #50aaff);
+}
+.skill-bar-fill.db {
+  background: linear-gradient(90deg, #e8a020, #ffc040);
+}
+.skill-bar-fill.dv {
+  background: linear-gradient(90deg, #44bb44, #66dd66);
+}

@@ -1,17 +1,38 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { motion, useScroll, useTransform, useMotionValue, useSpring } from 'framer-motion'
+import { motion, useScroll, useTransform } from 'framer-motion'
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 40 },
+  visible: (delay: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.8, delay, ease: [0.25, 0.46, 0.45, 0.94] }
+  })
+}
+
+const scaleIn = {
+  hidden: { opacity: 0, scale: 0.8 },
+  visible: (delay: number) => ({
+    opacity: 1,
+    scale: 1,
+    transition: { duration: 0.8, delay, ease: [0.25, 0.46, 0.45, 0.94] }
+  })
+}
+
+const fadeIn = {
+  hidden: { opacity: 0 },
+  visible: (delay: number) => ({
+    opacity: 1,
+    transition: { duration: 1.2, delay }
+  })
+}
 
 export default function Home() {
   const [isMobile, setIsMobile] = useState(false)
   const heroRef = useRef<HTMLElement>(null)
-
-  // Mouse parallax
-  const mouseX = useMotionValue(0)
-  const mouseY = useMotionValue(0)
-  const rotateX = useSpring(useTransform(mouseY, [-0.5, 0.5], [8, -8]), { stiffness: 100, damping: 20 })
-  const rotateY = useSpring(useTransform(mouseX, [-0.5, 0.5], [-8, 8]), { stiffness: 100, damping: 20 })
+  const glowRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 1024)
@@ -22,17 +43,13 @@ export default function Home() {
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
-      if (!heroRef.current) return
-      const rect = heroRef.current.getBoundingClientRect()
-      const x = (e.clientX - rect.left) / rect.width - 0.5
-      const y = (e.clientY - rect.top) / rect.height - 0.5
-      mouseX.set(x)
-      mouseY.set(y)
+      if (!glowRef.current) return
+      glowRef.current.style.left = `${e.clientX}px`
+      glowRef.current.style.top = `${e.clientY}px`
     }
-    const el = heroRef.current
-    el?.addEventListener('mousemove', handleMouseMove)
-    return () => el?.removeEventListener('mousemove', handleMouseMove)
-  }, [mouseX, mouseY])
+    window.addEventListener('mousemove', handleMouseMove)
+    return () => window.removeEventListener('mousemove', handleMouseMove)
+  }, [])
 
   const { scrollY } = useScroll()
 
@@ -45,6 +62,18 @@ export default function Home() {
   return (
     <div className='w-full bg-[#f0ece4] font-["Press_Start_2P"] text-[#2a2a3a]'>
       {/* HERO SECTION */}
+      {/* Global Mouse Glow Effect */}
+      <div
+        ref={glowRef}
+        className='pointer-events-none fixed z-[9999] -translate-x-1/2 -translate-y-1/2'
+        style={{
+          width: 180,
+          height: 180,
+          background: 'radial-gradient(circle, rgba(255,220,130,0.6) 0%, rgba(255,180,60,0.3) 40%, transparent 70%)',
+          borderRadius: '50%'
+        }}
+      />
+
       <section ref={heroRef} className='relative h-screen min-h-[700px] w-full overflow-hidden bg-[#78A7D0]'>
         {/* Sky Background (Fixed) */}
         <div className="absolute inset-0 z-0 bg-[url('/images/background.png')] bg-cover bg-bottom bg-no-repeat" />
@@ -59,31 +88,44 @@ export default function Home() {
           <div className="absolute inset-0 bg-[url('/images/cloud-right.png')] bg-cover bg-bottom bg-no-repeat opacity-90 mix-blend-screen" />
         </motion.div>
 
-        {/* Moving Content Layer with Mouse Tilt */}
-        <motion.div
-          className='pointer-events-none relative z-20 mx-auto flex h-full w-full max-w-4xl flex-col items-center justify-center px-4 lg:flex-row lg:justify-between lg:px-8'
-          style={{
-            rotateX,
-            rotateY,
-            perspective: 1000,
-            transformStyle: 'preserve-3d',
-          }}>
+        {/* Content Layer (no tilt) */}
+        <div className='pointer-events-none relative z-20 mx-auto flex h-full w-full max-w-4xl flex-col items-center justify-center px-4 lg:flex-row lg:justify-between lg:px-8'>
           {/* Text Section */}
           <div className='pointer-events-auto z-30 flex w-full flex-1 flex-col items-center justify-center text-center lg:items-start lg:text-left'>
-            <h1 className='mb-2 whitespace-nowrap font-["Press_Start_2P"] text-[1.5rem] font-bold leading-none text-white drop-shadow-[4px_4px_0_#07233e] sm:text-[2rem] md:text-[2.5rem] lg:text-[3rem] lg:drop-shadow-[6px_6px_0_#07233e] xl:text-[3.5rem]'>
+            <motion.h1
+              variants={fadeUp}
+              initial='hidden'
+              animate='visible'
+              custom={0.2}
+              className='mb-2 whitespace-nowrap font-["Press_Start_2P"] text-[1.5rem] font-bold leading-none text-white drop-shadow-[4px_4px_0_#07233e] sm:text-[2rem] md:text-[2.5rem] lg:text-[3rem] lg:drop-shadow-[6px_6px_0_#07233e] xl:text-[3.5rem]'>
               SATANG
-            </h1>
-            <h2 className='mb-3 whitespace-nowrap font-["Press_Start_2P"] text-[8px] font-bold tracking-widest text-white drop-shadow-[3px_3px_0_#07233e] sm:text-xs md:text-sm lg:mb-5 lg:text-base lg:tracking-[0.2em] lg:drop-shadow-[4px_4px_0_#07233e] xl:text-lg'>
+            </motion.h1>
+            <motion.h2
+              variants={fadeUp}
+              initial='hidden'
+              animate='visible'
+              custom={0.4}
+              className='mb-3 whitespace-nowrap font-["Press_Start_2P"] text-[8px] font-bold tracking-widest text-white drop-shadow-[3px_3px_0_#07233e] sm:text-xs md:text-sm lg:mb-5 lg:text-base lg:tracking-[0.2em] lg:drop-shadow-[4px_4px_0_#07233e] xl:text-lg'>
               FULL STACK <br className='lg:hidden' />
               DEVELOPER
-            </h2>
-            <p className='mb-6 max-w-md font-["Press_Start_2P"] text-[6px] leading-[2] text-white drop-shadow-[2px_2px_0_#222635] sm:text-[8px] md:text-[10px] lg:text-[11px] lg:leading-[2]'>
+            </motion.h2>
+            <motion.p
+              variants={fadeUp}
+              initial='hidden'
+              animate='visible'
+              custom={0.6}
+              className='mb-6 max-w-md font-["Press_Start_2P"] text-[6px] leading-[2] text-white drop-shadow-[2px_2px_0_#222635] sm:text-[8px] md:text-[10px] lg:text-[11px] lg:leading-[2]'>
               PASSIONATELY CRAFTING DIGITAL EXPERIENCES.
               <br />
               AVAILABLE FOR NEW VENTURES.
-            </p>
+            </motion.p>
 
-            <div className='flex flex-col justify-center gap-3 sm:flex-row lg:justify-start lg:gap-6'>
+            <motion.div
+              variants={fadeUp}
+              initial='hidden'
+              animate='visible'
+              custom={0.8}
+              className='flex flex-col justify-center gap-3 sm:flex-row lg:justify-start lg:gap-6'>
               <button className='pixel-btn flex items-center gap-3 text-[12px] md:text-[14px]'>
                 <img
                   src='/images/cursor.svg'
@@ -117,14 +159,19 @@ export default function Home() {
                 </svg>
                 CONTACT ME
               </button>
-            </div>
+            </motion.div>
           </div>
 
           {/* 3D Block Section */}
-          <div className='pointer-events-none relative mt-2 flex h-[30vh] w-full flex-1 items-center justify-center lg:mt-0 lg:h-[60%] lg:justify-end'>
+          <motion.div
+            variants={scaleIn}
+            initial='hidden'
+            animate='visible'
+            custom={0.5}
+            className='pointer-events-none relative mt-2 flex h-[30vh] w-full flex-1 items-center justify-center lg:mt-0 lg:h-[60%] lg:justify-end'>
             <div
               className='relative h-full w-full max-w-[320px] bg-contain bg-center bg-no-repeat lg:max-w-[350px] lg:bg-right'
-              style={{ backgroundImage: `url('/images/${isMobile ? 'block-mobile.png' : 'block.png'}')` }}>
+              style={{ backgroundImage: `url('/images/block.png')` }}>
               {/* Text Labels */}
               {!isMobile && (
                 <>
@@ -160,7 +207,7 @@ export default function Home() {
 
               {/* Floating Coin 2 (Left Frontend) */}
               <div
-                className='absolute left-[18%] top-[38%] z-30 animate-[bounce_2s_infinite_ease-in-out] text-[#f5a524] drop-shadow-[4px_4px_0_rgba(147,99,22,0.8)] md:left-[22%] md:top-[40%] lg:left-[22%] lg:top-[35%]'
+                className='absolute left-[18%] top-[40%] z-30 animate-[bounce_2s_infinite_ease-in-out] text-[#f5a524] drop-shadow-[4px_4px_0_rgba(147,99,22,0.8)] md:left-[22%] md:top-[40%] lg:left-[22%] lg:top-[35%]'
                 style={{ animationDelay: '0.8s' }}>
                 <svg
                   width='20'
@@ -194,11 +241,16 @@ export default function Home() {
                 </svg>
               </div>
             </div>
-          </div>
-        </motion.div>
+          </motion.div>
+        </div>
 
         {/* Scroll Down Indicator */}
-        <div className='absolute bottom-8 left-1/2 z-40 flex -translate-x-1/2 scale-100 animate-bounce flex-col items-center gap-4 md:scale-125'>
+        <motion.div
+          variants={fadeUp}
+          initial='hidden'
+          animate='visible'
+          custom={1.2}
+          className='absolute bottom-8 left-1/2 z-40 flex -translate-x-1/2 scale-100 animate-bounce flex-col items-center gap-4 md:scale-125'>
           <span className='font-["Press_Start_2P"] text-[8px] text-white drop-shadow-[2px_2px_0_#222635] md:text-[10px]'>
             SCROLL
           </span>
@@ -217,7 +269,7 @@ export default function Home() {
             <rect x='4' y='6' width='8' height='4' fill='#222635' />
             <rect x='2' y='4' width='12' height='4' fill='#222635' />
           </svg>
-        </div>
+        </motion.div>
       </section>
 
       {/* CONTENT AREA (Normal Scrolling Flow) */}
