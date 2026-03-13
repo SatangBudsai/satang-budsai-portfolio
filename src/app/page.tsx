@@ -40,8 +40,8 @@ export default function Home() {
           <div className="absolute inset-0 bg-[url('/images/cloud-right.png')] bg-cover bg-bottom bg-no-repeat opacity-90 mix-blend-screen" />
         </motion.div>
 
-        {/* Main Content Layout Container */}
-        <div className='pointer-events-none relative z-20 mx-auto flex h-full w-full max-w-[1700px] flex-col items-center justify-center px-6 pt-20 lg:flex-row lg:justify-between lg:px-20'>
+        {/* Moving Content Layer */}
+        <div className='pointer-events-none relative z-20 mx-auto flex h-[85vh] w-full max-w-5xl flex-col items-center justify-center px-4 pt-4 lg:-mt-16 lg:h-full lg:flex-row lg:justify-between lg:px-8'>
           {/* Text Section */}
           <div className='pointer-events-auto z-30 flex w-full flex-1 flex-col items-center justify-center text-center lg:items-start lg:text-left'>
             <h1 className='mb-2 whitespace-nowrap font-["Press_Start_2P"] text-[1.5rem] font-bold leading-none text-white drop-shadow-[4px_4px_0_#07233e] sm:text-[2rem] md:text-[3rem] lg:text-[4rem] lg:drop-shadow-[6px_6px_0_#07233e] xl:text-[5rem]'>
@@ -51,30 +51,21 @@ export default function Home() {
               FULL STACK <br className='lg:hidden' />
               DEVELOPER
             </h2>
-            <p className='mb-8 max-w-xl font-["Press_Start_2P"] text-[8px] leading-[2] text-white drop-shadow-[2px_2px_0_#222635] sm:text-[10px] md:text-[12px] lg:text-[14px] lg:leading-[2]'>
+            <p className='mb-8 max-w-xl font-["Press_Start_2P"] text-[6px] leading-[2] text-white drop-shadow-[2px_2px_0_#222635] sm:text-[10px] md:text-[12px] lg:text-[14px] lg:leading-[2]'>
               PASSIONATELY CRAFTING DIGITAL EXPERIENCES.
               <br />
               AVAILABLE FOR NEW VENTURES.
             </p>
 
             <div className='flex flex-col justify-center gap-4 sm:flex-row lg:justify-start lg:gap-8'>
-              <button className='pixel-btn flex items-center gap-2 text-[12px] md:text-[14px]'>
-                {/* Minimal pixel arrow icon */}
-                <svg
-                  className='pixel-icon'
-                  width='16'
-                  height='16'
-                  viewBox='0 0 16 16'
-                  style={{ shapeRendering: 'crispEdges', fillRule: 'evenodd' }}>
-                  <rect x='0' y='6' width='10' height='4' fill='#222635' />
-                  <rect x='10' y='4' width='2' height='8' fill='#222635' />
-                  <rect x='12' y='6' width='2' height='4' fill='#222635' />
-                  <rect x='14' y='7' width='2' height='2' fill='#222635' />
-                  <rect x='2' y='8' width='8' height='2' fill='#ffffff' />
-                  <rect x='10' y='6' width='2' height='4' fill='#ffffff' />
-                  <rect x='12' y='8' width='2' height='2' fill='#ffffff' />
-                </svg>
-                VIEW PROJECTS
+              <button className='pixel-btn flex items-center gap-3 text-[14px] md:text-[18px]'>
+                <img
+                  src='/images/cursor.svg'
+                  alt='cursor'
+                  className='-ml-1 h-5 w-5 object-contain'
+                  style={{ imageRendering: 'pixelated' }}
+                />
+                <span>VIEW PROJECTS</span>
               </button>
               <button className='pixel-btn text-[12px] md:text-[14px]'>
                 <svg
@@ -104,9 +95,9 @@ export default function Home() {
           </div>
 
           {/* 3D Block Section */}
-          <div className='pointer-events-none relative mt-8 flex h-[40vh] w-full flex-1 items-center justify-center lg:mt-0 lg:h-full lg:justify-end'>
+          <div className='pointer-events-none relative mt-4 flex h-[35vh] w-full flex-1 items-center justify-center lg:mt-0 lg:h-full lg:justify-end'>
             <div
-              className='relative h-full w-full max-w-[500px] bg-contain bg-center bg-no-repeat lg:bg-right'
+              className='relative h-full w-full max-w-[400px] bg-contain bg-center bg-no-repeat lg:bg-right'
               style={{ backgroundImage: `url('/images/${isMobile ? 'block-mobile.png' : 'block.png'}')` }}>
               {/* Text Labels */}
               {!isMobile && (
@@ -182,7 +173,7 @@ export default function Home() {
 
         {/* Scroll Down Indicator */}
         <div className='absolute bottom-12 left-1/2 z-40 flex -translate-x-1/2 scale-125 animate-bounce flex-col items-center gap-6 md:scale-150'>
-          <span className='font-["Press_Start_2P"] text-[12px] text-white drop-shadow-[2px_2px_0_#222635] md:text-[14px]'>
+          <span className='font-["Press_Start_2P"] text-[10px] text-white drop-shadow-[2px_2px_0_#222635] md:text-[12px]'>
             SCROLL
           </span>
           <svg
