@@ -31,6 +31,7 @@ const fadeIn = {
 
 export default function Home() {
   const [isMobile, setIsMobile] = useState(false)
+  const [isDark, setIsDark] = useState(true)
   const heroRef = useRef<HTMLElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const cursorRef = useRef<HTMLImageElement>(null)
@@ -173,7 +174,8 @@ export default function Home() {
   const cloudOpacity = useTransform(scrollY, [0, 300, 600], [0.9, 0.4, 0])
 
   return (
-    <div className='relative w-full overflow-x-hidden bg-[#f0ece4] font-["Press_Start_2P"] text-[#2a2a3a]'>
+    <div
+      className={`${isDark ? 'theme-dark' : 'theme-light'} relative w-full overflow-x-hidden bg-[var(--bg-outer)] font-["Press_Start_2P"] text-[#2a2a3a]`}>
       {/* Custom Cursor */}
       <img
         ref={cursorRef}
@@ -190,6 +192,72 @@ export default function Home() {
         className='pointer-events-none fixed inset-0 z-[9999]'
         style={{ width: '100%', height: '100%' }}
       />
+
+      {/* Theme Toggle Switch */}
+      <div
+        onClick={() => setIsDark(d => !d)}
+        className='fixed right-4 top-4 z-[9998] flex border-3 border-[#222635] shadow-[3px_3px_0_rgba(0,0,0,0.4)]'
+        style={{ imageRendering: 'pixelated' }}
+        role='button'
+        aria-label='Toggle theme'>
+        {/* Track background with both icons */}
+        <div className='relative flex h-[32px] w-[75px] items-center justify-between bg-[#181a28] px-2'>
+          {/* Sun icon (left, always visible) */}
+          <svg
+            width='14'
+            height='14'
+            viewBox='0 0 8 8'
+            className='relative z-10'
+            style={{ shapeRendering: 'crispEdges' }}>
+            <rect x='3' y='0' width='2' height='1' fill={!isDark ? '#f5a524' : '#555'} />
+            <rect x='3' y='7' width='2' height='1' fill={!isDark ? '#f5a524' : '#555'} />
+            <rect x='0' y='3' width='1' height='2' fill={!isDark ? '#f5a524' : '#555'} />
+            <rect x='7' y='3' width='1' height='2' fill={!isDark ? '#f5a524' : '#555'} />
+            <rect x='1' y='1' width='1' height='1' fill={!isDark ? '#f5a524' : '#555'} />
+            <rect x='6' y='1' width='1' height='1' fill={!isDark ? '#f5a524' : '#555'} />
+            <rect x='1' y='6' width='1' height='1' fill={!isDark ? '#f5a524' : '#555'} />
+            <rect x='6' y='6' width='1' height='1' fill={!isDark ? '#f5a524' : '#555'} />
+            <rect x='2' y='2' width='4' height='4' fill={!isDark ? '#ffec80' : '#666'} />
+          </svg>
+          {/* Moon icon (right, always visible) — crescent facing right */}
+          <svg
+            width='14'
+            height='14'
+            viewBox='0 0 10 10'
+            className='relative z-10'
+            style={{ shapeRendering: 'crispEdges' }}>
+            {/* Outer crescent shape */}
+            <rect x='3' y='0' width='3' height='1' fill={isDark ? '#e8e0ff' : '#555'} />
+            <rect x='5' y='1' width='3' height='1' fill={isDark ? '#e8e0ff' : '#555'} />
+            <rect x='7' y='2' width='2' height='1' fill={isDark ? '#e8e0ff' : '#555'} />
+            <rect x='8' y='3' width='1' height='4' fill={isDark ? '#e8e0ff' : '#555'} />
+            <rect x='7' y='7' width='2' height='1' fill={isDark ? '#e8e0ff' : '#555'} />
+            <rect x='5' y='8' width='3' height='1' fill={isDark ? '#e8e0ff' : '#555'} />
+            <rect x='3' y='9' width='3' height='1' fill={isDark ? '#e8e0ff' : '#555'} />
+            {/* Inner fill for crescent thickness */}
+            <rect x='6' y='2' width='1' height='1' fill={isDark ? '#d0c8f0' : '#444'} />
+            <rect x='7' y='3' width='1' height='4' fill={isDark ? '#d0c8f0' : '#444'} />
+            <rect x='6' y='7' width='1' height='1' fill={isDark ? '#d0c8f0' : '#444'} />
+            {/* Stars */}
+            <rect x='2' y='2' width='1' height='1' fill={isDark ? '#fffbe6' : '#666'} />
+            <rect x='1' y='6' width='1' height='1' fill={isDark ? '#fffbe6' : '#666'} />
+            <rect x='4' y='5' width='1' height='1' fill={isDark ? '#fffbe6' : '#666'} />
+          </svg>
+          {/* Sliding highlight knob */}
+          <div
+            className='absolute top-0 h-full w-[38px] border-r-3 border-[#222635] transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)]'
+            style={{
+              left: isDark ? '37px' : '0px',
+              background: isDark ? '#252850' : '#fffbe6',
+              boxShadow: isDark
+                ? 'inset 2px 2px 0 #353870, inset -2px -2px 0 #151838'
+                : 'inset 2px 2px 0 #fff, inset -2px -2px 0 #e0d8b0',
+              borderLeft: isDark ? '3px solid #222635' : 'none',
+              borderRight: !isDark ? '3px solid #222635' : 'none'
+            }}
+          />
+        </div>
+      </div>
 
       {/* HERO SECTION */}
       <section ref={heroRef} className='relative h-screen min-h-[700px] w-full overflow-hidden bg-[#78A7D0]'>
@@ -244,7 +312,7 @@ export default function Home() {
               initial='hidden'
               animate='visible'
               custom={0.6}
-              className='mb-6 max-w-md font-["Press_Start_2P"] text-[6px] leading-[2] text-white drop-shadow-[2px_2px_0_#222635] sm:text-[8px] md:text-[10px] lg:text-[11px] lg:leading-[2]'>
+              className='mb-6 max-w-md font-["Press_Start_2P"] text-[6px] leading-[2] text-white drop-shadow-[2px_2px_0_#222635] sm:text-[8px] md:text-[10px] lg:text-[12px] lg:leading-[2]'>
               PASSIONATELY CRAFTING DIGITAL EXPERIENCES.
               <br />
               AVAILABLE FOR NEW VENTURES.
@@ -402,8 +470,8 @@ export default function Home() {
         </motion.div>
       </section>
 
-      {/* CONTENT AREA — Dark Mode */}
-      <div className='relative z-30 w-full overflow-hidden bg-[#1a1c2b]'>
+      {/* CONTENT AREA */}
+      <div className='relative z-30 w-full overflow-hidden bg-[var(--bg-content)] transition-colors duration-300'>
         <div className='h-1.5 bg-gradient-to-r from-[#e06c75] via-[#f5a524] to-[#61afef]' />
 
         {/* CONTENT SECTIONS */}
@@ -418,7 +486,7 @@ export default function Home() {
             viewport={{ once: true, margin: '-80px' }}>
             <div className='mb-8 flex items-center justify-center gap-3'>
               <div className='h-1 w-10 bg-[#f5a524]'></div>
-              <h2 className='text-xl font-bold tracking-widest text-[#e8e0d0] drop-shadow-[2px_2px_0_#000] md:text-2xl'>
+              <h2 className='text-xl font-bold tracking-widest text-[var(--text-heading)] drop-shadow-[2px_2px_0_var(--shadow-text)] md:text-2xl'>
                 ABOUT ME
               </h2>
               <div className='h-1 w-10 bg-[#f5a524]'></div>
@@ -427,12 +495,12 @@ export default function Home() {
             <div className='grid gap-6 md:grid-cols-2 lg:gap-10'>
               {/* Portrait Box */}
               <motion.div
-                className='relative flex aspect-square items-center justify-center border-3 border-[#333650] bg-[#222540] p-3 shadow-[6px_6px_0_#111320]'
+                className='relative flex aspect-square items-center justify-center border-3 border-[var(--border-card)] bg-[var(--bg-card)] p-3 shadow-[6px_6px_0_var(--shadow-card)] transition-colors duration-300'
                 initial={{ opacity: 0, x: -40 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.6, delay: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }}
                 viewport={{ once: true }}>
-                <div className='flex h-full w-full items-center justify-center overflow-hidden border-3 border-dashed border-[#444870] bg-[#2a2d48]'>
+                <div className='flex h-full w-full items-center justify-center overflow-hidden border-3 border-dashed border-[var(--border-card-inner)] bg-[var(--bg-card-inner)] transition-colors duration-300'>
                   <div className='h-3/4 w-3/4 bg-[#555] opacity-10'></div>
                 </div>
               </motion.div>
@@ -443,8 +511,8 @@ export default function Home() {
                 whileInView={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.6, delay: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
                 viewport={{ once: true }}>
-                <div className='border-3 border-[#333650] bg-[#222540] p-5 shadow-[4px_4px_0_#111320]'>
-                  <p className='text-[9px] leading-relaxed text-[#c8c0b0] md:text-[11px] md:leading-loose'>
+                <div className='border-3 border-[var(--border-card)] bg-[var(--bg-card)] p-5 shadow-[4px_4px_0_var(--shadow-card)] transition-colors duration-300'>
+                  <p className='text-[9px] leading-relaxed text-[var(--text-body)] md:text-[11px] md:leading-loose'>
                     Hello! I am <span className='font-bold text-[#f5a524]'>Satang</span>, a passionate Full Stack
                     Developer with a deep love for creating digital experiences.
                     <br />
@@ -456,12 +524,12 @@ export default function Home() {
                 <div className='flex gap-3'>
                   <a
                     href='#projects'
-                    className='pixel-btn flex-1 border-2 border-[#f5a524] bg-[#f5a524] py-3 text-center text-[9px] text-[#1a1c2b] shadow-[3px_3px_0_#111320] hover:brightness-110 md:text-[11px]'>
+                    className='pixel-btn flex-1 border-2 border-[#f5a524] bg-[#f5a524] py-3 text-center text-[9px] text-[#1a1c2b] shadow-[3px_3px_0_var(--shadow-card)] hover:brightness-110 md:text-[11px]'>
                     VIEW WORK
                   </a>
                   <a
                     href='#contact'
-                    className='pixel-btn flex-1 border-2 border-[#444870] bg-[#2a2d48] py-3 text-center text-[9px] text-[#c8c0b0] shadow-[3px_3px_0_#111320] hover:border-[#f5a524] md:text-[11px]'>
+                    className='pixel-btn flex-1 border-2 border-[var(--border-card-inner)] bg-[var(--bg-card-inner)] py-3 text-center text-[9px] text-[var(--text-body)] shadow-[3px_3px_0_var(--shadow-card)] md:text-[11px]'>
                     RESUME
                   </a>
                 </div>
@@ -479,7 +547,7 @@ export default function Home() {
             viewport={{ once: true, margin: '-80px' }}>
             <div className='mb-8 flex items-center justify-center gap-3'>
               <div className='h-1 w-10 bg-[#98c379]'></div>
-              <h2 className='text-xl font-bold tracking-widest text-[#e8e0d0] drop-shadow-[2px_2px_0_#000] md:text-2xl'>
+              <h2 className='text-xl font-bold tracking-widest text-[var(--text-heading)] drop-shadow-[2px_2px_0_var(--shadow-text)] md:text-2xl'>
                 SKILLS
               </h2>
               <div className='h-1 w-10 bg-[#98c379]'></div>
@@ -488,12 +556,12 @@ export default function Home() {
             <div className='space-y-5'>
               {/* Front-End */}
               <motion.div
-                className='border-3 border-[#333650] bg-[#222540] p-4 shadow-[4px_4px_0_#111320]'
+                className='border-3 border-[var(--border-card)] bg-[var(--bg-card)] p-4 shadow-[4px_4px_0_var(--shadow-card)] transition-colors duration-300'
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.1 }}
                 viewport={{ once: true }}>
-                <h3 className='mb-3 text-[11px] font-bold text-[#98c379] drop-shadow-[1px_1px_0_#000] md:text-[13px]'>
+                <h3 className='mb-3 text-[11px] font-bold text-[#98c379] drop-shadow-[1px_1px_0_var(--shadow-text)] md:text-[13px]'>
                   FRONT-END
                 </h3>
                 <div className='flex flex-wrap gap-2'>
@@ -511,12 +579,12 @@ export default function Home() {
 
               {/* Back-End */}
               <motion.div
-                className='border-3 border-[#333650] bg-[#222540] p-4 shadow-[4px_4px_0_#111320]'
+                className='border-3 border-[var(--border-card)] bg-[var(--bg-card)] p-4 shadow-[4px_4px_0_var(--shadow-card)] transition-colors duration-300'
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.15 }}
                 viewport={{ once: true }}>
-                <h3 className='mb-3 text-[11px] font-bold text-[#e06c75] drop-shadow-[1px_1px_0_#000] md:text-[13px]'>
+                <h3 className='mb-3 text-[11px] font-bold text-[#e06c75] drop-shadow-[1px_1px_0_var(--shadow-text)] md:text-[13px]'>
                   BACK-END
                 </h3>
                 <div className='flex flex-wrap gap-2'>
@@ -532,12 +600,12 @@ export default function Home() {
 
               {/* Database */}
               <motion.div
-                className='border-3 border-[#333650] bg-[#222540] p-4 shadow-[4px_4px_0_#111320]'
+                className='border-3 border-[var(--border-card)] bg-[var(--bg-card)] p-4 shadow-[4px_4px_0_var(--shadow-card)] transition-colors duration-300'
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.2 }}
                 viewport={{ once: true }}>
-                <h3 className='mb-3 text-[11px] font-bold text-[#61afef] drop-shadow-[1px_1px_0_#000] md:text-[13px]'>
+                <h3 className='mb-3 text-[11px] font-bold text-[#61afef] drop-shadow-[1px_1px_0_var(--shadow-text)] md:text-[13px]'>
                   DATABASE
                 </h3>
                 <div className='flex flex-wrap gap-2'>
@@ -553,12 +621,12 @@ export default function Home() {
 
               {/* Version Control */}
               <motion.div
-                className='border-3 border-[#333650] bg-[#222540] p-4 shadow-[4px_4px_0_#111320]'
+                className='border-3 border-[var(--border-card)] bg-[var(--bg-card)] p-4 shadow-[4px_4px_0_var(--shadow-card)] transition-colors duration-300'
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.25 }}
                 viewport={{ once: true }}>
-                <h3 className='mb-3 text-[11px] font-bold text-[#c678dd] drop-shadow-[1px_1px_0_#000] md:text-[13px]'>
+                <h3 className='mb-3 text-[11px] font-bold text-[#c678dd] drop-shadow-[1px_1px_0_var(--shadow-text)] md:text-[13px]'>
                   VERSION CONTROL
                 </h3>
                 <div className='flex flex-wrap gap-2'>
@@ -579,8 +647,8 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.3 }}
                 viewport={{ once: true }}>
-                <div className='border-3 border-[#333650] bg-[#222540] p-4 shadow-[4px_4px_0_#111320]'>
-                  <h3 className='mb-3 text-[11px] font-bold text-[#f5a524] drop-shadow-[1px_1px_0_#000] md:text-[13px]'>
+                <div className='border-3 border-[var(--border-card)] bg-[var(--bg-card)] p-4 shadow-[4px_4px_0_var(--shadow-card)] transition-colors duration-300'>
+                  <h3 className='mb-3 text-[11px] font-bold text-[#f5a524] drop-shadow-[1px_1px_0_var(--shadow-text)] md:text-[13px]'>
                     DEVOPS
                   </h3>
                   <div className='flex flex-wrap gap-2'>
@@ -593,8 +661,8 @@ export default function Home() {
                     ))}
                   </div>
                 </div>
-                <div className='border-3 border-[#333650] bg-[#222540] p-4 shadow-[4px_4px_0_#111320]'>
-                  <h3 className='mb-3 text-[11px] font-bold text-[#e5c07b] drop-shadow-[1px_1px_0_#000] md:text-[13px]'>
+                <div className='border-3 border-[var(--border-card)] bg-[var(--bg-card)] p-4 shadow-[4px_4px_0_var(--shadow-card)] transition-colors duration-300'>
+                  <h3 className='mb-3 text-[11px] font-bold text-[#e5c07b] drop-shadow-[1px_1px_0_var(--shadow-text)] md:text-[13px]'>
                     SECURITY
                   </h3>
                   <div className='flex flex-wrap gap-2'>
@@ -611,12 +679,12 @@ export default function Home() {
 
               {/* Other Tools */}
               <motion.div
-                className='border-3 border-[#333650] bg-[#222540] p-4 shadow-[4px_4px_0_#111320]'
+                className='border-3 border-[var(--border-card)] bg-[var(--bg-card)] p-4 shadow-[4px_4px_0_var(--shadow-card)] transition-colors duration-300'
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.35 }}
                 viewport={{ once: true }}>
-                <h3 className='mb-3 text-[11px] font-bold text-[#56b6c2] drop-shadow-[1px_1px_0_#000] md:text-[13px]'>
+                <h3 className='mb-3 text-[11px] font-bold text-[#56b6c2] drop-shadow-[1px_1px_0_var(--shadow-text)] md:text-[13px]'>
                   OTHER TOOLS & TECHNOLOGIES
                 </h3>
                 <div className='flex flex-wrap gap-2'>
@@ -651,7 +719,7 @@ export default function Home() {
             viewport={{ once: true, margin: '-80px' }}>
             <div className='mb-8 flex items-center justify-center gap-3'>
               <div className='h-1 w-10 bg-[#e06c75]'></div>
-              <h2 className='text-xl font-bold tracking-widest text-[#e8e0d0] drop-shadow-[2px_2px_0_#000] md:text-2xl'>
+              <h2 className='text-xl font-bold tracking-widest text-[var(--text-heading)] drop-shadow-[2px_2px_0_var(--shadow-text)] md:text-2xl'>
                 PROJECTS
               </h2>
               <div className='h-1 w-10 bg-[#e06c75]'></div>
@@ -660,19 +728,19 @@ export default function Home() {
             <div className='grid gap-6 md:grid-cols-2'>
               {/* Project 1 */}
               <motion.div
-                className='group border-3 border-[#333650] bg-[#222540] transition-all hover:-translate-y-1 hover:shadow-[8px_8px_0_#111320]'
+                className='group border-3 border-[var(--border-card)] bg-[var(--bg-card)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[8px_8px_0_var(--shadow-card)]'
                 initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.1 }}
                 viewport={{ once: true }}>
-                <div className='relative aspect-video w-full overflow-hidden border-b-3 border-[#333650] bg-[#0d1020]'>
+                <div className='relative aspect-video w-full overflow-hidden border-b-3 border-[var(--border-card)] bg-[var(--bg-preview)]'>
                   <div className='absolute inset-0 flex items-center justify-center'>
-                    <span className='font-["Silkscreen"] text-3xl text-white opacity-20'>E-COMMERCE</span>
+                    <span className='font-["Silkscreen"] text-3xl text-[var(--text-muted)] opacity-40'>E-COMMERCE</span>
                   </div>
                 </div>
                 <div className='p-4'>
                   <h3 className='mb-1.5 text-base font-bold text-[#e06c75]'>PIXEL STORE</h3>
-                  <p className='mb-4 text-[9px] leading-relaxed text-[#8a8898] md:text-[10px]'>
+                  <p className='mb-4 text-[9px] leading-relaxed text-[var(--text-muted)] md:text-[10px]'>
                     A full-stack e-commerce platform built with Next.js, Stripe, and PostgreSQL.
                   </p>
                   <div className='mb-4 flex flex-wrap gap-1.5'>
@@ -688,7 +756,7 @@ export default function Home() {
                   </div>
                   <a
                     href='#'
-                    className='inline-block border-b border-[#555] pb-0.5 text-[9px] text-[#8a8898] hover:border-[#e06c75] hover:text-[#e06c75]'>
+                    className='inline-block border-b border-[var(--border-card)] pb-0.5 text-[9px] text-[var(--text-muted)] hover:border-[#e06c75] hover:text-[#e06c75]'>
                     VIEW SOURCE -{`>`}
                   </a>
                 </div>
@@ -696,19 +764,19 @@ export default function Home() {
 
               {/* Project 2 */}
               <motion.div
-                className='group border-3 border-[#333650] bg-[#222540] transition-all hover:-translate-y-1 hover:shadow-[8px_8px_0_#111320]'
+                className='group border-3 border-[var(--border-card)] bg-[var(--bg-card)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[8px_8px_0_var(--shadow-card)]'
                 initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.2 }}
                 viewport={{ once: true }}>
-                <div className='relative aspect-video w-full overflow-hidden border-b-3 border-[#333650] bg-[#0d1020]'>
+                <div className='relative aspect-video w-full overflow-hidden border-b-3 border-[var(--border-card)] bg-[var(--bg-preview)]'>
                   <div className='absolute inset-0 flex items-center justify-center'>
-                    <span className='font-["Silkscreen"] text-3xl text-white opacity-20'>DASHBOARD</span>
+                    <span className='font-["Silkscreen"] text-3xl text-[var(--text-muted)] opacity-40'>DASHBOARD</span>
                   </div>
                 </div>
                 <div className='p-4'>
                   <h3 className='mb-1.5 text-base font-bold text-[#61afef]'>ANALYTICS HUB</h3>
-                  <p className='mb-4 text-[9px] leading-relaxed text-[#8a8898] md:text-[10px]'>
+                  <p className='mb-4 text-[9px] leading-relaxed text-[var(--text-muted)] md:text-[10px]'>
                     Real-time analytics dashboard utilizing WebSockets and Redis caching.
                   </p>
                   <div className='mb-4 flex flex-wrap gap-1.5'>
@@ -724,7 +792,7 @@ export default function Home() {
                   </div>
                   <a
                     href='#'
-                    className='inline-block border-b border-[#555] pb-0.5 text-[9px] text-[#8a8898] hover:border-[#61afef] hover:text-[#61afef]'>
+                    className='inline-block border-b border-[var(--border-card)] pb-0.5 text-[9px] text-[var(--text-muted)] hover:border-[#61afef] hover:text-[#61afef]'>
                     VIEW SOURCE -{`>`}
                   </a>
                 </div>
@@ -736,10 +804,14 @@ export default function Home() {
         <div className='h-1.5 bg-gradient-to-r from-[#61afef] via-[#c678dd] to-[#e06c75]' />
 
         {/* Footer / Contact */}
-        <footer id='contact' className='bg-[#13141f] pb-8 pt-14 text-center text-white'>
-          <h2 className="mb-8 font-['Press_Start_2P'] text-lg drop-shadow-[3px_3px_0_#000] md:text-2xl">CONTACT ME</h2>
+        <footer
+          id='contact'
+          className='bg-[var(--bg-footer)] pb-8 pt-14 text-center text-[var(--text-heading)] transition-colors duration-300'>
+          <h2 className="mb-8 font-['Press_Start_2P'] text-lg drop-shadow-[3px_3px_0_var(--shadow-text)] md:text-2xl">
+            CONTACT ME
+          </h2>
           <div className='mb-10 flex justify-center gap-4'>
-            <button className='pixel-btn border-2 border-[#444870] text-[12px] hover:-translate-y-1 hover:border-[#f5a524] hover:shadow-lg'>
+            <button className='pixel-btn border-2 border-[var(--border-card-inner)] text-[12px] hover:-translate-y-1 hover:shadow-lg'>
               <svg
                 className='pixel-icon'
                 width='18'
@@ -764,7 +836,7 @@ export default function Home() {
               SEND EMAIL
             </button>
           </div>
-          <p className="font-['Press_Start_2P'] text-[8px] text-[#555870]">
+          <p className="font-['Press_Start_2P'] text-[8px] text-[var(--text-footer)]">
             © {new Date().getFullYear()} SATANG. ALL RIGHTS RESERVED.
           </p>
         </footer>
