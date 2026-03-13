@@ -193,22 +193,30 @@ export default function Home() {
 
       {/* HERO SECTION */}
       <section ref={heroRef} className='relative h-screen min-h-[700px] w-full overflow-hidden bg-[#78A7D0]'>
-        {/* Sky Background (Fixed) */}
-        <div className="absolute inset-0 z-0 bg-[url('/images/background.png')] bg-cover bg-bottom bg-no-repeat" />
+        {/* Sky Background (Animated GIF) */}
+        <div className="absolute inset-0 z-0 bg-[url('/images/background.gif')] bg-cover bg-bottom bg-no-repeat" />
 
-        {/* Cloud Left (behind content, fades on scroll) */}
-        <motion.div
-          className='pointer-events-none absolute inset-0 z-10'
-          style={{ y: yCloudLeft, x: xCloudLeft, opacity: cloudOpacity }}>
-          <div className="absolute inset-0 bg-[url('/images/cloud-left.png')] bg-cover bg-bottom bg-no-repeat mix-blend-screen" />
-        </motion.div>
-
-        {/* Cloud Right (behind content, fades on scroll) */}
-        <motion.div
-          className='pointer-events-none absolute inset-0 z-10'
-          style={{ y: yCloudRight, x: xCloudRight, opacity: cloudOpacity }}>
-          <div className="absolute inset-0 bg-[url('/images/cloud-right.png')] bg-cover bg-bottom bg-no-repeat mix-blend-screen" />
-        </motion.div>
+        {/* Clouds: single cloud.png on mobile, split left/right on desktop */}
+        {isMobile ? (
+          <motion.div
+            className='pointer-events-none absolute inset-0 z-10'
+            style={{ y: yCloudLeft, opacity: cloudOpacity }}>
+            <div className="absolute inset-0 bg-[url('/images/cloud.png')] bg-cover bg-bottom bg-no-repeat mix-blend-screen" />
+          </motion.div>
+        ) : (
+          <>
+            <motion.div
+              className='pointer-events-none absolute inset-0 z-10'
+              style={{ y: yCloudLeft, x: xCloudLeft, opacity: cloudOpacity }}>
+              <div className="absolute inset-0 bg-[url('/images/cloud-left.png')] bg-cover bg-bottom bg-no-repeat mix-blend-screen" />
+            </motion.div>
+            <motion.div
+              className='pointer-events-none absolute inset-0 z-10'
+              style={{ y: yCloudRight, x: xCloudRight, opacity: cloudOpacity }}>
+              <div className="absolute inset-0 bg-[url('/images/cloud-right.png')] bg-cover bg-bottom bg-no-repeat mix-blend-screen" />
+            </motion.div>
+          </>
+        )}
 
         {/* Content Layer */}
         <div className='pointer-events-none relative z-20 mx-auto flex h-full w-full max-w-4xl flex-col items-center justify-center px-4 lg:flex-row lg:justify-between lg:px-8'>
@@ -490,7 +498,7 @@ export default function Home() {
                 </h3>
                 <div className='flex flex-wrap gap-2'>
                   {['HTML', 'CSS', 'JavaScript', 'React.js', 'Next.js', 'Bootstrap', 'Tailwind', 'SASS', 'Redux'].map(
-                    (s) => (
+                    s => (
                       <span
                         key={s}
                         className='border-2 border-[#98c379]/40 bg-[#98c379]/10 px-2.5 py-1 text-[8px] text-[#98c379] transition-colors hover:bg-[#98c379]/20 md:text-[9px]'>
@@ -512,7 +520,7 @@ export default function Home() {
                   BACK-END
                 </h3>
                 <div className='flex flex-wrap gap-2'>
-                  {['Node.js', 'Express.js', '.Net', 'C#', 'MVC', 'Rest-API'].map((s) => (
+                  {['Node.js', 'Express.js', '.Net', 'C#', 'MVC', 'Rest-API'].map(s => (
                     <span
                       key={s}
                       className='border-2 border-[#e06c75]/40 bg-[#e06c75]/10 px-2.5 py-1 text-[8px] text-[#e06c75] transition-colors hover:bg-[#e06c75]/20 md:text-[9px]'>
@@ -533,7 +541,7 @@ export default function Home() {
                   DATABASE
                 </h3>
                 <div className='flex flex-wrap gap-2'>
-                  {['MongoDB', 'MySQL', 'PostgreSQL', 'Firebase', 'Redis'].map((s) => (
+                  {['MongoDB', 'MySQL', 'PostgreSQL', 'Firebase', 'Redis'].map(s => (
                     <span
                       key={s}
                       className='border-2 border-[#61afef]/40 bg-[#61afef]/10 px-2.5 py-1 text-[8px] text-[#61afef] transition-colors hover:bg-[#61afef]/20 md:text-[9px]'>
@@ -554,7 +562,7 @@ export default function Home() {
                   VERSION CONTROL
                 </h3>
                 <div className='flex flex-wrap gap-2'>
-                  {['Git', 'GitHub', 'GitLab'].map((s) => (
+                  {['Git', 'GitHub', 'GitLab'].map(s => (
                     <span
                       key={s}
                       className='border-2 border-[#c678dd]/40 bg-[#c678dd]/10 px-2.5 py-1 text-[8px] text-[#c678dd] transition-colors hover:bg-[#c678dd]/20 md:text-[9px]'>
@@ -576,7 +584,7 @@ export default function Home() {
                     DEVOPS
                   </h3>
                   <div className='flex flex-wrap gap-2'>
-                    {['CI/CD', 'Docker'].map((s) => (
+                    {['CI/CD', 'Docker'].map(s => (
                       <span
                         key={s}
                         className='border-2 border-[#f5a524]/40 bg-[#f5a524]/10 px-2.5 py-1 text-[8px] text-[#f5a524] transition-colors hover:bg-[#f5a524]/20 md:text-[9px]'>
@@ -590,7 +598,7 @@ export default function Home() {
                     SECURITY
                   </h3>
                   <div className='flex flex-wrap gap-2'>
-                    {['OWASP Standards'].map((s) => (
+                    {['OWASP Standards'].map(s => (
                       <span
                         key={s}
                         className='border-2 border-[#e5c07b]/40 bg-[#e5c07b]/10 px-2.5 py-1 text-[8px] text-[#e5c07b] transition-colors hover:bg-[#e5c07b]/20 md:text-[9px]'>
@@ -621,7 +629,7 @@ export default function Home() {
                     'Minio',
                     'Fast Report',
                     'GraphQL'
-                  ].map((s) => (
+                  ].map(s => (
                     <span
                       key={s}
                       className='border-2 border-[#56b6c2]/40 bg-[#56b6c2]/10 px-2.5 py-1 text-[8px] text-[#56b6c2] transition-colors hover:bg-[#56b6c2]/20 md:text-[9px]'>
