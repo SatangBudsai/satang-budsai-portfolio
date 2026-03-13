@@ -1,6 +1,8 @@
 @import url(nprogress.css);
 @import url(scrollbar.css);
 @import url(animation.css);
+@import url('https://fonts.googleapis.com/css2?family=Silkscreen&display=swap');
+
 
 @tailwind base;
 @tailwind components;
@@ -23,4 +25,60 @@
     font-size: 0.9em;
     vertical-align: sub;
   }
+
+  body, * {
+    cursor: url('/images/cursor.svg') 2 2, auto !important;
+  }
+  a, button, [role="button"], input[type="submit"], .pixel-btn, .cursor-pointer {
+    cursor: url('/images/cursor-pointer.svg') 8 2, pointer !important;
+  }
 }
+
+.pixel-btn {
+  /* สีพื้นฐานของปุ่ม */
+  background-color: #6a829f;
+  color: #ffffff;
+  
+  /* การจัดวาง */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 12px 20px;
+  
+  /* ฟอนต์ */
+  font-family: 'Silkscreen', sans-serif;
+  font-size: 18px;
+  line-height: 1;
+  letter-spacing: 1px;
+  
+  /* เส้นขอบและมุม */
+  border: 4px solid #222635;
+  border-radius: 6px;
+  cursor: pointer;
+  
+  /* แสงและเงาแบบ Pixel */
+  box-shadow: 
+      inset 4px 4px 0px #a4b8cd,
+      inset -4px -8px 0px #435a74;
+      
+  /* อนิเมชั่นตอนกดและชี้ */
+  transition: transform 0.05s ease, filter 0.2s;
+}
+
+.pixel-btn:hover {
+  filter: brightness(1.1);
+}
+
+.pixel-btn:active {
+  transform: translateY(4px);
+  box-shadow: 
+      inset 4px 8px 0px #435a74, 
+      inset -4px -4px 0px #a4b8cd;
+}
+
+.pixel-btn, .pixel-icon {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
