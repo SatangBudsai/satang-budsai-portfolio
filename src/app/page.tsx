@@ -401,7 +401,13 @@ export default function Home() {
         {/* CONTENT SECTIONS */}
         <div className='relative z-10 mx-auto w-full max-w-5xl px-4 py-16'>
           {/* About Section */}
-          <section id='about' className='mb-20'>
+          <motion.section
+            id='about'
+            className='mb-20'
+            initial={{ opacity: 0, y: 60 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
+            viewport={{ once: true, margin: '-80px' }}>
             <div className='mb-8 flex items-center justify-center gap-3'>
               <div className='h-1 w-10 bg-[#f5a524]'></div>
               <h2 className='text-xl font-bold tracking-widest text-[#e8e0d0] drop-shadow-[2px_2px_0_#000] md:text-2xl'>
@@ -412,13 +418,23 @@ export default function Home() {
 
             <div className='grid gap-6 md:grid-cols-2 lg:gap-10'>
               {/* Portrait Box */}
-              <div className='relative flex aspect-square items-center justify-center border-3 border-[#333650] bg-[#222540] p-3 shadow-[6px_6px_0_#111320]'>
+              <motion.div
+                className='relative flex aspect-square items-center justify-center border-3 border-[#333650] bg-[#222540] p-3 shadow-[6px_6px_0_#111320]'
+                initial={{ opacity: 0, x: -40 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6, delay: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }}
+                viewport={{ once: true }}>
                 <div className='flex h-full w-full items-center justify-center overflow-hidden border-3 border-dashed border-[#444870] bg-[#2a2d48]'>
                   <div className='h-3/4 w-3/4 bg-[#555] opacity-10'></div>
                 </div>
-              </div>
+              </motion.div>
 
-              <div className='flex flex-col justify-center space-y-4'>
+              <motion.div
+                className='flex flex-col justify-center space-y-4'
+                initial={{ opacity: 0, x: 40 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6, delay: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
+                viewport={{ once: true }}>
                 <div className='border-3 border-[#333650] bg-[#222540] p-5 shadow-[4px_4px_0_#111320]'>
                   <p className='text-[9px] leading-relaxed text-[#c8c0b0] md:text-[11px] md:leading-loose'>
                     Hello! I am <span className='font-bold text-[#f5a524]'>Satang</span>, a passionate Full Stack
@@ -441,12 +457,18 @@ export default function Home() {
                     RESUME
                   </a>
                 </div>
-              </div>
+              </motion.div>
             </div>
-          </section>
+          </motion.section>
 
           {/* Skills Section — Tag based */}
-          <section id='skills' className='mb-20'>
+          <motion.section
+            id='skills'
+            className='mb-20'
+            initial={{ opacity: 0, y: 60 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
+            viewport={{ once: true, margin: '-80px' }}>
             <div className='mb-8 flex items-center justify-center gap-3'>
               <div className='h-1 w-10 bg-[#98c379]'></div>
               <h2 className='text-xl font-bold tracking-widest text-[#e8e0d0] drop-shadow-[2px_2px_0_#000] md:text-2xl'>
@@ -457,7 +479,12 @@ export default function Home() {
 
             <div className='space-y-5'>
               {/* Front-End */}
-              <div className='border-3 border-[#333650] bg-[#222540] p-4 shadow-[4px_4px_0_#111320]'>
+              <motion.div
+                className='border-3 border-[#333650] bg-[#222540] p-4 shadow-[4px_4px_0_#111320]'
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.1 }}
+                viewport={{ once: true }}>
                 <h3 className='mb-3 text-[11px] font-bold text-[#98c379] drop-shadow-[1px_1px_0_#000] md:text-[13px]'>
                   FRONT-END
                 </h3>
@@ -472,10 +499,15 @@ export default function Home() {
                     )
                   )}
                 </div>
-              </div>
+              </motion.div>
 
               {/* Back-End */}
-              <div className='border-3 border-[#333650] bg-[#222540] p-4 shadow-[4px_4px_0_#111320]'>
+              <motion.div
+                className='border-3 border-[#333650] bg-[#222540] p-4 shadow-[4px_4px_0_#111320]'
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.15 }}
+                viewport={{ once: true }}>
                 <h3 className='mb-3 text-[11px] font-bold text-[#e06c75] drop-shadow-[1px_1px_0_#000] md:text-[13px]'>
                   BACK-END
                 </h3>
@@ -488,10 +520,15 @@ export default function Home() {
                     </span>
                   ))}
                 </div>
-              </div>
+              </motion.div>
 
               {/* Database */}
-              <div className='border-3 border-[#333650] bg-[#222540] p-4 shadow-[4px_4px_0_#111320]'>
+              <motion.div
+                className='border-3 border-[#333650] bg-[#222540] p-4 shadow-[4px_4px_0_#111320]'
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+                viewport={{ once: true }}>
                 <h3 className='mb-3 text-[11px] font-bold text-[#61afef] drop-shadow-[1px_1px_0_#000] md:text-[13px]'>
                   DATABASE
                 </h3>
@@ -504,10 +541,15 @@ export default function Home() {
                     </span>
                   ))}
                 </div>
-              </div>
+              </motion.div>
 
               {/* Version Control */}
-              <div className='border-3 border-[#333650] bg-[#222540] p-4 shadow-[4px_4px_0_#111320]'>
+              <motion.div
+                className='border-3 border-[#333650] bg-[#222540] p-4 shadow-[4px_4px_0_#111320]'
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.25 }}
+                viewport={{ once: true }}>
                 <h3 className='mb-3 text-[11px] font-bold text-[#c678dd] drop-shadow-[1px_1px_0_#000] md:text-[13px]'>
                   VERSION CONTROL
                 </h3>
@@ -520,10 +562,15 @@ export default function Home() {
                     </span>
                   ))}
                 </div>
-              </div>
+              </motion.div>
 
               {/* DevOps & Security */}
-              <div className='grid gap-5 sm:grid-cols-2'>
+              <motion.div
+                className='grid gap-5 sm:grid-cols-2'
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.3 }}
+                viewport={{ once: true }}>
                 <div className='border-3 border-[#333650] bg-[#222540] p-4 shadow-[4px_4px_0_#111320]'>
                   <h3 className='mb-3 text-[11px] font-bold text-[#f5a524] drop-shadow-[1px_1px_0_#000] md:text-[13px]'>
                     DEVOPS
@@ -552,10 +599,15 @@ export default function Home() {
                     ))}
                   </div>
                 </div>
-              </div>
+              </motion.div>
 
               {/* Other Tools */}
-              <div className='border-3 border-[#333650] bg-[#222540] p-4 shadow-[4px_4px_0_#111320]'>
+              <motion.div
+                className='border-3 border-[#333650] bg-[#222540] p-4 shadow-[4px_4px_0_#111320]'
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.35 }}
+                viewport={{ once: true }}>
                 <h3 className='mb-3 text-[11px] font-bold text-[#56b6c2] drop-shadow-[1px_1px_0_#000] md:text-[13px]'>
                   OTHER TOOLS & TECHNOLOGIES
                 </h3>
@@ -577,12 +629,18 @@ export default function Home() {
                     </span>
                   ))}
                 </div>
-              </div>
+              </motion.div>
             </div>
-          </section>
+          </motion.section>
 
           {/* Projects Section */}
-          <section id='projects' className='mb-20'>
+          <motion.section
+            id='projects'
+            className='mb-20'
+            initial={{ opacity: 0, y: 60 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
+            viewport={{ once: true, margin: '-80px' }}>
             <div className='mb-8 flex items-center justify-center gap-3'>
               <div className='h-1 w-10 bg-[#e06c75]'></div>
               <h2 className='text-xl font-bold tracking-widest text-[#e8e0d0] drop-shadow-[2px_2px_0_#000] md:text-2xl'>
@@ -593,7 +651,12 @@ export default function Home() {
 
             <div className='grid gap-6 md:grid-cols-2'>
               {/* Project 1 */}
-              <div className='group border-3 border-[#333650] bg-[#222540] transition-all hover:-translate-y-1 hover:shadow-[8px_8px_0_#111320]'>
+              <motion.div
+                className='group border-3 border-[#333650] bg-[#222540] transition-all hover:-translate-y-1 hover:shadow-[8px_8px_0_#111320]'
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.1 }}
+                viewport={{ once: true }}>
                 <div className='relative aspect-video w-full overflow-hidden border-b-3 border-[#333650] bg-[#0d1020]'>
                   <div className='absolute inset-0 flex items-center justify-center'>
                     <span className='font-["Silkscreen"] text-3xl text-white opacity-20'>E-COMMERCE</span>
@@ -621,10 +684,15 @@ export default function Home() {
                     VIEW SOURCE -{`>`}
                   </a>
                 </div>
-              </div>
+              </motion.div>
 
               {/* Project 2 */}
-              <div className='group border-3 border-[#333650] bg-[#222540] transition-all hover:-translate-y-1 hover:shadow-[8px_8px_0_#111320]'>
+              <motion.div
+                className='group border-3 border-[#333650] bg-[#222540] transition-all hover:-translate-y-1 hover:shadow-[8px_8px_0_#111320]'
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+                viewport={{ once: true }}>
                 <div className='relative aspect-video w-full overflow-hidden border-b-3 border-[#333650] bg-[#0d1020]'>
                   <div className='absolute inset-0 flex items-center justify-center'>
                     <span className='font-["Silkscreen"] text-3xl text-white opacity-20'>DASHBOARD</span>
@@ -652,9 +720,9 @@ export default function Home() {
                     VIEW SOURCE -{`>`}
                   </a>
                 </div>
-              </div>
+              </motion.div>
             </div>
-          </section>
+          </motion.section>
         </div>
 
         <div className='h-1.5 bg-gradient-to-r from-[#61afef] via-[#c678dd] to-[#e06c75]' />
