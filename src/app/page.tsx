@@ -32,7 +32,9 @@ const fadeIn = {
 export default function Home() {
   const [isMobile, setIsMobile] = useState(false)
   const heroRef = useRef<HTMLElement>(null)
-  const glowRef = useRef<HTMLDivElement>(null)
+  const canvasRef = useRef<HTMLCanvasElement>(null)
+  const cursorRef = useRef<HTMLImageElement>(null)
+  const particlesRef = useRef<Array<{ x: number; y: number; vx: number; vy: number; life: number; maxLife: number; size: number; color: string }>>([])
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 1024)
@@ -41,14 +43,102 @@ export default function Home() {
     return () => window.removeEventListener('resize', handleResize)
   }, [])
 
+  // Custom cursor (DOM-based for crisp rendering)
   useEffect(() => {
+    const cursor = cursorRef.current
+    if (!cursor) return
+
+    const onMove = (e: MouseEvent) => {
+      cursor.style.left = `${e.clientX}px`
+      cursor.style.top = `${e.clientY}px`
+
+      const target = e.target as HTMLElement
+      const isPointer = target.closest('a, button, [role="button"], input[type="submit"], .pixel-btn, .cursor-pointer')
+      cursor.src = isPointer ? '/images/cursor-pointer.svg' : '/images/cursor.svg'
+      cursor.style.transform = isPointer ? 'translate(-8px, -2px)' : 'translate(-2px, -2px)'
+    }
+
+    const onLeave = () => { cursor.style.opacity = '0' }
+    const onEnter = () => { cursor.style.opacity = '1' }
+
+    window.addEventListener('mousemove', onMove)
+    document.addEventListener('mouseleave', onLeave)
+    document.addEventListener('mouseenter', onEnter)
+    return () => {
+      window.removeEventListener('mousemove', onMove)
+      document.removeEventListener('mouseleave', onLeave)
+      document.removeEventListener('mouseenter', onEnter)
+    }
+  }, [])
+
+  // Sparkle trail effect
+  useEffect(() => {
+    const canvas = canvasRef.current
+    if (!canvas) return
+    const ctx = canvas.getContext('2d')
+    if (!ctx) return
+
+    const resize = () => {
+      canvas.width = window.innerWidth
+      canvas.height = window.innerHeight
+    }
+    resize()
+    window.addEventListener('resize', resize)
+
+    const colors = ['#ffd700', '#ffec80', '#fff4b8', '#ffa500', '#ffffff']
+
     const handleMouseMove = (e: MouseEvent) => {
-      if (!glowRef.current) return
-      glowRef.current.style.left = `${e.clientX}px`
-      glowRef.current.style.top = `${e.clientY}px`
+      // Spawn sparkles exactly at the sword tip (mouse position = hotspot)
+      const tipX = e.clientX
+      const tipY = e.clientY
+      for (let i = 0; i < 3; i++) {
+        particlesRef.current.push({
+          x: tipX + (Math.random() - 0.5) * 6,
+          y: tipY + (Math.random() - 0.5) * 6,
+          vx: (Math.random() - 0.5) * 1.5,
+          vy: (Math.random() - 0.5) * 1.5 - 0.5,
+          life: 1,
+          maxLife: 0.6 + Math.random() * 0.4,
+          size: 1.5 + Math.random() * 2.5,
+          color: colors[Math.floor(Math.random() * colors.length)],
+        })
+      }
+      if (particlesRef.current.length > 150) {
+        particlesRef.current = particlesRef.current.slice(-150)
+      }
     }
     window.addEventListener('mousemove', handleMouseMove)
-    return () => window.removeEventListener('mousemove', handleMouseMove)
+
+    let animId: number
+    const animate = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height)
+      const particles = particlesRef.current
+      for (let i = particles.length - 1; i >= 0; i--) {
+        const p = particles[i]
+        p.x += p.vx
+        p.y += p.vy
+        p.life -= 0.02
+        if (p.life <= 0) {
+          particles.splice(i, 1)
+          continue
+        }
+        const alpha = p.life / p.maxLife
+        ctx.globalAlpha = Math.min(alpha, 1)
+        ctx.fillStyle = p.color
+        // Draw a pixel-style sparkle (small square)
+        const s = p.size * alpha
+        ctx.fillRect(Math.round(p.x - s / 2), Math.round(p.y - s / 2), Math.round(s), Math.round(s))
+      }
+      ctx.globalAlpha = 1
+      animId = requestAnimationFrame(animate)
+    }
+    animate()
+
+    return () => {
+      cancelAnimationFrame(animId)
+      window.removeEventListener('mousemove', handleMouseMove)
+      window.removeEventListener('resize', resize)
+    }
   }, [])
 
   const { scrollY } = useScroll()
@@ -60,35 +150,30 @@ export default function Home() {
   const xCloudRight = useTransform(scrollY, [0, 1000], [0, 150])
 
   return (
-    <div className='w-full bg-[#f0ece4] font-["Press_Start_2P"] text-[#2a2a3a]'>
-      {/* HERO SECTION */}
-      {/* Global Mouse Glow Effect */}
-      <div
-        ref={glowRef}
-        className='pointer-events-none fixed z-[9999] -translate-x-1/2 -translate-y-1/2'
-        style={{
-          width: 180,
-          height: 180,
-          background: 'radial-gradient(circle, rgba(255,220,130,0.6) 0%, rgba(255,180,60,0.3) 40%, transparent 70%)',
-          borderRadius: '50%'
-        }}
+    <div className='relative w-full overflow-x-hidden bg-[#f0ece4] font-["Press_Start_2P"] text-[#2a2a3a]'>
+      {/* Custom Cursor */}
+      <img
+        ref={cursorRef}
+        src='/images/cursor.svg'
+        alt=''
+        className='pointer-events-none fixed z-[10000]'
+        style={{ imageRendering: 'pixelated', width: 56, height: 48, transform: 'translate(-2px, -2px)' }}
+        draggable={false}
       />
 
-      <section ref={heroRef} className='relative h-screen min-h-[700px] w-full overflow-hidden bg-[#78A7D0]'>
+      {/* Sparkle Trail Canvas */}
+      <canvas
+        ref={canvasRef}
+        className='pointer-events-none fixed inset-0 z-[9999]'
+        style={{ width: '100%', height: '100%' }}
+      />
+
+      {/* HERO SECTION */}
+      <section ref={heroRef} className='relative h-screen min-h-[700px] w-full bg-[#78A7D0]'>
         {/* Sky Background (Fixed) */}
         <div className="absolute inset-0 z-0 bg-[url('/images/background.png')] bg-cover bg-bottom bg-no-repeat" />
 
-        {/* Cloud Left (Parallax) */}
-        <motion.div className='pointer-events-none absolute inset-0 z-10' style={{ y: yCloudLeft, x: xCloudLeft }}>
-          <div className="absolute inset-0 bg-[url('/images/cloud-left.png')] bg-cover bg-bottom bg-no-repeat opacity-90 mix-blend-screen" />
-        </motion.div>
-
-        {/* Cloud Right (Parallax) */}
-        <motion.div className='pointer-events-none absolute inset-0 z-10' style={{ y: yCloudRight, x: xCloudRight }}>
-          <div className="absolute inset-0 bg-[url('/images/cloud-right.png')] bg-cover bg-bottom bg-no-repeat opacity-90 mix-blend-screen" />
-        </motion.div>
-
-        {/* Content Layer (no tilt) */}
+        {/* Content Layer */}
         <div className='pointer-events-none relative z-20 mx-auto flex h-full w-full max-w-4xl flex-col items-center justify-center px-4 lg:flex-row lg:justify-between lg:px-8'>
           {/* Text Section */}
           <div className='pointer-events-auto z-30 flex w-full flex-1 flex-col items-center justify-center text-center lg:items-start lg:text-left'>
@@ -271,6 +356,14 @@ export default function Home() {
           </svg>
         </motion.div>
       </section>
+
+      {/* Cloud Layers (outside hero so they overlap section 2) */}
+      <motion.div className='pointer-events-none absolute left-0 right-0 top-0 z-[50] h-screen' style={{ y: yCloudLeft, x: xCloudLeft }}>
+        <div className="absolute inset-0 bg-[url('/images/cloud-left.png')] bg-cover bg-bottom bg-no-repeat opacity-90 mix-blend-screen" />
+      </motion.div>
+      <motion.div className='pointer-events-none absolute left-0 right-0 top-0 z-[50] h-screen' style={{ y: yCloudRight, x: xCloudRight }}>
+        <div className="absolute inset-0 bg-[url('/images/cloud-right.png')] bg-cover bg-bottom bg-no-repeat opacity-90 mix-blend-screen" />
+      </motion.div>
 
       {/* CONTENT AREA (Normal Scrolling Flow) */}
       <div className='relative z-30 w-full overflow-hidden'>
