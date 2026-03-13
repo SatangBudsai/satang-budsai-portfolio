@@ -34,7 +34,9 @@ export default function Home() {
   const heroRef = useRef<HTMLElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const cursorRef = useRef<HTMLImageElement>(null)
-  const particlesRef = useRef<Array<{ x: number; y: number; vx: number; vy: number; life: number; maxLife: number; size: number; color: string }>>([])
+  const particlesRef = useRef<
+    Array<{ x: number; y: number; vx: number; vy: number; life: number; maxLife: number; size: number; color: string }>
+  >([])
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 1024)
@@ -55,11 +57,15 @@ export default function Home() {
       const target = e.target as HTMLElement
       const isPointer = target.closest('a, button, [role="button"], input[type="submit"], .pixel-btn, .cursor-pointer')
       cursor.src = isPointer ? '/images/cursor-pointer.svg' : '/images/cursor.svg'
-      cursor.style.transform = isPointer ? 'translate(-8px, -2px)' : 'translate(-2px, -2px)'
+      cursor.style.transform = isPointer ? 'translate(-5px, -1px)' : 'translate(-1px, -1px)'
     }
 
-    const onLeave = () => { cursor.style.opacity = '0' }
-    const onEnter = () => { cursor.style.opacity = '1' }
+    const onLeave = () => {
+      cursor.style.opacity = '0'
+    }
+    const onEnter = () => {
+      cursor.style.opacity = '1'
+    }
 
     window.addEventListener('mousemove', onMove)
     document.addEventListener('mouseleave', onLeave)
@@ -86,28 +92,43 @@ export default function Home() {
     window.addEventListener('resize', resize)
 
     const colors = ['#ffd700', '#ffec80', '#fff4b8', '#ffa500', '#ffffff']
+    const mousePos = { x: -100, y: -100 }
 
-    const handleMouseMove = (e: MouseEvent) => {
-      // Spawn sparkles exactly at the sword tip (mouse position = hotspot)
-      const tipX = e.clientX
-      const tipY = e.clientY
-      for (let i = 0; i < 3; i++) {
+    const spawnParticles = (x: number, y: number, count: number) => {
+      for (let i = 0; i < count; i++) {
         particlesRef.current.push({
-          x: tipX + (Math.random() - 0.5) * 6,
-          y: tipY + (Math.random() - 0.5) * 6,
+          x: x + (Math.random() - 0.5) * 6,
+          y: y + (Math.random() - 0.5) * 6,
           vx: (Math.random() - 0.5) * 1.5,
           vy: (Math.random() - 0.5) * 1.5 - 0.5,
           life: 1,
           maxLife: 0.6 + Math.random() * 0.4,
           size: 1.5 + Math.random() * 2.5,
-          color: colors[Math.floor(Math.random() * colors.length)],
+          color: colors[Math.floor(Math.random() * colors.length)]
         })
       }
-      if (particlesRef.current.length > 150) {
-        particlesRef.current = particlesRef.current.slice(-150)
+      if (particlesRef.current.length > 200) {
+        particlesRef.current = particlesRef.current.slice(-200)
       }
     }
+
+    const handleMouseMove = (e: MouseEvent) => {
+      mousePos.x = e.clientX
+      mousePos.y = e.clientY
+      const target = e.target as HTMLElement
+      const isPointer = target.closest('a, button, [role="button"], input[type="submit"], .pixel-btn, .cursor-pointer')
+      spawnParticles(mousePos.x, mousePos.y, isPointer ? 5 : 3)
+    }
     window.addEventListener('mousemove', handleMouseMove)
+
+    // Continuously emit sparkles even when mouse is still (more when hovering interactive elements)
+    const idleInterval = setInterval(() => {
+      if (mousePos.x > 0) {
+        const el = document.elementFromPoint(mousePos.x, mousePos.y)
+        const isPointer = el?.closest('a, button, [role="button"], input[type="submit"], .pixel-btn, .cursor-pointer')
+        spawnParticles(mousePos.x, mousePos.y, isPointer ? 4 : 1)
+      }
+    }, 60)
 
     let animId: number
     const animate = () => {
@@ -136,6 +157,7 @@ export default function Home() {
 
     return () => {
       cancelAnimationFrame(animId)
+      clearInterval(idleInterval)
       window.removeEventListener('mousemove', handleMouseMove)
       window.removeEventListener('resize', resize)
     }
@@ -143,11 +165,12 @@ export default function Home() {
 
   const { scrollY } = useScroll()
 
-  // Clouds move even faster when scrolling down for deeper parallax effect
-  const yCloudLeft = useTransform(scrollY, [0, 1000], [0, 800])
-  const xCloudLeft = useTransform(scrollY, [0, 1000], [0, -150])
-  const yCloudRight = useTransform(scrollY, [0, 1000], [0, 900])
-  const xCloudRight = useTransform(scrollY, [0, 1000], [0, 150])
+  // Cloud parallax + fade out as user scrolls
+  const yCloudLeft = useTransform(scrollY, [0, 800], [0, 500])
+  const xCloudLeft = useTransform(scrollY, [0, 800], [0, -100])
+  const yCloudRight = useTransform(scrollY, [0, 800], [0, 600])
+  const xCloudRight = useTransform(scrollY, [0, 800], [0, 100])
+  const cloudOpacity = useTransform(scrollY, [0, 300, 600], [0.9, 0.4, 0])
 
   return (
     <div className='relative w-full overflow-x-hidden bg-[#f0ece4] font-["Press_Start_2P"] text-[#2a2a3a]'>
@@ -157,7 +180,7 @@ export default function Home() {
         src='/images/cursor.svg'
         alt=''
         className='pointer-events-none fixed z-[10000]'
-        style={{ imageRendering: 'pixelated', width: 56, height: 48, transform: 'translate(-2px, -2px)' }}
+        style={{ imageRendering: 'pixelated', width: 32, height: 28, transform: 'translate(-1px, -1px)' }}
         draggable={false}
       />
 
@@ -169,9 +192,23 @@ export default function Home() {
       />
 
       {/* HERO SECTION */}
-      <section ref={heroRef} className='relative h-screen min-h-[700px] w-full bg-[#78A7D0]'>
+      <section ref={heroRef} className='relative h-screen min-h-[700px] w-full overflow-hidden bg-[#78A7D0]'>
         {/* Sky Background (Fixed) */}
         <div className="absolute inset-0 z-0 bg-[url('/images/background.png')] bg-cover bg-bottom bg-no-repeat" />
+
+        {/* Cloud Left (behind content, fades on scroll) */}
+        <motion.div
+          className='pointer-events-none absolute inset-0 z-10'
+          style={{ y: yCloudLeft, x: xCloudLeft, opacity: cloudOpacity }}>
+          <div className="absolute inset-0 bg-[url('/images/cloud-left.png')] bg-cover bg-bottom bg-no-repeat mix-blend-screen" />
+        </motion.div>
+
+        {/* Cloud Right (behind content, fades on scroll) */}
+        <motion.div
+          className='pointer-events-none absolute inset-0 z-10'
+          style={{ y: yCloudRight, x: xCloudRight, opacity: cloudOpacity }}>
+          <div className="absolute inset-0 bg-[url('/images/cloud-right.png')] bg-cover bg-bottom bg-no-repeat mix-blend-screen" />
+        </motion.div>
 
         {/* Content Layer */}
         <div className='pointer-events-none relative z-20 mx-auto flex h-full w-full max-w-4xl flex-col items-center justify-center px-4 lg:flex-row lg:justify-between lg:px-8'>
@@ -356,14 +393,6 @@ export default function Home() {
           </svg>
         </motion.div>
       </section>
-
-      {/* Cloud Layers (outside hero so they overlap section 2) */}
-      <motion.div className='pointer-events-none absolute left-0 right-0 top-0 z-[50] h-screen' style={{ y: yCloudLeft, x: xCloudLeft }}>
-        <div className="absolute inset-0 bg-[url('/images/cloud-left.png')] bg-cover bg-bottom bg-no-repeat opacity-90 mix-blend-screen" />
-      </motion.div>
-      <motion.div className='pointer-events-none absolute left-0 right-0 top-0 z-[50] h-screen' style={{ y: yCloudRight, x: xCloudRight }}>
-        <div className="absolute inset-0 bg-[url('/images/cloud-right.png')] bg-cover bg-bottom bg-no-repeat opacity-90 mix-blend-screen" />
-      </motion.div>
 
       {/* CONTENT AREA (Normal Scrolling Flow) */}
       <div className='relative z-30 w-full overflow-hidden'>
