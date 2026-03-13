@@ -1,11 +1,17 @@
 'use client'
 
-import Navbar from '@/components/navbar'
-import { useEffect, useState } from 'react'
-import { motion, useScroll, useTransform } from 'framer-motion'
+import { useEffect, useRef, useState } from 'react'
+import { motion, useScroll, useTransform, useMotionValue, useSpring } from 'framer-motion'
 
 export default function Home() {
   const [isMobile, setIsMobile] = useState(false)
+  const heroRef = useRef<HTMLElement>(null)
+
+  // Mouse parallax
+  const mouseX = useMotionValue(0)
+  const mouseY = useMotionValue(0)
+  const rotateX = useSpring(useTransform(mouseY, [-0.5, 0.5], [8, -8]), { stiffness: 100, damping: 20 })
+  const rotateY = useSpring(useTransform(mouseX, [-0.5, 0.5], [-8, 8]), { stiffness: 100, damping: 20 })
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 1024)
@@ -13,6 +19,20 @@ export default function Home() {
     window.addEventListener('resize', handleResize)
     return () => window.removeEventListener('resize', handleResize)
   }, [])
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!heroRef.current) return
+      const rect = heroRef.current.getBoundingClientRect()
+      const x = (e.clientX - rect.left) / rect.width - 0.5
+      const y = (e.clientY - rect.top) / rect.height - 0.5
+      mouseX.set(x)
+      mouseY.set(y)
+    }
+    const el = heroRef.current
+    el?.addEventListener('mousemove', handleMouseMove)
+    return () => el?.removeEventListener('mousemove', handleMouseMove)
+  }, [mouseX, mouseY])
 
   const { scrollY } = useScroll()
 
@@ -24,9 +44,8 @@ export default function Home() {
 
   return (
     <div className='w-full bg-[#f0ece4] font-["Press_Start_2P"] text-[#2a2a3a]'>
-      <Navbar />
       {/* HERO SECTION */}
-      <section className='relative h-screen min-h-[700px] w-full overflow-hidden bg-[#78A7D0]'>
+      <section ref={heroRef} className='relative h-screen min-h-[700px] w-full overflow-hidden bg-[#78A7D0]'>
         {/* Sky Background (Fixed) */}
         <div className="absolute inset-0 z-0 bg-[url('/images/background.png')] bg-cover bg-bottom bg-no-repeat" />
 
@@ -40,38 +59,45 @@ export default function Home() {
           <div className="absolute inset-0 bg-[url('/images/cloud-right.png')] bg-cover bg-bottom bg-no-repeat opacity-90 mix-blend-screen" />
         </motion.div>
 
-        {/* Moving Content Layer */}
-        <div className='pointer-events-none relative z-20 mx-auto flex h-[85vh] w-full max-w-5xl flex-col items-center justify-center px-4 pt-4 lg:-mt-16 lg:h-full lg:flex-row lg:justify-between lg:px-8'>
+        {/* Moving Content Layer with Mouse Tilt */}
+        <motion.div
+          className='pointer-events-none relative z-20 mx-auto flex h-full w-full max-w-4xl flex-col items-center justify-center px-4 lg:flex-row lg:justify-between lg:px-8'
+          style={{
+            rotateX,
+            rotateY,
+            perspective: 1000,
+            transformStyle: 'preserve-3d',
+          }}>
           {/* Text Section */}
           <div className='pointer-events-auto z-30 flex w-full flex-1 flex-col items-center justify-center text-center lg:items-start lg:text-left'>
-            <h1 className='mb-2 whitespace-nowrap font-["Press_Start_2P"] text-[1.5rem] font-bold leading-none text-white drop-shadow-[4px_4px_0_#07233e] sm:text-[2rem] md:text-[3rem] lg:text-[4rem] lg:drop-shadow-[6px_6px_0_#07233e] xl:text-[5rem]'>
+            <h1 className='mb-2 whitespace-nowrap font-["Press_Start_2P"] text-[1.5rem] font-bold leading-none text-white drop-shadow-[4px_4px_0_#07233e] sm:text-[2rem] md:text-[2.5rem] lg:text-[3rem] lg:drop-shadow-[6px_6px_0_#07233e] xl:text-[3.5rem]'>
               SATANG
             </h1>
-            <h2 className='mb-4 whitespace-nowrap font-["Press_Start_2P"] text-xs font-bold tracking-widest text-white drop-shadow-[3px_3px_0_#07233e] sm:text-sm md:text-base lg:mb-8 lg:text-xl lg:tracking-[0.2em] lg:drop-shadow-[4px_4px_0_#07233e] xl:text-2xl'>
+            <h2 className='mb-3 whitespace-nowrap font-["Press_Start_2P"] text-[8px] font-bold tracking-widest text-white drop-shadow-[3px_3px_0_#07233e] sm:text-xs md:text-sm lg:mb-5 lg:text-base lg:tracking-[0.2em] lg:drop-shadow-[4px_4px_0_#07233e] xl:text-lg'>
               FULL STACK <br className='lg:hidden' />
               DEVELOPER
             </h2>
-            <p className='mb-8 max-w-xl font-["Press_Start_2P"] text-[6px] leading-[2] text-white drop-shadow-[2px_2px_0_#222635] sm:text-[10px] md:text-[12px] lg:text-[14px] lg:leading-[2]'>
+            <p className='mb-6 max-w-md font-["Press_Start_2P"] text-[6px] leading-[2] text-white drop-shadow-[2px_2px_0_#222635] sm:text-[8px] md:text-[10px] lg:text-[11px] lg:leading-[2]'>
               PASSIONATELY CRAFTING DIGITAL EXPERIENCES.
               <br />
               AVAILABLE FOR NEW VENTURES.
             </p>
 
-            <div className='flex flex-col justify-center gap-4 sm:flex-row lg:justify-start lg:gap-8'>
-              <button className='pixel-btn flex items-center gap-3 text-[14px] md:text-[18px]'>
+            <div className='flex flex-col justify-center gap-3 sm:flex-row lg:justify-start lg:gap-6'>
+              <button className='pixel-btn flex items-center gap-3 text-[12px] md:text-[14px]'>
                 <img
                   src='/images/cursor.svg'
                   alt='cursor'
-                  className='-ml-1 h-5 w-5 object-contain'
+                  className='-ml-1 h-4 w-4 object-contain'
                   style={{ imageRendering: 'pixelated' }}
                 />
                 <span>VIEW PROJECTS</span>
               </button>
-              <button className='pixel-btn text-[12px] md:text-[14px]'>
+              <button className='pixel-btn text-[10px] md:text-[12px]'>
                 <svg
                   className='pixel-icon'
-                  width='22'
-                  height='16'
+                  width='18'
+                  height='13'
                   viewBox='0 0 10 7'
                   style={{ shapeRendering: 'crispEdges', fillRule: 'evenodd' }}>
                   <rect x='1' y='0' width='8' height='7' fill='#222635' />
@@ -95,20 +121,20 @@ export default function Home() {
           </div>
 
           {/* 3D Block Section */}
-          <div className='pointer-events-none relative mt-4 flex h-[35vh] w-full flex-1 items-center justify-center lg:mt-0 lg:h-full lg:justify-end'>
+          <div className='pointer-events-none relative mt-2 flex h-[30vh] w-full flex-1 items-center justify-center lg:mt-0 lg:h-[60%] lg:justify-end'>
             <div
-              className='relative h-full w-full max-w-[400px] bg-contain bg-center bg-no-repeat lg:bg-right'
+              className='relative h-full w-full max-w-[320px] bg-contain bg-center bg-no-repeat lg:max-w-[350px] lg:bg-right'
               style={{ backgroundImage: `url('/images/${isMobile ? 'block-mobile.png' : 'block.png'}')` }}>
               {/* Text Labels */}
               {!isMobile && (
                 <>
-                  <div className='absolute left-[8%] top-[38%] font-["Press_Start_2P"] text-[10px] text-white drop-shadow-[2px_2px_0_#222635] xl:text-[12px]'>
+                  <div className='absolute left-[5%] top-[35%] font-["Press_Start_2P"] text-[8px] text-white drop-shadow-[2px_2px_0_#222635] xl:text-[10px]'>
                     FRONTEND
                   </div>
-                  <div className='absolute right-[0%] top-[30%] font-["Press_Start_2P"] text-[10px] text-white drop-shadow-[2px_2px_0_#222635] xl:text-[12px]'>
+                  <div className='absolute right-[-2%] top-[28%] font-["Press_Start_2P"] text-[8px] text-white drop-shadow-[2px_2px_0_#222635] xl:text-[10px]'>
                     BACKEND
                   </div>
-                  <div className='absolute bottom-[18%] right-[22%] font-["Press_Start_2P"] text-[10px] text-white drop-shadow-[2px_2px_0_#222635] xl:text-[12px]'>
+                  <div className='absolute bottom-[15%] right-[18%] font-["Press_Start_2P"] text-[8px] text-white drop-shadow-[2px_2px_0_#222635] xl:text-[10px]'>
                     DATABASE
                   </div>
                 </>
@@ -116,11 +142,11 @@ export default function Home() {
 
               {/* Floating Coin 1 (Top Center) */}
               <div
-                className='absolute right-[35%] top-[5%] z-30 animate-[bounce_2.5s_infinite_ease-in-out] text-[#f5a524] drop-shadow-[4px_4px_0_rgba(147,99,22,0.8)] md:right-[38%] md:top-[8%] lg:right-[40%] lg:top-[5%]'
+                className='absolute right-[35%] top-[3%] z-30 animate-[bounce_2.5s_infinite_ease-in-out] text-[#f5a524] drop-shadow-[4px_4px_0_rgba(147,99,22,0.8)] md:right-[38%] md:top-[5%] lg:right-[40%] lg:top-[3%]'
                 style={{ animationDelay: '0s' }}>
                 <svg
-                  width='32'
-                  height='32'
+                  width='26'
+                  height='26'
                   viewBox='0 0 16 16'
                   style={{ shapeRendering: 'crispEdges', fillRule: 'evenodd' }}>
                   <rect x='4' y='0' width='8' height='16' fill='currentColor' />
@@ -134,11 +160,11 @@ export default function Home() {
 
               {/* Floating Coin 2 (Left Frontend) */}
               <div
-                className='absolute left-[20%] top-[40%] z-30 animate-[bounce_2s_infinite_ease-in-out] text-[#f5a524] drop-shadow-[4px_4px_0_rgba(147,99,22,0.8)] md:left-[25%] md:top-[42%] lg:left-[25%] lg:top-[38%]'
+                className='absolute left-[18%] top-[38%] z-30 animate-[bounce_2s_infinite_ease-in-out] text-[#f5a524] drop-shadow-[4px_4px_0_rgba(147,99,22,0.8)] md:left-[22%] md:top-[40%] lg:left-[22%] lg:top-[35%]'
                 style={{ animationDelay: '0.8s' }}>
                 <svg
-                  width='24'
-                  height='24'
+                  width='20'
+                  height='20'
                   viewBox='0 0 16 16'
                   style={{ shapeRendering: 'crispEdges', fillRule: 'evenodd' }}>
                   <rect x='4' y='0' width='8' height='16' fill='currentColor' />
@@ -152,11 +178,11 @@ export default function Home() {
 
               {/* Floating Coin 3 (Right Backend) */}
               <div
-                className='absolute right-[12%] top-[35%] z-30 animate-[bounce_3s_infinite_ease-in-out] text-[#f5a524] drop-shadow-[4px_4px_0_rgba(147,99,22,0.8)] md:right-[15%] md:top-[38%] lg:right-[15%] lg:top-[32%]'
+                className='absolute right-[10%] top-[32%] z-30 animate-[bounce_3s_infinite_ease-in-out] text-[#f5a524] drop-shadow-[4px_4px_0_rgba(147,99,22,0.8)] md:right-[12%] md:top-[35%] lg:right-[12%] lg:top-[30%]'
                 style={{ animationDelay: '1.5s' }}>
                 <svg
-                  width='28'
-                  height='28'
+                  width='22'
+                  height='22'
                   viewBox='0 0 16 16'
                   style={{ shapeRendering: 'crispEdges', fillRule: 'evenodd' }}>
                   <rect x='4' y='0' width='8' height='16' fill='currentColor' />
@@ -169,17 +195,17 @@ export default function Home() {
               </div>
             </div>
           </div>
-        </div>
+        </motion.div>
 
         {/* Scroll Down Indicator */}
-        <div className='absolute bottom-12 left-1/2 z-40 flex -translate-x-1/2 scale-125 animate-bounce flex-col items-center gap-6 md:scale-150'>
-          <span className='font-["Press_Start_2P"] text-[10px] text-white drop-shadow-[2px_2px_0_#222635] md:text-[12px]'>
+        <div className='absolute bottom-8 left-1/2 z-40 flex -translate-x-1/2 scale-100 animate-bounce flex-col items-center gap-4 md:scale-125'>
+          <span className='font-["Press_Start_2P"] text-[8px] text-white drop-shadow-[2px_2px_0_#222635] md:text-[10px]'>
             SCROLL
           </span>
           <svg
             className='pixel-icon'
-            width='48'
-            height='48'
+            width='36'
+            height='36'
             viewBox='0 0 16 16'
             style={{ shapeRendering: 'crispEdges', fillRule: 'evenodd' }}>
             <rect x='6' y='0' width='4' height='12' fill='#fff' />
