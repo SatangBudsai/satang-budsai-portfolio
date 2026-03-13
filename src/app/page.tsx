@@ -394,50 +394,50 @@ export default function Home() {
         </motion.div>
       </section>
 
-      {/* CONTENT AREA (Normal Scrolling Flow) */}
-      <div className='relative z-30 w-full overflow-hidden'>
-        <div className='pixel-divider border-b-4 border-t-4 border-[#222635]' />
+      {/* CONTENT AREA — Dark Mode */}
+      <div className='relative z-30 w-full overflow-hidden bg-[#1a1c2b]'>
+        <div className='h-1.5 bg-gradient-to-r from-[#e06c75] via-[#f5a524] to-[#61afef]' />
 
         {/* CONTENT SECTIONS */}
-        <div className='relative z-10 mx-auto w-full max-w-6xl px-4 py-24'>
+        <div className='relative z-10 mx-auto w-full max-w-5xl px-4 py-16'>
           {/* About Section */}
-          <section id='about' className='mb-32'>
-            <div className='mb-12 flex items-center justify-center gap-4'>
-              <div className='h-2 w-16 bg-[#2a2a3a]'></div>
-              <h2 className='text-3xl font-bold tracking-widest text-[#2a2a3a] drop-shadow-[2px_2px_0_#fff] md:text-4xl'>
+          <section id='about' className='mb-20'>
+            <div className='mb-8 flex items-center justify-center gap-3'>
+              <div className='h-1 w-10 bg-[#f5a524]'></div>
+              <h2 className='text-xl font-bold tracking-widest text-[#e8e0d0] drop-shadow-[2px_2px_0_#000] md:text-2xl'>
                 ABOUT ME
               </h2>
-              <div className='h-2 w-16 bg-[#2a2a3a]'></div>
+              <div className='h-1 w-10 bg-[#f5a524]'></div>
             </div>
 
-            <div className='grid gap-8 md:grid-cols-2 lg:gap-16'>
-              {/* Minimal Portrait Box */}
-              <div className='pixel-border-heavy relative flex aspect-square items-center justify-center bg-[#fff] p-4 shadow-[8px_8px_0_#2a2a3a]'>
-                <div className='flex h-full w-full items-center justify-center overflow-hidden border-4 border-dashed border-[#2a2a3a] bg-[#e0d8c8]'>
-                  <div className='pixel-portrait mask-pixel-art h-3/4 w-3/4 bg-[#2a2a3a] opacity-10'></div>
+            <div className='grid gap-6 md:grid-cols-2 lg:gap-10'>
+              {/* Portrait Box */}
+              <div className='relative flex aspect-square items-center justify-center border-3 border-[#333650] bg-[#222540] p-3 shadow-[6px_6px_0_#111320]'>
+                <div className='flex h-full w-full items-center justify-center overflow-hidden border-3 border-dashed border-[#444870] bg-[#2a2d48]'>
+                  <div className='h-3/4 w-3/4 bg-[#555] opacity-10'></div>
                 </div>
               </div>
 
-              <div className='flex flex-col justify-center space-y-6'>
-                <div className='pixel-border-heavy bg-white p-6 shadow-[6px_6px_0_#2a2a3a]'>
-                  <p className='text-[10px] leading-relaxed text-[#2a2a3a] md:text-[12px] md:leading-loose'>
-                    Hello! I am <span className='font-bold text-[#e06c75]'>Satang</span>, a passionate Full Stack
+              <div className='flex flex-col justify-center space-y-4'>
+                <div className='border-3 border-[#333650] bg-[#222540] p-5 shadow-[4px_4px_0_#111320]'>
+                  <p className='text-[9px] leading-relaxed text-[#c8c0b0] md:text-[11px] md:leading-loose'>
+                    Hello! I am <span className='font-bold text-[#f5a524]'>Satang</span>, a passionate Full Stack
                     Developer with a deep love for creating digital experiences.
                     <br />
                     <br />I specialize in bridging the gap between elegant frontend interfaces and robust backend
-                    architectures. When I'm not coding, you can find me exploring new technologies or enjoying vintage
-                    pixel art games.
+                    architectures. When I&#39;m not coding, you can find me exploring new technologies or enjoying
+                    vintage pixel art games.
                   </p>
                 </div>
-                <div className='flex gap-4'>
+                <div className='flex gap-3'>
                   <a
                     href='#projects'
-                    className='pixel-btn flex-1 border-2 border-[#2a2a3a] bg-[#f5a524] py-4 text-center text-[10px] text-[#2a2a3a] shadow-[4px_4px_0_#2a2a3a] hover:bg-[#d48c1c] md:text-[12px]'>
+                    className='pixel-btn flex-1 border-2 border-[#f5a524] bg-[#f5a524] py-3 text-center text-[9px] text-[#1a1c2b] shadow-[3px_3px_0_#111320] hover:brightness-110 md:text-[11px]'>
                     VIEW WORK
                   </a>
                   <a
                     href='#contact'
-                    className='pixel-btn flex-1 border-2 border-[#2a2a3a] bg-[#fff] py-4 text-center text-[10px] text-[#2a2a3a] shadow-[4px_4px_0_#2a2a3a] hover:bg-[#e0d8c8] md:text-[12px]'>
+                    className='pixel-btn flex-1 border-2 border-[#444870] bg-[#2a2d48] py-3 text-center text-[9px] text-[#c8c0b0] shadow-[3px_3px_0_#111320] hover:border-[#f5a524] md:text-[11px]'>
                     RESUME
                   </a>
                 </div>
@@ -445,198 +445,210 @@ export default function Home() {
             </div>
           </section>
 
-          {/* Skills Section */}
-          <section id='skills' className='mb-32'>
-            <div className='mb-12 flex items-center justify-center gap-4'>
-              <div className='h-2 w-16 bg-[#2a2a3a]'></div>
-              <h2 className='text-3xl font-bold tracking-widest text-[#2a2a3a] drop-shadow-[2px_2px_0_#fff] md:text-4xl'>
+          {/* Skills Section — Tag based */}
+          <section id='skills' className='mb-20'>
+            <div className='mb-8 flex items-center justify-center gap-3'>
+              <div className='h-1 w-10 bg-[#98c379]'></div>
+              <h2 className='text-xl font-bold tracking-widest text-[#e8e0d0] drop-shadow-[2px_2px_0_#000] md:text-2xl'>
                 SKILLS
               </h2>
-              <div className='h-2 w-16 bg-[#2a2a3a]'></div>
+              <div className='h-1 w-10 bg-[#98c379]'></div>
             </div>
 
-            <div className='grid gap-8 sm:grid-cols-2 lg:grid-cols-3'>
-              {/* Skill Category: Frontend */}
-              <div className='pixel-border-heavy bg-[#fff] p-6 shadow-[6px_6px_0_#2a2a3a] transition-transform hover:-translate-y-2'>
-                <h3 className='mb-6 border-b-4 border-dashed border-[#2a2a3a] pb-4 text-center text-xl text-[#98c379] drop-shadow-[1px_1px_0_#2a2a3a]'>
-                  FRONTEND
+            <div className='space-y-5'>
+              {/* Front-End */}
+              <div className='border-3 border-[#333650] bg-[#222540] p-4 shadow-[4px_4px_0_#111320]'>
+                <h3 className='mb-3 text-[11px] font-bold text-[#98c379] drop-shadow-[1px_1px_0_#000] md:text-[13px]'>
+                  FRONT-END
                 </h3>
-                <div className='space-y-4'>
-                  <div>
-                    <div className='mb-2 flex justify-between text-[10px] text-[#2a2a3a]'>
-                      <span>REACT/NEXT.JS</span>
-                      <span>90%</span>
-                    </div>
-                    <div className='h-4 w-full border-2 border-[#2a2a3a] bg-[#e0d8c8] p-0.5'>
-                      <div className='h-full bg-[#98c379]' style={{ width: '90%' }}></div>
-                    </div>
-                  </div>
-                  <div>
-                    <div className='mb-2 flex justify-between text-[10px] text-[#2a2a3a]'>
-                      <span>TYPESCRIPT</span>
-                      <span>85%</span>
-                    </div>
-                    <div className='h-4 w-full border-2 border-[#2a2a3a] bg-[#e0d8c8] p-0.5'>
-                      <div className='h-full bg-[#98c379]' style={{ width: '85%' }}></div>
-                    </div>
-                  </div>
-                  <div>
-                    <div className='mb-2 flex justify-between text-[10px] text-[#2a2a3a]'>
-                      <span>TAILWIND CSS</span>
-                      <span>95%</span>
-                    </div>
-                    <div className='h-4 w-full border-2 border-[#2a2a3a] bg-[#e0d8c8] p-0.5'>
-                      <div className='h-full bg-[#98c379]' style={{ width: '95%' }}></div>
-                    </div>
-                  </div>
+                <div className='flex flex-wrap gap-2'>
+                  {['HTML', 'CSS', 'JavaScript', 'React.js', 'Next.js', 'Bootstrap', 'Tailwind', 'SASS', 'Redux'].map(
+                    (s) => (
+                      <span
+                        key={s}
+                        className='border-2 border-[#98c379]/40 bg-[#98c379]/10 px-2.5 py-1 text-[8px] text-[#98c379] transition-colors hover:bg-[#98c379]/20 md:text-[9px]'>
+                        {s}
+                      </span>
+                    )
+                  )}
                 </div>
               </div>
 
-              {/* Skill Category: Backend */}
-              <div className='pixel-border-heavy bg-[#fff] p-6 shadow-[6px_6px_0_#2a2a3a] transition-transform hover:-translate-y-2'>
-                <h3 className='mb-6 border-b-4 border-dashed border-[#2a2a3a] pb-4 text-center text-xl text-[#e06c75] drop-shadow-[1px_1px_0_#2a2a3a]'>
-                  BACKEND
+              {/* Back-End */}
+              <div className='border-3 border-[#333650] bg-[#222540] p-4 shadow-[4px_4px_0_#111320]'>
+                <h3 className='mb-3 text-[11px] font-bold text-[#e06c75] drop-shadow-[1px_1px_0_#000] md:text-[13px]'>
+                  BACK-END
                 </h3>
-                <div className='space-y-4'>
-                  <div>
-                    <div className='mb-2 flex justify-between text-[10px] text-[#2a2a3a]'>
-                      <span>NODE.JS</span>
-                      <span>85%</span>
-                    </div>
-                    <div className='h-4 w-full border-2 border-[#2a2a3a] bg-[#e0d8c8] p-0.5'>
-                      <div className='h-full bg-[#e06c75]' style={{ width: '85%' }}></div>
-                    </div>
-                  </div>
-                  <div>
-                    <div className='mb-2 flex justify-between text-[10px] text-[#2a2a3a]'>
-                      <span>PYTHON</span>
-                      <span>75%</span>
-                    </div>
-                    <div className='h-4 w-full border-2 border-[#2a2a3a] bg-[#e0d8c8] p-0.5'>
-                      <div className='h-full bg-[#e06c75]' style={{ width: '75%' }}></div>
-                    </div>
-                  </div>
-                  <div>
-                    <div className='mb-2 flex justify-between text-[10px] text-[#2a2a3a]'>
-                      <span>EXPRESS</span>
-                      <span>80%</span>
-                    </div>
-                    <div className='h-4 w-full border-2 border-[#2a2a3a] bg-[#e0d8c8] p-0.5'>
-                      <div className='h-full bg-[#e06c75]' style={{ width: '80%' }}></div>
-                    </div>
-                  </div>
+                <div className='flex flex-wrap gap-2'>
+                  {['Node.js', 'Express.js', '.Net', 'C#', 'MVC', 'Rest-API'].map((s) => (
+                    <span
+                      key={s}
+                      className='border-2 border-[#e06c75]/40 bg-[#e06c75]/10 px-2.5 py-1 text-[8px] text-[#e06c75] transition-colors hover:bg-[#e06c75]/20 md:text-[9px]'>
+                      {s}
+                    </span>
+                  ))}
                 </div>
               </div>
 
-              {/* Skill Category: Database */}
-              <div className='pixel-border-heavy bg-[#fff] p-6 shadow-[6px_6px_0_#2a2a3a] transition-transform hover:-translate-y-2 sm:col-span-2 lg:col-span-1'>
-                <h3 className='mb-6 border-b-4 border-dashed border-[#2a2a3a] pb-4 text-center text-xl text-[#61afef] drop-shadow-[1px_1px_0_#2a2a3a]'>
+              {/* Database */}
+              <div className='border-3 border-[#333650] bg-[#222540] p-4 shadow-[4px_4px_0_#111320]'>
+                <h3 className='mb-3 text-[11px] font-bold text-[#61afef] drop-shadow-[1px_1px_0_#000] md:text-[13px]'>
                   DATABASE
                 </h3>
-                <div className='space-y-4'>
-                  <div>
-                    <div className='mb-2 flex justify-between text-[10px] text-[#2a2a3a]'>
-                      <span>POSTGRESQL</span>
-                      <span>80%</span>
-                    </div>
-                    <div className='h-4 w-full border-2 border-[#2a2a3a] bg-[#e0d8c8] p-0.5'>
-                      <div className='h-full bg-[#61afef]' style={{ width: '80%' }}></div>
-                    </div>
+                <div className='flex flex-wrap gap-2'>
+                  {['MongoDB', 'MySQL', 'PostgreSQL', 'Firebase', 'Redis'].map((s) => (
+                    <span
+                      key={s}
+                      className='border-2 border-[#61afef]/40 bg-[#61afef]/10 px-2.5 py-1 text-[8px] text-[#61afef] transition-colors hover:bg-[#61afef]/20 md:text-[9px]'>
+                      {s}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              {/* Version Control */}
+              <div className='border-3 border-[#333650] bg-[#222540] p-4 shadow-[4px_4px_0_#111320]'>
+                <h3 className='mb-3 text-[11px] font-bold text-[#c678dd] drop-shadow-[1px_1px_0_#000] md:text-[13px]'>
+                  VERSION CONTROL
+                </h3>
+                <div className='flex flex-wrap gap-2'>
+                  {['Git', 'GitHub', 'GitLab'].map((s) => (
+                    <span
+                      key={s}
+                      className='border-2 border-[#c678dd]/40 bg-[#c678dd]/10 px-2.5 py-1 text-[8px] text-[#c678dd] transition-colors hover:bg-[#c678dd]/20 md:text-[9px]'>
+                      {s}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              {/* DevOps & Security */}
+              <div className='grid gap-5 sm:grid-cols-2'>
+                <div className='border-3 border-[#333650] bg-[#222540] p-4 shadow-[4px_4px_0_#111320]'>
+                  <h3 className='mb-3 text-[11px] font-bold text-[#f5a524] drop-shadow-[1px_1px_0_#000] md:text-[13px]'>
+                    DEVOPS
+                  </h3>
+                  <div className='flex flex-wrap gap-2'>
+                    {['CI/CD', 'Docker'].map((s) => (
+                      <span
+                        key={s}
+                        className='border-2 border-[#f5a524]/40 bg-[#f5a524]/10 px-2.5 py-1 text-[8px] text-[#f5a524] transition-colors hover:bg-[#f5a524]/20 md:text-[9px]'>
+                        {s}
+                      </span>
+                    ))}
                   </div>
-                  <div>
-                    <div className='mb-2 flex justify-between text-[10px] text-[#2a2a3a]'>
-                      <span>MONGODB</span>
-                      <span>85%</span>
-                    </div>
-                    <div className='h-4 w-full border-2 border-[#2a2a3a] bg-[#e0d8c8] p-0.5'>
-                      <div className='h-full bg-[#61afef]' style={{ width: '85%' }}></div>
-                    </div>
+                </div>
+                <div className='border-3 border-[#333650] bg-[#222540] p-4 shadow-[4px_4px_0_#111320]'>
+                  <h3 className='mb-3 text-[11px] font-bold text-[#e5c07b] drop-shadow-[1px_1px_0_#000] md:text-[13px]'>
+                    SECURITY
+                  </h3>
+                  <div className='flex flex-wrap gap-2'>
+                    {['OWASP Standards'].map((s) => (
+                      <span
+                        key={s}
+                        className='border-2 border-[#e5c07b]/40 bg-[#e5c07b]/10 px-2.5 py-1 text-[8px] text-[#e5c07b] transition-colors hover:bg-[#e5c07b]/20 md:text-[9px]'>
+                        {s}
+                      </span>
+                    ))}
                   </div>
-                  <div>
-                    <div className='mb-2 flex justify-between text-[10px] text-[#2a2a3a]'>
-                      <span>REDIS</span>
-                      <span>70%</span>
-                    </div>
-                    <div className='h-4 w-full border-2 border-[#2a2a3a] bg-[#e0d8c8] p-0.5'>
-                      <div className='h-full bg-[#61afef]' style={{ width: '70%' }}></div>
-                    </div>
-                  </div>
+                </div>
+              </div>
+
+              {/* Other Tools */}
+              <div className='border-3 border-[#333650] bg-[#222540] p-4 shadow-[4px_4px_0_#111320]'>
+                <h3 className='mb-3 text-[11px] font-bold text-[#56b6c2] drop-shadow-[1px_1px_0_#000] md:text-[13px]'>
+                  OTHER TOOLS & TECHNOLOGIES
+                </h3>
+                <div className='flex flex-wrap gap-2'>
+                  {[
+                    'Swagger',
+                    'Socket.io',
+                    'Unit Testing (Playwright)',
+                    'Responsive Design',
+                    'Fusion Auth',
+                    'Minio',
+                    'Fast Report',
+                    'GraphQL'
+                  ].map((s) => (
+                    <span
+                      key={s}
+                      className='border-2 border-[#56b6c2]/40 bg-[#56b6c2]/10 px-2.5 py-1 text-[8px] text-[#56b6c2] transition-colors hover:bg-[#56b6c2]/20 md:text-[9px]'>
+                      {s}
+                    </span>
+                  ))}
                 </div>
               </div>
             </div>
           </section>
 
           {/* Projects Section */}
-          <section id='projects' className='mb-32'>
-            <div className='mb-12 flex items-center justify-center gap-4'>
-              <div className='h-2 w-16 bg-[#2a2a3a]'></div>
-              <h2 className='text-3xl font-bold tracking-widest text-[#2a2a3a] drop-shadow-[2px_2px_0_#fff] md:text-4xl'>
+          <section id='projects' className='mb-20'>
+            <div className='mb-8 flex items-center justify-center gap-3'>
+              <div className='h-1 w-10 bg-[#e06c75]'></div>
+              <h2 className='text-xl font-bold tracking-widest text-[#e8e0d0] drop-shadow-[2px_2px_0_#000] md:text-2xl'>
                 PROJECTS
               </h2>
-              <div className='h-2 w-16 bg-[#2a2a3a]'></div>
+              <div className='h-1 w-10 bg-[#e06c75]'></div>
             </div>
 
-            <div className='grid gap-8 md:grid-cols-2'>
+            <div className='grid gap-6 md:grid-cols-2'>
               {/* Project 1 */}
-              <div className='group relative border-4 border-[#2a2a3a] bg-white transition-all hover:-translate-y-2 hover:shadow-[12px_12px_0_#2a2a3a]'>
-                <div className='relative aspect-video w-full overflow-hidden border-b-4 border-[#2a2a3a] bg-[#07233e]'>
-                  {/* Mock image placeholder */}
-                  <div className='absolute inset-0 bg-[url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCI+CjxyZWN0IHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgZmlsbD0iIzQzNWE3NCI+PC9yZWN0Pgo8Y2lyY2xlIGN4PSIxMCIgY3k9IjEwIiByPSIyIiBmaWxsPSIjZmZmIiBvcGFjaXR5PSIwLjEiPjwvY2lyY2xlPgo8L3N2Zz4=")] opacity-20'></div>
+              <div className='group border-3 border-[#333650] bg-[#222540] transition-all hover:-translate-y-1 hover:shadow-[8px_8px_0_#111320]'>
+                <div className='relative aspect-video w-full overflow-hidden border-b-3 border-[#333650] bg-[#0d1020]'>
                   <div className='absolute inset-0 flex items-center justify-center'>
-                    <span className='font-["Silkscreen"] text-4xl text-white opacity-30'>E-COMMERCE</span>
+                    <span className='font-["Silkscreen"] text-3xl text-white opacity-20'>E-COMMERCE</span>
                   </div>
                 </div>
-                <div className='p-6'>
-                  <h3 className='mb-2 text-xl font-bold text-[#e06c75]'>PIXEL STORE</h3>
-                  <p className='mb-6 text-[10px] leading-relaxed text-[#2a2a3a]'>
+                <div className='p-4'>
+                  <h3 className='mb-1.5 text-base font-bold text-[#e06c75]'>PIXEL STORE</h3>
+                  <p className='mb-4 text-[9px] leading-relaxed text-[#8a8898] md:text-[10px]'>
                     A full-stack e-commerce platform built with Next.js, Stripe, and PostgreSQL.
                   </p>
-                  <div className='mb-6 flex flex-wrap gap-2'>
-                    <span className='pixel-badge border border-[#2a2a3a] bg-[#98c379] px-2 py-1 text-[8px] text-[#2a2a3a]'>
+                  <div className='mb-4 flex flex-wrap gap-1.5'>
+                    <span className='border border-[#98c379]/40 bg-[#98c379]/10 px-2 py-0.5 text-[7px] text-[#98c379]'>
                       NEXT.JS
                     </span>
-                    <span className='pixel-badge border border-[#2a2a3a] bg-[#e06c75] px-2 py-1 text-[8px] text-[#2a2a3a]'>
+                    <span className='border border-[#e06c75]/40 bg-[#e06c75]/10 px-2 py-0.5 text-[7px] text-[#e06c75]'>
                       STRIPE
                     </span>
-                    <span className='pixel-badge border border-[#2a2a3a] bg-[#61afef] px-2 py-1 text-[8px] text-[#2a2a3a]'>
+                    <span className='border border-[#61afef]/40 bg-[#61afef]/10 px-2 py-0.5 text-[7px] text-[#61afef]'>
                       POSTGRES
                     </span>
                   </div>
                   <a
                     href='#'
-                    className='inline-block border-b-2 border-[#2a2a3a] pb-1 text-[10px] text-[#2a2a3a] hover:border-[#e06c75] hover:text-[#e06c75]'>
+                    className='inline-block border-b border-[#555] pb-0.5 text-[9px] text-[#8a8898] hover:border-[#e06c75] hover:text-[#e06c75]'>
                     VIEW SOURCE -{`>`}
                   </a>
                 </div>
               </div>
 
               {/* Project 2 */}
-              <div className='group relative border-4 border-[#2a2a3a] bg-white transition-all hover:-translate-y-2 hover:shadow-[12px_12px_0_#2a2a3a]'>
-                <div className='relative aspect-video w-full overflow-hidden border-b-4 border-[#2a2a3a] bg-[#07233e]'>
-                  <div className='absolute inset-0 bg-[url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCI+CjxyZWN0IHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgZmlsbD0iIzQzNWE3NCI+PC9yZWN0Pgo8Y2lyY2xlIGN4PSIxMCIgY3k9IjEwIiByPSIyIiBmaWxsPSIjZmZmIiBvcGFjaXR5PSIwLjEiPjwvY2lyY2xlPgo8L3N2Zz4=")] opacity-20'></div>
+              <div className='group border-3 border-[#333650] bg-[#222540] transition-all hover:-translate-y-1 hover:shadow-[8px_8px_0_#111320]'>
+                <div className='relative aspect-video w-full overflow-hidden border-b-3 border-[#333650] bg-[#0d1020]'>
                   <div className='absolute inset-0 flex items-center justify-center'>
-                    <span className='font-["Silkscreen"] text-4xl text-white opacity-30'>DASHBOARD</span>
+                    <span className='font-["Silkscreen"] text-3xl text-white opacity-20'>DASHBOARD</span>
                   </div>
                 </div>
-                <div className='p-6'>
-                  <h3 className='mb-2 text-xl font-bold text-[#61afef]'>ANALYTICS HUB</h3>
-                  <p className='mb-6 text-[10px] leading-relaxed text-[#2a2a3a]'>
+                <div className='p-4'>
+                  <h3 className='mb-1.5 text-base font-bold text-[#61afef]'>ANALYTICS HUB</h3>
+                  <p className='mb-4 text-[9px] leading-relaxed text-[#8a8898] md:text-[10px]'>
                     Real-time analytics dashboard utilizing WebSockets and Redis caching.
                   </p>
-                  <div className='mb-6 flex flex-wrap gap-2'>
-                    <span className='pixel-badge border border-[#2a2a3a] bg-[#98c379] px-2 py-1 text-[8px] text-[#2a2a3a]'>
+                  <div className='mb-4 flex flex-wrap gap-1.5'>
+                    <span className='border border-[#98c379]/40 bg-[#98c379]/10 px-2 py-0.5 text-[7px] text-[#98c379]'>
                       REACT
                     </span>
-                    <span className='pixel-badge border border-[#2a2a3a] bg-[#f5a524] px-2 py-1 text-[8px] text-[#2a2a3a]'>
+                    <span className='border border-[#f5a524]/40 bg-[#f5a524]/10 px-2 py-0.5 text-[7px] text-[#f5a524]'>
                       WEBSOCKETS
                     </span>
-                    <span className='pixel-badge border border-[#2a2a3a] bg-[#61afef] px-2 py-1 text-[8px] text-[#2a2a3a]'>
+                    <span className='border border-[#61afef]/40 bg-[#61afef]/10 px-2 py-0.5 text-[7px] text-[#61afef]'>
                       REDIS
                     </span>
                   </div>
                   <a
                     href='#'
-                    className='inline-block border-b-2 border-[#2a2a3a] pb-1 text-[10px] text-[#2a2a3a] hover:border-[#61afef] hover:text-[#61afef]'>
+                    className='inline-block border-b border-[#555] pb-0.5 text-[9px] text-[#8a8898] hover:border-[#61afef] hover:text-[#61afef]'>
                     VIEW SOURCE -{`>`}
                   </a>
                 </div>
@@ -645,17 +657,17 @@ export default function Home() {
           </section>
         </div>
 
-        <div className='pixel-divider border-b-4 border-t-4 border-[#222635]' />
+        <div className='h-1.5 bg-gradient-to-r from-[#61afef] via-[#c678dd] to-[#e06c75]' />
 
         {/* Footer / Contact */}
-        <footer id='contact' className='bg-[#2a2a3a] pb-12 pt-20 text-center text-white'>
-          <h2 className="mb-12 font-['Press_Start_2P'] text-xl drop-shadow-[4px_4px_0_#000] md:text-3xl">CONTACT ME</h2>
-          <div className='mb-16 flex justify-center gap-4'>
-            <button className='pixel-btn text-[14px] hover:-translate-y-1 hover:shadow-lg'>
+        <footer id='contact' className='bg-[#13141f] pb-8 pt-14 text-center text-white'>
+          <h2 className="mb-8 font-['Press_Start_2P'] text-lg drop-shadow-[3px_3px_0_#000] md:text-2xl">CONTACT ME</h2>
+          <div className='mb-10 flex justify-center gap-4'>
+            <button className='pixel-btn border-2 border-[#444870] text-[12px] hover:-translate-y-1 hover:border-[#f5a524] hover:shadow-lg'>
               <svg
                 className='pixel-icon'
-                width='22'
-                height='16'
+                width='18'
+                height='13'
                 viewBox='0 0 10 7'
                 style={{ shapeRendering: 'crispEdges', fillRule: 'evenodd' }}>
                 <rect x='1' y='0' width='8' height='7' fill='#222635' />
@@ -676,7 +688,7 @@ export default function Home() {
               SEND EMAIL
             </button>
           </div>
-          <p className="font-['Press_Start_2P'] text-[10px] text-[#8a8898]">
+          <p className="font-['Press_Start_2P'] text-[8px] text-[#555870]">
             © {new Date().getFullYear()} SATANG. ALL RIGHTS RESERVED.
           </p>
         </footer>
