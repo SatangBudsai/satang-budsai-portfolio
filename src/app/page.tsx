@@ -16,11 +16,11 @@ export default function Home() {
 
   const { scrollY } = useScroll()
 
-  // Clouds move faster when scrolling down for deeper parallax effect
-  const yCloudLeft = useTransform(scrollY, [0, 1000], [0, 500])
-  const xCloudLeft = useTransform(scrollY, [0, 1000], [0, -100])
-  const yCloudRight = useTransform(scrollY, [0, 1000], [0, 600])
-  const xCloudRight = useTransform(scrollY, [0, 1000], [0, 100])
+  // Clouds move even faster when scrolling down for deeper parallax effect
+  const yCloudLeft = useTransform(scrollY, [0, 1000], [0, 800])
+  const xCloudLeft = useTransform(scrollY, [0, 1000], [0, -150])
+  const yCloudRight = useTransform(scrollY, [0, 1000], [0, 900])
+  const xCloudRight = useTransform(scrollY, [0, 1000], [0, 150])
 
   return (
     <div className='w-full bg-[#f0ece4] font-["Press_Start_2P"] text-[#2a2a3a]'>
@@ -31,28 +31,23 @@ export default function Home() {
         <div className="absolute inset-0 z-0 bg-[url('/images/background.png')] bg-cover bg-bottom bg-no-repeat" />
 
         {/* Cloud Left (Parallax) */}
-        <motion.div
-          className='pointer-events-none absolute inset-0 z-10'
-          style={{ y: yCloudLeft, x: xCloudLeft }}>
+        <motion.div className='pointer-events-none absolute inset-0 z-10' style={{ y: yCloudLeft, x: xCloudLeft }}>
           <div className="absolute inset-0 bg-[url('/images/cloud-left.png')] bg-cover bg-bottom bg-no-repeat opacity-90 mix-blend-screen" />
         </motion.div>
 
         {/* Cloud Right (Parallax) */}
-        <motion.div
-          className='pointer-events-none absolute inset-0 z-10'
-          style={{ y: yCloudRight, x: xCloudRight }}>
+        <motion.div className='pointer-events-none absolute inset-0 z-10' style={{ y: yCloudRight, x: xCloudRight }}>
           <div className="absolute inset-0 bg-[url('/images/cloud-right.png')] bg-cover bg-bottom bg-no-repeat opacity-90 mix-blend-screen" />
         </motion.div>
 
         {/* Main Content Layout Container */}
         <div className='pointer-events-none relative z-20 mx-auto flex h-full w-full max-w-[1700px] flex-col items-center justify-center px-6 pt-20 lg:flex-row lg:justify-between lg:px-20'>
-          
           {/* Text Section */}
           <div className='pointer-events-auto z-30 flex w-full flex-1 flex-col items-center justify-center text-center lg:items-start lg:text-left'>
-            <h1 className='mb-2 whitespace-nowrap font-["Press_Start_2P"] text-[2rem] font-bold leading-none text-white drop-shadow-[4px_4px_0_#435a74] sm:text-[3rem] md:text-[4rem] lg:text-[5rem] lg:drop-shadow-[6px_6px_0_#435a74] xl:text-[6rem]'>
+            <h1 className='mb-2 whitespace-nowrap font-["Press_Start_2P"] text-[1.5rem] font-bold leading-none text-white drop-shadow-[4px_4px_0_#07233e] sm:text-[2rem] md:text-[3rem] lg:text-[4rem] lg:drop-shadow-[6px_6px_0_#07233e] xl:text-[5rem]'>
               SATANG
             </h1>
-            <h2 className='mb-4 whitespace-nowrap font-["Press_Start_2P"] text-sm font-bold tracking-widest text-white drop-shadow-[3px_3px_0_#435a74] sm:text-lg md:text-xl lg:mb-8 lg:text-2xl lg:tracking-[0.2em] lg:drop-shadow-[4px_4px_0_#435a74] xl:text-3xl'>
+            <h2 className='mb-4 whitespace-nowrap font-["Press_Start_2P"] text-xs font-bold tracking-widest text-white drop-shadow-[3px_3px_0_#07233e] sm:text-sm md:text-base lg:mb-8 lg:text-xl lg:tracking-[0.2em] lg:drop-shadow-[4px_4px_0_#07233e] xl:text-2xl'>
               FULL STACK <br className='lg:hidden' />
               DEVELOPER
             </h2>
@@ -63,15 +58,31 @@ export default function Home() {
             </p>
 
             <div className='flex flex-col justify-center gap-4 sm:flex-row lg:justify-start lg:gap-8'>
-              <button className='pixel-btn text-[12px] md:text-[14px]'>
-                <svg className='pixel-icon' width='16' height='22' viewBox='0 0 11 16' style={{ shapeRendering: 'crispEdges', fillRule: 'evenodd' }}>
-                  <path fill='#222635' d='M0,0 h1 v16 h1 v-1 h1 v-1 h1 v1 h1 v1 h1 v1 h2 v-1 h1 v-3 h-1 v-1 h-1 v-1 h1 v-1 h1 v-1 h1 v-6 h-1 v-1 h-3 v-1 h-4 v1 h-1 v-1 h-1 v-1 z' />
-                  <path fill='#ffffff' d='M1,1 h1 v14 h1 v-2 h1 v1 h1 v1 h2 v-1 h1 v-3 h-1 v-1 h-1 v-1 h1 v-1 h1 v-5 h-2 v-1 h-3 v1 h-1 z' />
+              <button className='pixel-btn flex items-center gap-2 text-[12px] md:text-[14px]'>
+                {/* Minimal pixel arrow icon */}
+                <svg
+                  className='pixel-icon'
+                  width='16'
+                  height='16'
+                  viewBox='0 0 16 16'
+                  style={{ shapeRendering: 'crispEdges', fillRule: 'evenodd' }}>
+                  <rect x='0' y='6' width='10' height='4' fill='#222635' />
+                  <rect x='10' y='4' width='2' height='8' fill='#222635' />
+                  <rect x='12' y='6' width='2' height='4' fill='#222635' />
+                  <rect x='14' y='7' width='2' height='2' fill='#222635' />
+                  <rect x='2' y='8' width='8' height='2' fill='#ffffff' />
+                  <rect x='10' y='6' width='2' height='4' fill='#ffffff' />
+                  <rect x='12' y='8' width='2' height='2' fill='#ffffff' />
                 </svg>
                 VIEW PROJECTS
               </button>
               <button className='pixel-btn text-[12px] md:text-[14px]'>
-                <svg className='pixel-icon' width='22' height='16' viewBox='0 0 10 7' style={{ shapeRendering: 'crispEdges', fillRule: 'evenodd' }}>
+                <svg
+                  className='pixel-icon'
+                  width='22'
+                  height='16'
+                  viewBox='0 0 10 7'
+                  style={{ shapeRendering: 'crispEdges', fillRule: 'evenodd' }}>
                   <rect x='1' y='0' width='8' height='7' fill='#222635' />
                   <rect x='0' y='1' width='10' height='5' fill='#222635' />
                   <rect x='1' y='1' width='8' height='5' fill='#ffffff' />
@@ -97,17 +108,16 @@ export default function Home() {
             <div
               className='relative h-full w-full max-w-[500px] bg-contain bg-center bg-no-repeat lg:bg-right'
               style={{ backgroundImage: `url('/images/${isMobile ? 'block-mobile.png' : 'block.png'}')` }}>
-              
               {/* Text Labels */}
               {!isMobile && (
                 <>
-                  <div className='absolute left-[8%] top-[38%] animate-pulse font-["Press_Start_2P"] text-[10px] text-white drop-shadow-[2px_2px_0_#222635] xl:text-[12px]'>
+                  <div className='absolute left-[8%] top-[38%] font-["Press_Start_2P"] text-[10px] text-white drop-shadow-[2px_2px_0_#222635] xl:text-[12px]'>
                     FRONTEND
                   </div>
-                  <div className='absolute right-[0%] top-[30%] animate-pulse font-["Press_Start_2P"] text-[10px] text-white drop-shadow-[2px_2px_0_#222635] xl:text-[12px]'>
+                  <div className='absolute right-[0%] top-[30%] font-["Press_Start_2P"] text-[10px] text-white drop-shadow-[2px_2px_0_#222635] xl:text-[12px]'>
                     BACKEND
                   </div>
-                  <div className='absolute bottom-[18%] right-[22%] animate-pulse font-["Press_Start_2P"] text-[10px] text-white drop-shadow-[2px_2px_0_#222635] xl:text-[12px]'>
+                  <div className='absolute bottom-[18%] right-[22%] font-["Press_Start_2P"] text-[10px] text-white drop-shadow-[2px_2px_0_#222635] xl:text-[12px]'>
                     DATABASE
                   </div>
                 </>
@@ -117,7 +127,11 @@ export default function Home() {
               <div
                 className='absolute right-[35%] top-[5%] z-30 animate-[bounce_2.5s_infinite_ease-in-out] text-[#f5a524] drop-shadow-[4px_4px_0_rgba(147,99,22,0.8)] md:right-[38%] md:top-[8%] lg:right-[40%] lg:top-[5%]'
                 style={{ animationDelay: '0s' }}>
-                <svg width='32' height='32' viewBox='0 0 16 16' style={{ shapeRendering: 'crispEdges', fillRule: 'evenodd' }}>
+                <svg
+                  width='32'
+                  height='32'
+                  viewBox='0 0 16 16'
+                  style={{ shapeRendering: 'crispEdges', fillRule: 'evenodd' }}>
                   <rect x='4' y='0' width='8' height='16' fill='currentColor' />
                   <rect x='2' y='2' width='12' height='12' fill='currentColor' />
                   <rect x='0' y='4' width='16' height='8' fill='currentColor' />
@@ -131,7 +145,11 @@ export default function Home() {
               <div
                 className='absolute left-[20%] top-[40%] z-30 animate-[bounce_2s_infinite_ease-in-out] text-[#f5a524] drop-shadow-[4px_4px_0_rgba(147,99,22,0.8)] md:left-[25%] md:top-[42%] lg:left-[25%] lg:top-[38%]'
                 style={{ animationDelay: '0.8s' }}>
-                <svg width='24' height='24' viewBox='0 0 16 16' style={{ shapeRendering: 'crispEdges', fillRule: 'evenodd' }}>
+                <svg
+                  width='24'
+                  height='24'
+                  viewBox='0 0 16 16'
+                  style={{ shapeRendering: 'crispEdges', fillRule: 'evenodd' }}>
                   <rect x='4' y='0' width='8' height='16' fill='currentColor' />
                   <rect x='2' y='2' width='12' height='12' fill='currentColor' />
                   <rect x='0' y='4' width='16' height='8' fill='currentColor' />
@@ -145,7 +163,11 @@ export default function Home() {
               <div
                 className='absolute right-[12%] top-[35%] z-30 animate-[bounce_3s_infinite_ease-in-out] text-[#f5a524] drop-shadow-[4px_4px_0_rgba(147,99,22,0.8)] md:right-[15%] md:top-[38%] lg:right-[15%] lg:top-[32%]'
                 style={{ animationDelay: '1.5s' }}>
-                <svg width='28' height='28' viewBox='0 0 16 16' style={{ shapeRendering: 'crispEdges', fillRule: 'evenodd' }}>
+                <svg
+                  width='28'
+                  height='28'
+                  viewBox='0 0 16 16'
+                  style={{ shapeRendering: 'crispEdges', fillRule: 'evenodd' }}>
                   <rect x='4' y='0' width='8' height='16' fill='currentColor' />
                   <rect x='2' y='2' width='12' height='12' fill='currentColor' />
                   <rect x='0' y='4' width='16' height='8' fill='currentColor' />
@@ -159,14 +181,21 @@ export default function Home() {
         </div>
 
         {/* Scroll Down Indicator */}
-        <div className='absolute bottom-10 left-1/2 flex -translate-x-1/2 animate-bounce flex-col items-center gap-4 z-40'>
-          <span className='font-["Press_Start_2P"] text-[12px] md:text-[16px] text-white drop-shadow-[2px_2px_0_#222635]'>SCROLL</span>
-          <svg className='pixel-icon' width='32' height='32' viewBox='0 0 16 16' style={{ shapeRendering: 'crispEdges', fillRule: 'evenodd' }}>
+        <div className='absolute bottom-12 left-1/2 z-40 flex -translate-x-1/2 scale-125 animate-bounce flex-col items-center gap-6 md:scale-150'>
+          <span className='font-["Press_Start_2P"] text-[12px] text-white drop-shadow-[2px_2px_0_#222635] md:text-[14px]'>
+            SCROLL
+          </span>
+          <svg
+            className='pixel-icon'
+            width='48'
+            height='48'
+            viewBox='0 0 16 16'
+            style={{ shapeRendering: 'crispEdges', fillRule: 'evenodd' }}>
             <rect x='6' y='0' width='4' height='12' fill='#fff' />
             <rect x='4' y='8' width='8' height='4' fill='#fff' />
             <rect x='2' y='6' width='12' height='4' fill='#fff' />
             <rect x='0' y='4' width='16' height='4' fill='#fff' />
-            
+
             <rect x='6' y='2' width='4' height='10' fill='#222635' />
             <rect x='4' y='6' width='8' height='4' fill='#222635' />
             <rect x='2' y='4' width='12' height='4' fill='#222635' />
@@ -176,171 +205,268 @@ export default function Home() {
 
       {/* CONTENT AREA (Normal Scrolling Flow) */}
       <div className='relative z-30 w-full overflow-hidden'>
-        <div className='pixel-divider border-t-4 border-b-4 border-[#222635]' />
+        <div className='pixel-divider border-b-4 border-t-4 border-[#222635]' />
 
-        {/* About Section */}
-        <section id='about' className='mx-auto max-w-5xl px-6 py-20'>
-          <h2 className="mb-4 inline-block font-['Press_Start_2P'] text-[16px] text-[#2a2a3a] before:text-[#e85090] before:content-['>_'] md:text-[24px]">
-            ABOUT ME
-          </h2>
-          <p className="mb-12 pl-4 font-['Press_Start_2P'] text-[10px] text-[#6a6050]">FULL STACK DEVELOPER LEVEL 99</p>
-
-          <div className='pixel-card mb-8 bg-white p-6 border-b-[6px] border-r-[6px] border-[#a8a090]'>
-            <h3 className="mb-6 border-b-2 border-dashed border-[#d0c8b8] pb-4 font-['Press_Start_2P'] text-[12px] text-[#2a2a3a]">CHARACTER STATS</h3>
-            <p className="font-['Press_Start_2P'] text-[10px] leading-[2.5] text-[#555040]">
-              HELLO! I'M SATANG, A PIXEL ART LOVING DEVELOPER FOCUSED ON CREATING IMMERSIVE WEB EXPERIENCES. WITH DEEP
-              TECHNICAL SKILLS ACROSS THE ENTIRE STACK, I BUILD APPLICATIONS THAT ARE AS FUNCTIONALLY ROBUST AS THEY ARE
-              VISUALLY STRIKING. I CRAFT SCALABLE BACKENDS AND BEAUTIFUL FRONTENDS CAPABLE OF HANDLING ANY QUEST.
-            </p>
-          </div>
-
-          <div className='grid grid-cols-2 gap-4 lg:grid-cols-4'>
-            <div className='pixel-card bg-[#faf6ee] p-5 text-center transition-transform hover:-translate-y-2 border-b-[4px] border-r-[4px] border-[#a8a090]'>
-              <span className="mb-3 block font-['Press_Start_2P'] text-[24px] text-[#e85090]">8+</span>
-              <span className="font-['Press_Start_2P'] text-[8px] text-[#888070]">YEARS EXP</span>
-            </div>
-            <div className='pixel-card bg-[#faf6ee] p-5 text-center transition-transform hover:-translate-y-2 border-b-[4px] border-r-[4px] border-[#a8a090]'>
-              <span className="mb-3 block font-['Press_Start_2P'] text-[24px] text-[#3388dd]">50</span>
-              <span className="font-['Press_Start_2P'] text-[8px] text-[#888070]">PROJECTS</span>
-            </div>
-            <div className='pixel-card bg-[#faf6ee] p-5 text-center transition-transform hover:-translate-y-2 border-b-[4px] border-r-[4px] border-[#a8a090]'>
-              <span className="mb-3 block font-['Press_Start_2P'] text-[24px] text-[#e8a020]">100%</span>
-              <span className="font-['Press_Start_2P'] text-[8px] text-[#888070]">COMMITMENT</span>
-            </div>
-            <div className='pixel-card bg-[#faf6ee] p-5 text-center transition-transform hover:-translate-y-2 border-b-[4px] border-r-[4px] border-[#a8a090]'>
-              <span className="mb-3 block font-['Press_Start_2P'] text-[24px] text-[#44bb44]">∞</span>
-              <span className="font-['Press_Start_2P'] text-[8px] text-[#888070]">COFFEE</span>
-            </div>
-          </div>
-        </section>
-
-        <div className='mx-auto w-[90%] border-t-4 border-dashed border-[#d8d0c0]' />
-
-        {/* Skills Section */}
-        <section id='skills' className='mx-auto max-w-5xl px-6 py-20'>
-          <h2 className="mb-4 inline-block font-['Press_Start_2P'] text-[16px] text-[#2a2a3a] before:text-[#3388dd] before:content-['>_'] md:text-[24px]">
-            SKILL TREE
-          </h2>
-          <p className="mb-12 pl-4 font-['Press_Start_2P'] text-[10px] text-[#6a6050]">
-            MASTERED ABILITIES & TECHNOLOGIES
-          </p>
-
-          <div className='grid grid-cols-1 gap-8 md:grid-cols-2'>
-            <div className='pixel-card bg-white p-6 border-b-[6px] border-r-[6px] border-[#a8a090]'>
-              <div className="mb-4 flex justify-between font-['Press_Start_2P'] text-[12px] text-[#2a2a3a]">
-                <span>FRONTEND</span>
-                <span className='text-[#e85090]'>90%</span>
-              </div>
-              <div className='skill-bar-track w-full'>
-                <div className='skill-bar-fill fe w-[90%]' />
-              </div>
+        {/* CONTENT SECTIONS */}
+        <div className='relative z-10 mx-auto w-full max-w-6xl px-4 py-24'>
+          {/* About Section */}
+          <section id='about' className='mb-32'>
+            <div className='mb-12 flex items-center justify-center gap-4'>
+              <div className='h-2 w-16 bg-[#2a2a3a]'></div>
+              <h2 className='text-3xl font-bold tracking-widest text-[#2a2a3a] drop-shadow-[2px_2px_0_#fff] md:text-4xl'>
+                ABOUT ME
+              </h2>
+              <div className='h-2 w-16 bg-[#2a2a3a]'></div>
             </div>
 
-            <div className='pixel-card bg-white p-6 border-b-[6px] border-r-[6px] border-[#a8a090]'>
-              <div className="mb-4 flex justify-between font-['Press_Start_2P'] text-[12px] text-[#2a2a3a]">
-                <span>BACKEND</span>
-                <span className='text-[#3388dd]'>85%</span>
+            <div className='grid gap-8 md:grid-cols-2 lg:gap-16'>
+              {/* Minimal Portrait Box */}
+              <div className='pixel-border-heavy relative flex aspect-square items-center justify-center bg-[#fff] p-4 shadow-[8px_8px_0_#2a2a3a]'>
+                <div className='flex h-full w-full items-center justify-center overflow-hidden border-4 border-dashed border-[#2a2a3a] bg-[#e0d8c8]'>
+                  <div className='pixel-portrait mask-pixel-art h-3/4 w-3/4 bg-[#2a2a3a] opacity-10'></div>
+                </div>
               </div>
-              <div className='skill-bar-track w-full'>
-                <div className='skill-bar-fill be w-[85%]' />
-              </div>
-            </div>
 
-            <div className='pixel-card bg-white p-6 border-b-[6px] border-r-[6px] border-[#a8a090]'>
-              <div className="mb-4 flex justify-between font-['Press_Start_2P'] text-[12px] text-[#2a2a3a]">
-                <span>DATABASE</span>
-                <span className='text-[#e8a020]'>80%</span>
-              </div>
-              <div className='skill-bar-track w-full'>
-                <div className='skill-bar-fill db w-[80%]' />
-              </div>
-            </div>
-
-            <div className='pixel-card bg-white p-6 border-b-[6px] border-r-[6px] border-[#a8a090]'>
-              <div className="mb-4 flex justify-between font-['Press_Start_2P'] text-[12px] text-[#2a2a3a]">
-                <span>DEVOPS</span>
-                <span className='text-[#44bb44]'>70%</span>
-              </div>
-              <div className='skill-bar-track w-full'>
-                <div className='skill-bar-fill dv w-[70%]' />
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <div className='mx-auto w-[90%] border-t-4 border-dashed border-[#d8d0c0]' />
-
-        {/* Projects Section */}
-        <section id='projects' className='mx-auto max-w-5xl px-6 py-20'>
-          <h2 className="mb-4 inline-block font-['Press_Start_2P'] text-[16px] text-[#2a2a3a] before:text-[#e8a020] before:content-['>_'] md:text-[24px]">
-            INVENTORY
-          </h2>
-          <p className="mb-12 pl-4 font-['Press_Start_2P'] text-[10px] text-[#6a6050]">EQUIPPED ITEMS & CREATIONS</p>
-
-          <div className='grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3'>
-            <div className='pixel-card flex cursor-pointer flex-col bg-white p-0 transition-transform hover:-translate-y-2 border-b-[6px] border-r-[6px] border-[#a8a090]'>
-              <div className="flex h-40 w-full items-center justify-center border-b-4 border-[#222635] bg-[#3a3a4a] font-['Press_Start_2P'] text-[40px] text-[#ffffff40]">
-                ?
-              </div>
-              <div className='flex-1 p-5'>
-                <h3 className="mb-4 font-['Press_Start_2P'] text-[12px] text-[#2a2a3a]">E-COMMERCE</h3>
-                <div className='flex flex-wrap gap-2'>
-                  <span className="inline-block border-2 border-[#d0c8b8] bg-[#f0ece4] px-2 py-1.5 font-['Press_Start_2P'] text-[8px] text-[#6a6050]">
-                    NEXT.JS
-                  </span>
-                  <span className="inline-block border-2 border-[#d0c8b8] bg-[#f0ece4] px-2 py-1.5 font-['Press_Start_2P'] text-[8px] text-[#6a6050]">
-                    STRIPE
-                  </span>
+              <div className='flex flex-col justify-center space-y-6'>
+                <div className='pixel-border-heavy bg-white p-6 shadow-[6px_6px_0_#2a2a3a]'>
+                  <p className='text-[10px] leading-relaxed text-[#2a2a3a] md:text-[12px] md:leading-loose'>
+                    Hello! I am <span className='font-bold text-[#e06c75]'>Satang</span>, a passionate Full Stack
+                    Developer with a deep love for creating digital experiences.
+                    <br />
+                    <br />I specialize in bridging the gap between elegant frontend interfaces and robust backend
+                    architectures. When I'm not coding, you can find me exploring new technologies or enjoying vintage
+                    pixel art games.
+                  </p>
+                </div>
+                <div className='flex gap-4'>
+                  <a
+                    href='#projects'
+                    className='pixel-btn flex-1 border-2 border-[#2a2a3a] bg-[#f5a524] py-4 text-center text-[10px] text-[#2a2a3a] shadow-[4px_4px_0_#2a2a3a] hover:bg-[#d48c1c] md:text-[12px]'>
+                    VIEW WORK
+                  </a>
+                  <a
+                    href='#contact'
+                    className='pixel-btn flex-1 border-2 border-[#2a2a3a] bg-[#fff] py-4 text-center text-[10px] text-[#2a2a3a] shadow-[4px_4px_0_#2a2a3a] hover:bg-[#e0d8c8] md:text-[12px]'>
+                    RESUME
+                  </a>
                 </div>
               </div>
             </div>
+          </section>
 
-            <div className='pixel-card flex cursor-pointer flex-col bg-white p-0 transition-transform hover:-translate-y-2 border-b-[6px] border-r-[6px] border-[#a8a090]'>
-              <div className="flex h-40 w-full items-center justify-center border-b-4 border-[#222635] bg-[#2a4a3a] font-['Press_Start_2P'] text-[40px] text-[#ffffff40]">
-                ?
+          {/* Skills Section */}
+          <section id='skills' className='mb-32'>
+            <div className='mb-12 flex items-center justify-center gap-4'>
+              <div className='h-2 w-16 bg-[#2a2a3a]'></div>
+              <h2 className='text-3xl font-bold tracking-widest text-[#2a2a3a] drop-shadow-[2px_2px_0_#fff] md:text-4xl'>
+                SKILLS
+              </h2>
+              <div className='h-2 w-16 bg-[#2a2a3a]'></div>
+            </div>
+
+            <div className='grid gap-8 sm:grid-cols-2 lg:grid-cols-3'>
+              {/* Skill Category: Frontend */}
+              <div className='pixel-border-heavy bg-[#fff] p-6 shadow-[6px_6px_0_#2a2a3a] transition-transform hover:-translate-y-2'>
+                <h3 className='mb-6 border-b-4 border-dashed border-[#2a2a3a] pb-4 text-center text-xl text-[#98c379] drop-shadow-[1px_1px_0_#2a2a3a]'>
+                  FRONTEND
+                </h3>
+                <div className='space-y-4'>
+                  <div>
+                    <div className='mb-2 flex justify-between text-[10px] text-[#2a2a3a]'>
+                      <span>REACT/NEXT.JS</span>
+                      <span>90%</span>
+                    </div>
+                    <div className='h-4 w-full border-2 border-[#2a2a3a] bg-[#e0d8c8] p-0.5'>
+                      <div className='h-full bg-[#98c379]' style={{ width: '90%' }}></div>
+                    </div>
+                  </div>
+                  <div>
+                    <div className='mb-2 flex justify-between text-[10px] text-[#2a2a3a]'>
+                      <span>TYPESCRIPT</span>
+                      <span>85%</span>
+                    </div>
+                    <div className='h-4 w-full border-2 border-[#2a2a3a] bg-[#e0d8c8] p-0.5'>
+                      <div className='h-full bg-[#98c379]' style={{ width: '85%' }}></div>
+                    </div>
+                  </div>
+                  <div>
+                    <div className='mb-2 flex justify-between text-[10px] text-[#2a2a3a]'>
+                      <span>TAILWIND CSS</span>
+                      <span>95%</span>
+                    </div>
+                    <div className='h-4 w-full border-2 border-[#2a2a3a] bg-[#e0d8c8] p-0.5'>
+                      <div className='h-full bg-[#98c379]' style={{ width: '95%' }}></div>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div className='flex-1 p-5'>
-                <h3 className="mb-4 font-['Press_Start_2P'] text-[12px] text-[#2a2a3a]">DASHBOARD</h3>
-                <div className='flex flex-wrap gap-2'>
-                  <span className="inline-block border-2 border-[#d0c8b8] bg-[#f0ece4] px-2 py-1.5 font-['Press_Start_2P'] text-[8px] text-[#6a6050]">
-                    REACT
-                  </span>
-                  <span className="inline-block border-2 border-[#d0c8b8] bg-[#f0ece4] px-2 py-1.5 font-['Press_Start_2P'] text-[8px] text-[#6a6050]">
-                    NODE.JS
-                  </span>
+
+              {/* Skill Category: Backend */}
+              <div className='pixel-border-heavy bg-[#fff] p-6 shadow-[6px_6px_0_#2a2a3a] transition-transform hover:-translate-y-2'>
+                <h3 className='mb-6 border-b-4 border-dashed border-[#2a2a3a] pb-4 text-center text-xl text-[#e06c75] drop-shadow-[1px_1px_0_#2a2a3a]'>
+                  BACKEND
+                </h3>
+                <div className='space-y-4'>
+                  <div>
+                    <div className='mb-2 flex justify-between text-[10px] text-[#2a2a3a]'>
+                      <span>NODE.JS</span>
+                      <span>85%</span>
+                    </div>
+                    <div className='h-4 w-full border-2 border-[#2a2a3a] bg-[#e0d8c8] p-0.5'>
+                      <div className='h-full bg-[#e06c75]' style={{ width: '85%' }}></div>
+                    </div>
+                  </div>
+                  <div>
+                    <div className='mb-2 flex justify-between text-[10px] text-[#2a2a3a]'>
+                      <span>PYTHON</span>
+                      <span>75%</span>
+                    </div>
+                    <div className='h-4 w-full border-2 border-[#2a2a3a] bg-[#e0d8c8] p-0.5'>
+                      <div className='h-full bg-[#e06c75]' style={{ width: '75%' }}></div>
+                    </div>
+                  </div>
+                  <div>
+                    <div className='mb-2 flex justify-between text-[10px] text-[#2a2a3a]'>
+                      <span>EXPRESS</span>
+                      <span>80%</span>
+                    </div>
+                    <div className='h-4 w-full border-2 border-[#2a2a3a] bg-[#e0d8c8] p-0.5'>
+                      <div className='h-full bg-[#e06c75]' style={{ width: '80%' }}></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Skill Category: Database */}
+              <div className='pixel-border-heavy bg-[#fff] p-6 shadow-[6px_6px_0_#2a2a3a] transition-transform hover:-translate-y-2 sm:col-span-2 lg:col-span-1'>
+                <h3 className='mb-6 border-b-4 border-dashed border-[#2a2a3a] pb-4 text-center text-xl text-[#61afef] drop-shadow-[1px_1px_0_#2a2a3a]'>
+                  DATABASE
+                </h3>
+                <div className='space-y-4'>
+                  <div>
+                    <div className='mb-2 flex justify-between text-[10px] text-[#2a2a3a]'>
+                      <span>POSTGRESQL</span>
+                      <span>80%</span>
+                    </div>
+                    <div className='h-4 w-full border-2 border-[#2a2a3a] bg-[#e0d8c8] p-0.5'>
+                      <div className='h-full bg-[#61afef]' style={{ width: '80%' }}></div>
+                    </div>
+                  </div>
+                  <div>
+                    <div className='mb-2 flex justify-between text-[10px] text-[#2a2a3a]'>
+                      <span>MONGODB</span>
+                      <span>85%</span>
+                    </div>
+                    <div className='h-4 w-full border-2 border-[#2a2a3a] bg-[#e0d8c8] p-0.5'>
+                      <div className='h-full bg-[#61afef]' style={{ width: '85%' }}></div>
+                    </div>
+                  </div>
+                  <div>
+                    <div className='mb-2 flex justify-between text-[10px] text-[#2a2a3a]'>
+                      <span>REDIS</span>
+                      <span>70%</span>
+                    </div>
+                    <div className='h-4 w-full border-2 border-[#2a2a3a] bg-[#e0d8c8] p-0.5'>
+                      <div className='h-full bg-[#61afef]' style={{ width: '70%' }}></div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
+          </section>
 
-            <div className='pixel-card flex cursor-pointer flex-col bg-white p-0 transition-transform hover:-translate-y-2 border-b-[6px] border-r-[6px] border-[#a8a090]'>
-              <div className="flex h-40 w-full items-center justify-center border-b-4 border-[#222635] bg-[#4a2a3a] font-['Press_Start_2P'] text-[40px] text-[#ffffff40]">
-                ?
+          {/* Projects Section */}
+          <section id='projects' className='mb-32'>
+            <div className='mb-12 flex items-center justify-center gap-4'>
+              <div className='h-2 w-16 bg-[#2a2a3a]'></div>
+              <h2 className='text-3xl font-bold tracking-widest text-[#2a2a3a] drop-shadow-[2px_2px_0_#fff] md:text-4xl'>
+                PROJECTS
+              </h2>
+              <div className='h-2 w-16 bg-[#2a2a3a]'></div>
+            </div>
+
+            <div className='grid gap-8 md:grid-cols-2'>
+              {/* Project 1 */}
+              <div className='group relative border-4 border-[#2a2a3a] bg-white transition-all hover:-translate-y-2 hover:shadow-[12px_12px_0_#2a2a3a]'>
+                <div className='relative aspect-video w-full overflow-hidden border-b-4 border-[#2a2a3a] bg-[#07233e]'>
+                  {/* Mock image placeholder */}
+                  <div className='absolute inset-0 bg-[url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCI+CjxyZWN0IHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgZmlsbD0iIzQzNWE3NCI+PC9yZWN0Pgo8Y2lyY2xlIGN4PSIxMCIgY3k9IjEwIiByPSIyIiBmaWxsPSIjZmZmIiBvcGFjaXR5PSIwLjEiPjwvY2lyY2xlPgo8L3N2Zz4=")] opacity-20'></div>
+                  <div className='absolute inset-0 flex items-center justify-center'>
+                    <span className='font-["Silkscreen"] text-4xl text-white opacity-30'>E-COMMERCE</span>
+                  </div>
+                </div>
+                <div className='p-6'>
+                  <h3 className='mb-2 text-xl font-bold text-[#e06c75]'>PIXEL STORE</h3>
+                  <p className='mb-6 text-[10px] leading-relaxed text-[#2a2a3a]'>
+                    A full-stack e-commerce platform built with Next.js, Stripe, and PostgreSQL.
+                  </p>
+                  <div className='mb-6 flex flex-wrap gap-2'>
+                    <span className='pixel-badge border border-[#2a2a3a] bg-[#98c379] px-2 py-1 text-[8px] text-[#2a2a3a]'>
+                      NEXT.JS
+                    </span>
+                    <span className='pixel-badge border border-[#2a2a3a] bg-[#e06c75] px-2 py-1 text-[8px] text-[#2a2a3a]'>
+                      STRIPE
+                    </span>
+                    <span className='pixel-badge border border-[#2a2a3a] bg-[#61afef] px-2 py-1 text-[8px] text-[#2a2a3a]'>
+                      POSTGRES
+                    </span>
+                  </div>
+                  <a
+                    href='#'
+                    className='inline-block border-b-2 border-[#2a2a3a] pb-1 text-[10px] text-[#2a2a3a] hover:border-[#e06c75] hover:text-[#e06c75]'>
+                    VIEW SOURCE -{`>`}
+                  </a>
+                </div>
               </div>
-              <div className='flex-1 p-5'>
-                <h3 className="mb-4 font-['Press_Start_2P'] text-[12px] text-[#2a2a3a]">PORTFOLIO V1</h3>
-                <div className='flex flex-wrap gap-2'>
-                  <span className="inline-block border-2 border-[#d0c8b8] bg-[#f0ece4] px-2 py-1.5 font-['Press_Start_2P'] text-[8px] text-[#6a6050]">
-                    HTML/CSS
-                  </span>
-                  <span className="inline-block border-2 border-[#d0c8b8] bg-[#f0ece4] px-2 py-1.5 font-['Press_Start_2P'] text-[8px] text-[#6a6050]">
-                    JS
-                  </span>
+
+              {/* Project 2 */}
+              <div className='group relative border-4 border-[#2a2a3a] bg-white transition-all hover:-translate-y-2 hover:shadow-[12px_12px_0_#2a2a3a]'>
+                <div className='relative aspect-video w-full overflow-hidden border-b-4 border-[#2a2a3a] bg-[#07233e]'>
+                  <div className='absolute inset-0 bg-[url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCI+CjxyZWN0IHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgZmlsbD0iIzQzNWE3NCI+PC9yZWN0Pgo8Y2lyY2xlIGN4PSIxMCIgY3k9IjEwIiByPSIyIiBmaWxsPSIjZmZmIiBvcGFjaXR5PSIwLjEiPjwvY2lyY2xlPgo8L3N2Zz4=")] opacity-20'></div>
+                  <div className='absolute inset-0 flex items-center justify-center'>
+                    <span className='font-["Silkscreen"] text-4xl text-white opacity-30'>DASHBOARD</span>
+                  </div>
+                </div>
+                <div className='p-6'>
+                  <h3 className='mb-2 text-xl font-bold text-[#61afef]'>ANALYTICS HUB</h3>
+                  <p className='mb-6 text-[10px] leading-relaxed text-[#2a2a3a]'>
+                    Real-time analytics dashboard utilizing WebSockets and Redis caching.
+                  </p>
+                  <div className='mb-6 flex flex-wrap gap-2'>
+                    <span className='pixel-badge border border-[#2a2a3a] bg-[#98c379] px-2 py-1 text-[8px] text-[#2a2a3a]'>
+                      REACT
+                    </span>
+                    <span className='pixel-badge border border-[#2a2a3a] bg-[#f5a524] px-2 py-1 text-[8px] text-[#2a2a3a]'>
+                      WEBSOCKETS
+                    </span>
+                    <span className='pixel-badge border border-[#2a2a3a] bg-[#61afef] px-2 py-1 text-[8px] text-[#2a2a3a]'>
+                      REDIS
+                    </span>
+                  </div>
+                  <a
+                    href='#'
+                    className='inline-block border-b-2 border-[#2a2a3a] pb-1 text-[10px] text-[#2a2a3a] hover:border-[#61afef] hover:text-[#61afef]'>
+                    VIEW SOURCE -{`>`}
+                  </a>
                 </div>
               </div>
             </div>
-          </div>
-        </section>
+          </section>
+        </div>
 
-        <div className='pixel-divider border-t-4 border-b-4 border-[#222635]' />
+        <div className='pixel-divider border-b-4 border-t-4 border-[#222635]' />
 
         {/* Footer / Contact */}
         <footer id='contact' className='bg-[#2a2a3a] pb-12 pt-20 text-center text-white'>
-          <h2 className="mb-12 font-['Press_Start_2P'] text-xl drop-shadow-[4px_4px_0_#000] md:text-3xl">
-            CONTACT ME
-          </h2>
+          <h2 className="mb-12 font-['Press_Start_2P'] text-xl drop-shadow-[4px_4px_0_#000] md:text-3xl">CONTACT ME</h2>
           <div className='mb-16 flex justify-center gap-4'>
             <button className='pixel-btn text-[14px] hover:-translate-y-1 hover:shadow-lg'>
-              <svg className='pixel-icon' width='22' height='16' viewBox='0 0 10 7' style={{ shapeRendering: 'crispEdges', fillRule: 'evenodd' }}>
+              <svg
+                className='pixel-icon'
+                width='22'
+                height='16'
+                viewBox='0 0 10 7'
+                style={{ shapeRendering: 'crispEdges', fillRule: 'evenodd' }}>
                 <rect x='1' y='0' width='8' height='7' fill='#222635' />
                 <rect x='0' y='1' width='10' height='5' fill='#222635' />
                 <rect x='1' y='1' width='8' height='5' fill='#ffffff' />
