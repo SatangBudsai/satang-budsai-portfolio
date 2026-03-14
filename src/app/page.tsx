@@ -30,7 +30,6 @@ const fadeIn = {
 }
 
 export default function Home() {
-  const [isMobile, setIsMobile] = useState(false)
   const [isDark, setIsDark] = useState(true)
   const heroRef = useRef<HTMLElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -38,13 +37,6 @@ export default function Home() {
   const particlesRef = useRef<
     Array<{ x: number; y: number; vx: number; vy: number; life: number; maxLife: number; size: number; color: string }>
   >([])
-
-  useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth < 1024)
-    handleResize()
-    window.addEventListener('resize', handleResize)
-    return () => window.removeEventListener('resize', handleResize)
-  }, [])
 
   // Custom cursor (DOM-based for crisp rendering)
   useEffect(() => {
@@ -261,30 +253,39 @@ export default function Home() {
 
       {/* HERO SECTION */}
       <section ref={heroRef} className='relative h-screen min-h-[700px] w-full overflow-hidden bg-[#78A7D0]'>
-        {/* Sky Background (Animated GIF) */}
-        <div className="absolute inset-0 z-0 bg-[url('/images/background.gif')] bg-cover bg-bottom bg-no-repeat" />
+        {/* Sky Background (Animated GIF) — สลับตาม theme */}
+        <div
+          className='absolute inset-0 z-0 bg-cover bg-bottom bg-no-repeat transition-opacity duration-500'
+          style={{ backgroundImage: `url('/images/${isDark ? 'background-dark' : 'background'}.gif')` }}
+        />
 
-        {/* Clouds: single cloud.png on mobile, split left/right on desktop */}
-        {isMobile ? (
-          <motion.div
-            className='pointer-events-none absolute inset-0 z-10'
-            style={{ y: yCloudLeft, opacity: cloudOpacity }}>
-            <div className="absolute inset-0 bg-[url('/images/cloud.png')] bg-cover bg-bottom bg-no-repeat mix-blend-screen" />
-          </motion.div>
-        ) : (
-          <>
-            <motion.div
-              className='pointer-events-none absolute inset-0 z-10'
-              style={{ y: yCloudLeft, x: xCloudLeft, opacity: cloudOpacity }}>
-              <div className="absolute inset-0 bg-[url('/images/cloud-left.png')] bg-cover bg-bottom bg-no-repeat mix-blend-screen" />
-            </motion.div>
-            <motion.div
-              className='pointer-events-none absolute inset-0 z-10'
-              style={{ y: yCloudRight, x: xCloudRight, opacity: cloudOpacity }}>
-              <div className="absolute inset-0 bg-[url('/images/cloud-right.png')] bg-cover bg-bottom bg-no-repeat mix-blend-screen" />
-            </motion.div>
-          </>
-        )}
+        {/* Clouds: single cloud on mobile, split left/right on desktop — สลับตาม theme */}
+        {/* Mobile cloud */}
+        <motion.div
+          className='pointer-events-none absolute inset-0 z-10 lg:hidden'
+          style={{ y: yCloudLeft, opacity: cloudOpacity }}>
+          <div
+            className='absolute inset-0 bg-cover bg-bottom bg-no-repeat mix-blend-screen'
+            style={{ backgroundImage: `url('/images/${isDark ? 'cloud-dark' : 'cloud'}.png')` }}
+          />
+        </motion.div>
+        {/* Desktop clouds */}
+        <motion.div
+          className='pointer-events-none absolute inset-0 z-10 hidden lg:block'
+          style={{ y: yCloudLeft, x: xCloudLeft, opacity: cloudOpacity }}>
+          <div
+            className='absolute inset-0 bg-cover bg-bottom bg-no-repeat mix-blend-screen'
+            style={{ backgroundImage: `url('/images/${isDark ? 'cloud-left-dark' : 'cloud-left'}.png')` }}
+          />
+        </motion.div>
+        <motion.div
+          className='pointer-events-none absolute inset-0 z-10 hidden lg:block'
+          style={{ y: yCloudRight, x: xCloudRight, opacity: cloudOpacity }}>
+          <div
+            className='absolute inset-0 bg-cover bg-bottom bg-no-repeat mix-blend-screen'
+            style={{ backgroundImage: `url('/images/${isDark ? 'cloud-right-dark' : 'cloud-right'}.png')` }}
+          />
+        </motion.div>
 
         {/* Content Layer */}
         <div className='pointer-events-none relative z-20 mx-auto flex h-full w-full max-w-4xl flex-col items-center justify-center px-4 lg:flex-row lg:justify-between lg:px-8'>
@@ -370,36 +371,51 @@ export default function Home() {
             <div
               className='relative h-full w-full max-w-[320px] bg-contain bg-center bg-no-repeat lg:max-w-[350px] lg:bg-right'
               style={{ backgroundImage: `url('/images/block.png')` }}>
-              {/* Text Labels */}
-              {!isMobile && (
-                <>
-                  <div className='absolute left-[5%] top-[35%] font-["Press_Start_2P"] text-[8px] text-white drop-shadow-[2px_2px_0_#222635] xl:text-[10px]'>
-                    FRONTEND
-                  </div>
-                  <div className='absolute right-[-2%] top-[28%] font-["Press_Start_2P"] text-[8px] text-white drop-shadow-[2px_2px_0_#222635] xl:text-[10px]'>
-                    BACKEND
-                  </div>
-                  <div className='absolute bottom-[15%] right-[18%] font-["Press_Start_2P"] text-[8px] text-white drop-shadow-[2px_2px_0_#222635] xl:text-[10px]'>
-                    DATABASE
-                  </div>
-                </>
-              )}
+              {/* Text Labels — desktop only */}
+              <div className='absolute left-[5%] top-[35%] hidden font-["Press_Start_2P"] text-[8px] text-white drop-shadow-[2px_2px_0_#222635] lg:block xl:text-[10px]'>
+                FRONTEND
+              </div>
+              <div className='absolute right-[-2%] top-[28%] hidden font-["Press_Start_2P"] text-[8px] text-white drop-shadow-[2px_2px_0_#222635] lg:block xl:text-[10px]'>
+                BACKEND
+              </div>
+              <div className='absolute bottom-[15%] right-[18%] hidden font-["Press_Start_2P"] text-[8px] text-white drop-shadow-[2px_2px_0_#222635] lg:block xl:text-[10px]'>
+                DATABASE
+              </div>
 
               {/* Floating Coin 1 (Top Center) */}
               <div
                 className='absolute right-[35%] top-[3%] z-30 animate-[bounce_2.5s_infinite_ease-in-out] text-[#f5a524] drop-shadow-[4px_4px_0_rgba(147,99,22,0.8)] md:right-[38%] md:top-[5%] lg:right-[40%] lg:top-[3%]'
                 style={{ animationDelay: '0s' }}>
-                <svg
-                  width='26'
-                  height='26'
-                  viewBox='0 0 16 16'
-                  style={{ shapeRendering: 'crispEdges', fillRule: 'evenodd' }}>
-                  <rect x='4' y='0' width='8' height='16' fill='currentColor' />
-                  <rect x='2' y='2' width='12' height='12' fill='currentColor' />
-                  <rect x='0' y='4' width='16' height='8' fill='currentColor' />
-                  <rect x='6' y='2' width='4' height='12' fill='#fff' />
-                  <rect x='4' y='4' width='8' height='8' fill='#fff' />
-                  <rect x='6' y='4' width='4' height='8' fill='#e9b426' />
+                <svg width='26' height='26' viewBox='0 0 16 16' style={{ shapeRendering: 'crispEdges' }}>
+                  {/* Outer border */}
+                  <rect x='4' y='0' width='8' height='1' fill='#b8860b' />
+                  <rect x='2' y='1' width='12' height='1' fill='#b8860b' />
+                  <rect x='1' y='2' width='14' height='1' fill='#b8860b' />
+                  <rect x='0' y='3' width='16' height='1' fill='#b8860b' />
+                  <rect x='0' y='12' width='16' height='1' fill='#b8860b' />
+                  <rect x='1' y='13' width='14' height='1' fill='#b8860b' />
+                  <rect x='2' y='14' width='12' height='1' fill='#b8860b' />
+                  <rect x='4' y='15' width='8' height='1' fill='#b8860b' />
+                  <rect x='0' y='3' width='1' height='10' fill='#b8860b' />
+                  <rect x='15' y='3' width='1' height='10' fill='#b8860b' />
+                  {/* Gold fill */}
+                  <rect x='4' y='1' width='8' height='1' fill='#ffd044' />
+                  <rect x='2' y='2' width='12' height='1' fill='#ffd044' />
+                  <rect x='1' y='3' width='14' height='10' fill='#ffd044' />
+                  <rect x='2' y='13' width='12' height='1' fill='#ffd044' />
+                  <rect x='4' y='14' width='8' height='1' fill='#ffd044' />
+                  {/* Highlight */}
+                  <rect x='5' y='2' width='6' height='1' fill='#ffe680' />
+                  <rect x='2' y='3' width='1' height='6' fill='#ffe680' />
+                  <rect x='3' y='3' width='10' height='1' fill='#ffe680' />
+                  {/* $ symbol */}
+                  <rect x='7' y='4' width='2' height='1' fill='#b8860b' />
+                  <rect x='6' y='5' width='5' height='1' fill='#b8860b' />
+                  <rect x='5' y='6' width='2' height='1' fill='#b8860b' />
+                  <rect x='6' y='7' width='4' height='1' fill='#b8860b' />
+                  <rect x='9' y='8' width='2' height='1' fill='#b8860b' />
+                  <rect x='5' y='9' width='6' height='1' fill='#b8860b' />
+                  <rect x='7' y='10' width='2' height='1' fill='#b8860b' />
                 </svg>
               </div>
 
@@ -407,17 +423,32 @@ export default function Home() {
               <div
                 className='absolute left-[18%] top-[40%] z-30 animate-[bounce_2s_infinite_ease-in-out] text-[#f5a524] drop-shadow-[4px_4px_0_rgba(147,99,22,0.8)] md:left-[22%] md:top-[40%] lg:left-[22%] lg:top-[35%]'
                 style={{ animationDelay: '0.8s' }}>
-                <svg
-                  width='20'
-                  height='20'
-                  viewBox='0 0 16 16'
-                  style={{ shapeRendering: 'crispEdges', fillRule: 'evenodd' }}>
-                  <rect x='4' y='0' width='8' height='16' fill='currentColor' />
-                  <rect x='2' y='2' width='12' height='12' fill='currentColor' />
-                  <rect x='0' y='4' width='16' height='8' fill='currentColor' />
-                  <rect x='6' y='2' width='4' height='12' fill='#fff' />
-                  <rect x='4' y='4' width='8' height='8' fill='#fff' />
-                  <rect x='6' y='4' width='4' height='8' fill='#e9b426' />
+                <svg width='20' height='20' viewBox='0 0 16 16' style={{ shapeRendering: 'crispEdges' }}>
+                  <rect x='4' y='0' width='8' height='1' fill='#b8860b' />
+                  <rect x='2' y='1' width='12' height='1' fill='#b8860b' />
+                  <rect x='1' y='2' width='14' height='1' fill='#b8860b' />
+                  <rect x='0' y='3' width='16' height='1' fill='#b8860b' />
+                  <rect x='0' y='12' width='16' height='1' fill='#b8860b' />
+                  <rect x='1' y='13' width='14' height='1' fill='#b8860b' />
+                  <rect x='2' y='14' width='12' height='1' fill='#b8860b' />
+                  <rect x='4' y='15' width='8' height='1' fill='#b8860b' />
+                  <rect x='0' y='3' width='1' height='10' fill='#b8860b' />
+                  <rect x='15' y='3' width='1' height='10' fill='#b8860b' />
+                  <rect x='4' y='1' width='8' height='1' fill='#ffd044' />
+                  <rect x='2' y='2' width='12' height='1' fill='#ffd044' />
+                  <rect x='1' y='3' width='14' height='10' fill='#ffd044' />
+                  <rect x='2' y='13' width='12' height='1' fill='#ffd044' />
+                  <rect x='4' y='14' width='8' height='1' fill='#ffd044' />
+                  <rect x='5' y='2' width='6' height='1' fill='#ffe680' />
+                  <rect x='2' y='3' width='1' height='6' fill='#ffe680' />
+                  <rect x='3' y='3' width='10' height='1' fill='#ffe680' />
+                  <rect x='7' y='4' width='2' height='1' fill='#b8860b' />
+                  <rect x='6' y='5' width='5' height='1' fill='#b8860b' />
+                  <rect x='5' y='6' width='2' height='1' fill='#b8860b' />
+                  <rect x='6' y='7' width='4' height='1' fill='#b8860b' />
+                  <rect x='9' y='8' width='2' height='1' fill='#b8860b' />
+                  <rect x='5' y='9' width='6' height='1' fill='#b8860b' />
+                  <rect x='7' y='10' width='2' height='1' fill='#b8860b' />
                 </svg>
               </div>
 
@@ -425,17 +456,32 @@ export default function Home() {
               <div
                 className='absolute right-[10%] top-[32%] z-30 animate-[bounce_3s_infinite_ease-in-out] text-[#f5a524] drop-shadow-[4px_4px_0_rgba(147,99,22,0.8)] md:right-[12%] md:top-[35%] lg:right-[12%] lg:top-[30%]'
                 style={{ animationDelay: '1.5s' }}>
-                <svg
-                  width='22'
-                  height='22'
-                  viewBox='0 0 16 16'
-                  style={{ shapeRendering: 'crispEdges', fillRule: 'evenodd' }}>
-                  <rect x='4' y='0' width='8' height='16' fill='currentColor' />
-                  <rect x='2' y='2' width='12' height='12' fill='currentColor' />
-                  <rect x='0' y='4' width='16' height='8' fill='currentColor' />
-                  <rect x='6' y='2' width='4' height='12' fill='#fff' />
-                  <rect x='4' y='4' width='8' height='8' fill='#fff' />
-                  <rect x='6' y='4' width='4' height='8' fill='#e9b426' />
+                <svg width='22' height='22' viewBox='0 0 16 16' style={{ shapeRendering: 'crispEdges' }}>
+                  <rect x='4' y='0' width='8' height='1' fill='#b8860b' />
+                  <rect x='2' y='1' width='12' height='1' fill='#b8860b' />
+                  <rect x='1' y='2' width='14' height='1' fill='#b8860b' />
+                  <rect x='0' y='3' width='16' height='1' fill='#b8860b' />
+                  <rect x='0' y='12' width='16' height='1' fill='#b8860b' />
+                  <rect x='1' y='13' width='14' height='1' fill='#b8860b' />
+                  <rect x='2' y='14' width='12' height='1' fill='#b8860b' />
+                  <rect x='4' y='15' width='8' height='1' fill='#b8860b' />
+                  <rect x='0' y='3' width='1' height='10' fill='#b8860b' />
+                  <rect x='15' y='3' width='1' height='10' fill='#b8860b' />
+                  <rect x='4' y='1' width='8' height='1' fill='#ffd044' />
+                  <rect x='2' y='2' width='12' height='1' fill='#ffd044' />
+                  <rect x='1' y='3' width='14' height='10' fill='#ffd044' />
+                  <rect x='2' y='13' width='12' height='1' fill='#ffd044' />
+                  <rect x='4' y='14' width='8' height='1' fill='#ffd044' />
+                  <rect x='5' y='2' width='6' height='1' fill='#ffe680' />
+                  <rect x='2' y='3' width='1' height='6' fill='#ffe680' />
+                  <rect x='3' y='3' width='10' height='1' fill='#ffe680' />
+                  <rect x='7' y='4' width='2' height='1' fill='#b8860b' />
+                  <rect x='6' y='5' width='5' height='1' fill='#b8860b' />
+                  <rect x='5' y='6' width='2' height='1' fill='#b8860b' />
+                  <rect x='6' y='7' width='4' height='1' fill='#b8860b' />
+                  <rect x='9' y='8' width='2' height='1' fill='#b8860b' />
+                  <rect x='5' y='9' width='6' height='1' fill='#b8860b' />
+                  <rect x='7' y='10' width='2' height='1' fill='#b8860b' />
                 </svg>
               </div>
             </div>
@@ -522,16 +568,16 @@ export default function Home() {
                   </p>
                 </div>
                 <div className='flex gap-3'>
-                  <a
-                    href='#projects'
-                    className='pixel-btn flex-1 border-2 border-[#f5a524] bg-[#f5a524] py-3 text-center text-[9px] text-[#1a1c2b] shadow-[3px_3px_0_var(--shadow-card)] hover:brightness-110 md:text-[11px]'>
+                  <button
+                    onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
+                    className='pixel-btn flex-1 py-3 text-center text-[9px] md:text-[11px]'>
                     VIEW WORK
-                  </a>
-                  <a
-                    href='#contact'
-                    className='pixel-btn flex-1 border-2 border-[var(--border-card-inner)] bg-[var(--bg-card-inner)] py-3 text-center text-[9px] text-[var(--text-body)] shadow-[3px_3px_0_var(--shadow-card)] md:text-[11px]'>
+                  </button>
+                  <button
+                    onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+                    className='pixel-btn flex-1 py-3 text-center text-[9px] text-[var(--text-body)] md:text-[11px]'>
                     RESUME
-                  </a>
+                  </button>
                 </div>
               </motion.div>
             </div>
