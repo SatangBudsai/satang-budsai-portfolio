@@ -1,7 +1,8 @@
 import Link from 'next/link'
 
 import ActivityCard from '@/components/site/activity-card'
-import ProfilePhoto from '@/components/site/profile-photo'
+import HeroSprite from '@/components/site/hero-sprite'
+import { PixelItem } from '@/components/site/pixel'
 import { LocalTime, Reveal } from '@/components/site/motion'
 import { Doodle, Marked, PlayfulName } from '@/components/site/playful'
 import WorkGrid from '@/components/site/work-grid'
@@ -22,35 +23,42 @@ export default async function Home() {
   return (
     <>
       {/* HERO: a person, honest numbers, and the proof next to them */}
-      <section className='container-page grid items-center gap-x-14 gap-y-12 pt-32 pb-20 sm:pt-40 lg:grid-cols-[0.95fr_1.05fr]'>
-        <div className='flex flex-col gap-7'>
-          <div className='flex items-end gap-6 sm:gap-8'>
-            <ProfilePhoto
-              src={profile.photo}
-              alt={profile.name}
-              caption={t('common.hero.photo-caption', 'hi, that’s me!')}
-              priority
+      <section className='container-page grid items-center gap-x-12 gap-y-10 pt-24 pb-14 sm:pt-28 lg:min-h-[min(100svh,860px)] lg:grid-cols-[0.95fr_1.05fr] lg:pb-10'>
+        <div className='flex flex-col gap-6'>
+          <div className='flex flex-wrap items-center gap-x-4 gap-y-2 font-mono text-xs tracking-[0.06em] text-muted-foreground uppercase'>
+            <span>
+              {tr(profile.location, lang)} · <LocalTime timeZone={profile.timeZone} />
+            </span>
+            {profile.availability ? (
+              <a href='#contact' className='inline-flex items-center gap-2 text-primary hover:underline'>
+                <span className='animate-pulse-dot size-2 rounded-full bg-primary' aria-hidden='true' />
+                {tr(profile.availability, lang)}
+              </a>
+            ) : null}
+          </div>
+          <div className='mt-14 flex items-end gap-4 sm:gap-6'>
+            <HeroSprite
+              sheet='/pixel/hero-typing.png'
+              frames={6}
+              cell={96}
+              alt={t('common.hero.sprite-alt', 'Pixel-art Satang typing on a laptop')}
+              lines={[
+                t('common.hero.bubble-1', 'hi, that’s me!'),
+                t('common.hero.bubble-2', 'move your mouse — I’ll look'),
+                t('common.hero.bubble-3', 'shipping Orca v0.12.1…'),
+                t('common.hero.bubble-4', 'git commit -m "fix it for real"'),
+                t('common.hero.bubble-5', 'coffee → code → coffee'),
+                t('common.hero.bubble-6', 'open for freelance & full-time')
+              ]}
+              className='-ml-2'
             />
-            <div className='flex min-w-0 flex-col gap-4 pb-2'>
-              <div className='flex flex-col gap-2 font-mono text-xs tracking-[0.06em] text-muted-foreground uppercase'>
-                <span>
-                  {tr(profile.location, lang)} · <LocalTime timeZone={profile.timeZone} />
-                </span>
-                {profile.availability ? (
-                  <a href='#contact' className='inline-flex items-center gap-2 text-primary hover:underline'>
-                    <span className='animate-pulse-dot size-2 rounded-full bg-primary' aria-hidden='true' />
-                    {tr(profile.availability, lang)}
-                  </a>
-                ) : null}
-              </div>
-              <h1 className='display text-[clamp(44px,5.6vw,92px)] leading-[0.92]'>
-                <PlayfulName lines={['Satang', 'Budsai']} />
-              </h1>
-            </div>
+            <h1 className='display pb-3 text-[clamp(44px,5vw,80px)] leading-[0.92]'>
+              <PlayfulName lines={['Satang', 'Budsai']} />
+            </h1>
           </div>
 
           <Reveal delay={0.4} y={14}>
-            <p className='max-w-[34rem] text-[clamp(18px,1.6vw,22px)] leading-[1.6] text-soft'>
+            <p className='max-w-[34rem] text-[clamp(17px,1.35vw,20px)] leading-[1.6] text-soft'>
               {t('common.hero.day', 'By day I build government systems at Chanwanich.')}{' '}
               {t(
                 'common.hero.side',
@@ -66,12 +74,12 @@ export default async function Home() {
           <Reveal delay={0.5} y={12} className='flex flex-wrap items-center gap-3'>
             <a
               href='#contact'
-              className='inline-flex min-h-12 items-center rounded-full bg-primary px-6 font-semibold text-primary-foreground transition-transform active:scale-95'>
+              className='inline-flex min-h-12 flex-1 items-center justify-center rounded-full bg-primary px-6 font-semibold text-primary-foreground transition-transform active:scale-95 sm:flex-none'>
               {t('common.hero.cta-client', 'Start a project')}
             </a>
             <Link
-              href='/about'
-              className='inline-flex min-h-12 items-center rounded-full border border-line-strong px-6 transition-colors hover:border-foreground'>
+              href='/experience'
+              className='order-last inline-flex min-h-12 w-full items-center justify-center rounded-full border border-line-strong px-6 transition-colors hover:border-foreground sm:order-none sm:w-auto'>
               {t('common.hero.cta-hire', 'Hiring? See my experience')}
             </Link>
             <a
@@ -136,7 +144,8 @@ export default async function Home() {
       {/* SELECTED WORK: six pieces, the rest one click away */}
       <section id='work' className='container-page scroll-mt-24 pb-24'>
         <div className='mb-8 flex flex-wrap items-end justify-between gap-4'>
-          <h2 className='display text-[clamp(32px,4vw,56px)]'>
+          <h2 className='display flex items-center gap-3 text-[clamp(32px,4vw,56px)]'>
+            <PixelItem name='chest' size={48} className='pixel-bob' />
             {t('common.home.work-before', 'Selected')}{' '}
             <span className='accent-serif'>{t('common.home.work-accent', 'work')}</span>
           </h2>
@@ -195,7 +204,7 @@ export default async function Home() {
                 key={index}
                 delay={index * 0.05}
                 className='flex gap-4 rounded-2xl border border-line p-5 transition-[transform,border-color] duration-500 ease-out-expo hover:-translate-y-0.5 hover:border-line-strong'>
-                <span className='font-mono text-sm text-primary'>{String(index + 1).padStart(2, '0')}</span>
+                <PixelItem name={['laptop', 'scroll', 'wrench'][index] ?? 'gear'} size={32} />
                 <span className='flex flex-col gap-1'>
                   <span className='font-semibold'>{tr(service.title, lang)}</span>
                   <span className='text-sm leading-relaxed text-muted-foreground'>{tr(service.body, lang)}</span>

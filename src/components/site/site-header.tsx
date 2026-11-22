@@ -14,7 +14,8 @@ import { cn } from '@/lib/utils'
 type Labels = {
   work: string
   services: string
-  experiments: string
+  experience: string
+  learning: string
   about: string
   resume: string
   talk: string
@@ -89,7 +90,8 @@ export default function SiteHeader({ labels, lang, resumeHref }: { labels: Label
 
   const links = [
     { href: '/work', label: labels.work },
-    { href: '/experiments', label: labels.experiments },
+    { href: '/experience', label: labels.experience },
+    { href: '/learning', label: labels.learning },
     { href: '/about', label: labels.about }
   ]
 

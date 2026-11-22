@@ -12,6 +12,7 @@ import { cn } from '@/lib/utils'
 
 import CoverArt from './art'
 import ProductStage from './product-stage'
+import { itemIcon, PixelItem } from './pixel'
 
 export type WorkGroup = 'product' | 'client' | 'experiment'
 
@@ -86,7 +87,11 @@ function Card({ item, index, lang }: { item: WorkItem; index: number; lang: Lang
       <div className='flex items-start justify-between gap-4 px-2 pt-4 pb-2'>
         <div className='flex min-w-0 flex-col gap-1.5'>
           <span className='inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.06em] text-muted-foreground uppercase'>
-            <span className='size-2 rounded-full' style={{ backgroundColor: item.tone }} aria-hidden='true' />
+            {itemIcon[item.key] ? (
+              <PixelItem src={itemIcon[item.key]} size={24} />
+            ) : (
+              <span className='size-2 rounded-full' style={{ backgroundColor: item.tone }} aria-hidden='true' />
+            )}
             {item.tag}
           </span>
           <h3 className={cn('font-semibold tracking-[-0.02em]', item.size === 'lg' ? 'text-3xl' : 'text-2xl')}>
@@ -254,6 +259,7 @@ export default function WorkGrid({
                     ))}
                   </span>
                   <span className='relative flex flex-col gap-3'>
+                    <PixelItem name='map' size={48} className='pixel-bob' />
                     <span className='text-[clamp(56px,6vw,88px)] leading-none font-extrabold tracking-[-0.05em]'>
                       {more.count}
                     </span>

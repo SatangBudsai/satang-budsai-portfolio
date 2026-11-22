@@ -89,7 +89,7 @@ export function buildWorkItems(lang: Lang, t: AppTranslate, options: { featured?
   for (const experiment of experiments) {
     items.set(experiment.slug, {
       key: experiment.slug,
-      href: `/experiments#${experiment.slug}`,
+      href: `/learning#${experiment.slug}`,
       group: 'experiment',
       size: 'md',
       title: experiment.title,

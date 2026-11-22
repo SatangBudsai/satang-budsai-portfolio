@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { Icon } from '@/components/ui/icon'
 import { appIcons } from '@/config/icons'
 import { getNextProject } from '@/content/projects'
+import { itemIcon, PixelItem } from './pixel'
 import { tr, type CaseStudy, type Lang, type Product, type Project } from '@/content/types'
 import type { AppTranslate } from '@/tolgee/translate'
 
@@ -45,7 +46,8 @@ function NextProject({ project, lang, t }: Props<Project>) {
         href={`/work/${next.slug}`}
         className='group flex flex-wrap items-center justify-between gap-6 rounded-[1.75rem] border border-line bg-card/50 p-6 transition-colors duration-500 hover:border-line-strong hover:bg-card sm:p-8'>
         <span className='flex flex-col gap-2'>
-          <span className='eyebrow'>
+          <span className='eyebrow flex items-center gap-2'>
+            <PixelItem name='boots' size={24} />
             {project.kind === 'product'
               ? t('common.detail.next-product', 'Next product')
               : t('common.detail.next-case', 'Next case study')}
@@ -77,7 +79,12 @@ export function ProductDetail({ project, lang, t }: Props<Product>) {
             <span className='pill'>{tr(project.category, lang)}</span>
           </Reveal>
           <Reveal delay={0.05}>
-            <h1 className='display text-[clamp(44px,5.6vw,88px)] leading-[0.95]'>{project.title}</h1>
+            <h1 className='display flex flex-wrap items-center gap-4 text-[clamp(44px,5.6vw,88px)] leading-[0.95]'>
+              {itemIcon[project.slug] ? (
+                <PixelItem src={itemIcon[project.slug]} size={72} className='pixel-bob' />
+              ) : null}
+              {project.title}
+            </h1>
           </Reveal>
           <Reveal delay={0.1}>
             <p className='text-[clamp(19px,1.7vw,24px)] leading-[1.45]'>{tr(project.tagline, lang)}</p>

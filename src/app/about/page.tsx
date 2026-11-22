@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Link from 'next/link'
 
 import ProfilePhoto from '@/components/site/profile-photo'
 import CopyEmail from '@/components/site/copy-email'
@@ -61,7 +62,12 @@ export default async function About() {
       </header>
 
       <section className='container-page pb-20'>
-        <h2 className={H2}>{t('common.about.path', 'Path')}</h2>
+        <div className='mb-8 flex flex-wrap items-end justify-between gap-4'>
+          <h2 className='display text-[clamp(30px,3.4vw,48px)]'>{t('common.about.path', 'Path')}</h2>
+          <Link href='/experience' className='link-draw pb-0.5 text-sm text-soft'>
+            {t('common.about.path-link', 'Full experience →')}
+          </Link>
+        </div>
         <ol className='grid gap-3 md:grid-cols-2'>
           {timeline.map((item, index) => (
             <Reveal

@@ -1,11 +1,21 @@
 import type { Metadata, Viewport } from 'next'
-import { Caveat, Inter_Tight, Instrument_Serif, Itim, JetBrains_Mono, Noto_Sans_Thai } from 'next/font/google'
+import {
+  Caveat,
+  Inter_Tight,
+  Instrument_Serif,
+  Itim,
+  JetBrains_Mono,
+  Noto_Sans_Thai,
+  Pixelify_Sans,
+  Silkscreen
+} from 'next/font/google'
 import { getTolgee } from '@/tolgee/server'
 import { getI18n } from '@/lib/lang'
 import { profile } from '@/content/site'
 import SiteHeader from '@/components/site/site-header'
 import SiteFooter from '@/components/site/site-footer'
 import { EasterEggs } from '@/components/site/playful'
+import DesignPicker, { designBootScript } from '@/components/site/design-picker'
 import Providers from './providers'
 import '@/styles/globals.css'
 
@@ -21,6 +31,16 @@ const jetbrainsMono = JetBrains_Mono({ subsets: ['latin'], variable: '--font-jet
 const notoSansThai = Noto_Sans_Thai({ subsets: ['thai'], variable: '--font-noto-thai', display: 'swap' })
 // Handwritten notes: Caveat for Latin, Itim for Thai.
 const caveat = Caveat({ subsets: ['latin'], weight: ['500', '700'], variable: '--font-caveat', display: 'swap' })
+// Pixel UI text (speech bubbles, item labels). Thai falls back to Noto Sans Thai.
+const silkscreen = Silkscreen({ subsets: ['latin'], weight: '400', variable: '--font-silkscreen', display: 'swap' })
+// Headings in the "Pixel" style.
+const pixelify = Pixelify_Sans({
+  subsets: ['latin'],
+  weight: '700',
+  variable: '--font-pixelify',
+  display: 'swap',
+  preload: false
+})
 const itim = Itim({ subsets: ['thai'], weight: '400', variable: '--font-itim', display: 'swap' })
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -51,7 +71,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const nav = {
     work: t('common.nav.work', 'Work'),
     services: t('common.nav.services', 'Services'),
-    experiments: t('common.nav.experiments', 'Experiments'),
+    experience: t('common.nav.experience', 'Experience'),
+    learning: t('common.nav.learning', 'Learning'),
     about: t('common.nav.about', 'About'),
     resume: t('common.nav.resume', 'Resume'),
     talk: t('common.nav.talk', 'Let’s talk'),
@@ -64,11 +85,12 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html
       lang={lang}
-      className={`dark ${interTight.variable} ${instrumentSerif.variable} ${jetbrainsMono.variable} ${notoSansThai.variable} ${caveat.variable} ${itim.variable}`}
+      className={`dark ${interTight.variable} ${instrumentSerif.variable} ${jetbrainsMono.variable} ${notoSansThai.variable} ${caveat.variable} ${itim.variable} ${silkscreen.variable} ${pixelify.variable}`}
       data-scroll-behavior='smooth'
       suppressHydrationWarning>
       {/* Browser extensions often add attributes to <body> before React loads. */}
       <body suppressHydrationWarning>
+        <script dangerouslySetInnerHTML={{ __html: designBootScript }} />
         <a
           href='#main'
           className='sr-only z-[100] rounded-full bg-primary px-5 py-3 font-medium text-primary-foreground focus:not-sr-only focus:fixed focus:top-4 focus:left-4'>
@@ -85,6 +107,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
               'Try typing "ship" anywhere on the page.'
             ]}
           />
+          <DesignPicker always={process.env.NODE_ENV !== 'production'} />
         </Providers>
         <div className='grain' aria-hidden='true' />
       </body>

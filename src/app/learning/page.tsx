@@ -3,6 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 import { Reveal } from '@/components/site/motion'
+import { PixelItem } from '@/components/site/pixel'
 import { GallerySection, ObstaclesSection, ResultsSection } from '@/components/site/story'
 import { experimentGalleries } from '@/content/galleries'
 import { experimentStories } from '@/content/stories'
@@ -15,12 +16,12 @@ import { getI18n } from '@/lib/lang'
 export async function generateMetadata(): Promise<Metadata> {
   const { t } = await getI18n()
   return {
-    title: t('common.nav.experiments', 'Experiments'),
+    title: t('common.nav.learning', 'Learning'),
     description: t('common.exp.meta', 'Studies in building unfamiliar software by directing AI coding agents.')
   }
 }
 
-export default async function Experiments() {
+export default async function Learning() {
   const { lang, t } = await getI18n()
   const testing = [
     t('common.exp.test-1', 'Can agents follow architecture decisions over hundreds of commits?'),
@@ -31,9 +32,10 @@ export default async function Experiments() {
   return (
     <>
       <header className='container-page flex flex-col gap-10 pt-32 pb-20 sm:pt-40'>
-        <Reveal>
+        <Reveal className='flex items-center gap-3'>
+          <PixelItem name='wizard-hat' size={48} className='pixel-bob' />
           <span className='eyebrow text-primary'>
-            {t('common.exp.page-eyebrow', 'Study log · AI-assisted development')}
+            {t('common.exp.page-eyebrow', 'Always learning · new domains, on purpose')}
           </span>
         </Reveal>
         <Reveal delay={0.05}>
@@ -48,12 +50,15 @@ export default async function Experiments() {
             <p className='text-xl leading-relaxed text-soft'>
               {t(
                 'common.exp.intro',
-                'I’m a web developer, not a game developer. These projects are deliberate experiments: pick a domain I have no experience in — real-time multiplayer, game engines — and see how far planning, written rules and AI coding agents can carry me.'
+                'I learn by building. When something is new to me — real-time multiplayer, game engines — I take it on as a real project: plan it, write down the rules, direct AI coding agents, and keep notes on what held up. Games aren’t my job; learning fast is.'
               )}
             </p>
           </Reveal>
           <Reveal delay={0.15} className='flex flex-col gap-4 rounded-3xl border border-line p-7'>
-            <span className='eyebrow'>{t('common.exp.testing', 'What I’m testing')}</span>
+            <span className='eyebrow flex items-center gap-2'>
+              <PixelItem name='magnifier' size={24} />
+              {t('common.exp.testing', 'What I’m testing')}
+            </span>
             <ul className='flex flex-col gap-3 text-soft'>
               {testing.map(item => (
                 <li key={item} className='flex gap-3'>

@@ -39,7 +39,7 @@ export default async function Work() {
           all: t('common.grid.all', 'All'),
           product: t('common.grid.products', 'My products'),
           client: t('common.grid.client', 'Client work'),
-          experiment: t('common.grid.lab', 'Lab & experiments')
+          experiment: t('common.grid.lab', 'Learning')
         }}
         cta={{
           href: '#contact',

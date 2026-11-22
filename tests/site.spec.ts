@@ -18,7 +18,8 @@ const routes = [
   '/work/sage',
   '/work/junior-bootcamp',
   '/work/readitgo',
-  '/experiments',
+  '/learning',
+  '/experience',
   '/about'
 ]
 
@@ -100,7 +101,7 @@ test('hydrates cleanly with reduced motion', async ({ browser }) => {
   const page = await context.newPage()
   const errors: string[] = []
   page.on('pageerror', error => errors.push(error.message))
-  for (const route of ['/', '/work', '/work/eec-id', '/work/qorstack-report', '/experiments', '/about']) {
+  for (const route of ['/', '/work', '/work/eec-id', '/work/qorstack-report', '/learning', '/about']) {
     await page.goto(route)
     await expect(page.getByRole('heading', { level: 1 })).toBeVisible()
   }

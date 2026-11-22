@@ -11,9 +11,20 @@ type Category = 'work' | 'freelance' | 'own'
 type Day = Partial<Record<Category, number>>
 type Product = { key: string; title: string; icon: string; href: string; version: string; tone: string }
 
-export const categoryTone: Record<Category, string> = { work: '#9b6dff', freelance: '#5eead4', own: '#f472b6' }
+// Series colours follow the active palette (see globals.css).
+export const categoryTone: Record<Category, string> = {
+  work: 'var(--primary)',
+  freelance: 'var(--series-2)',
+  own: 'var(--series-3)'
+}
 const order: Category[] = ['work', 'freelance', 'own']
-const heat = ['#1d1926', '#33255a', '#4f36a0', '#7651ea', '#b49bff']
+const heat = [
+  'color-mix(in oklab, var(--foreground) 7%, var(--card))',
+  'color-mix(in oklab, var(--primary) 28%, var(--card))',
+  'color-mix(in oklab, var(--primary) 52%, var(--card))',
+  'color-mix(in oklab, var(--primary) 80%, var(--card))',
+  'color-mix(in oklab, var(--primary) 70%, white)'
+]
 
 const sum = (day: Day | undefined) => (day ? order.reduce((total, key) => total + (day[key] ?? 0), 0) : 0)
 const iso = (date: Date) => date.toISOString().slice(0, 10)
@@ -146,7 +157,7 @@ export default function ActivityCard({
   ]
 
   return (
-    <div className='rounded-[1.75rem] border border-line bg-card/80 p-5 shadow-[0_30px_80px_rgba(0,0,0,0.45)] backdrop-blur-sm sm:p-7'>
+    <div className='rounded-[1.75rem] border border-line bg-card/80 p-5 shadow-[0_30px_80px_rgba(0,0,0,0.45)] backdrop-blur-sm sm:p-6'>
       <div className='flex flex-wrap items-center justify-between gap-3'>
         <span className='font-mono text-xs tracking-[0.08em] text-muted-foreground uppercase'>{labels.period}</span>
         <ul className='flex flex-wrap gap-x-4 gap-y-1 text-xs text-soft'>
@@ -163,10 +174,10 @@ export default function ActivityCard({
         </ul>
       </div>
 
-      <dl className='mt-5 grid grid-cols-2 gap-x-4 gap-y-4 sm:grid-cols-4'>
+      <dl className='mt-4 grid grid-cols-2 gap-x-4 gap-y-3 sm:grid-cols-4'>
         {stats.map(stat => (
           <div key={stat.label} className='flex flex-col gap-1'>
-            <dd className='text-[clamp(26px,2.6vw,38px)] leading-none font-extrabold tracking-[-0.035em] tabular-nums'>
+            <dd className='text-[clamp(24px,2.2vw,34px)] leading-none font-extrabold tracking-[-0.035em] tabular-nums'>
               {stat.value}
             </dd>
             <dt className='text-xs text-muted-foreground'>{stat.label}</dt>
@@ -175,7 +186,7 @@ export default function ActivityCard({
       </dl>
 
       {/* Contribution heatmap */}
-      <div className='mt-6' role='img' aria-label={labels.chart}>
+      <div className='mt-4' role='img' aria-label={labels.chart}>
         <div className='hidden grid-cols-[repeat(53,minmax(0,1fr))] gap-[3px] sm:grid' aria-hidden='true'>
           {monthLabels.map((label, index) => (
             <span
@@ -246,7 +257,7 @@ export default function ActivityCard({
       </div>
 
       {/* Monthly bars by category */}
-      <div className='mt-4 flex h-28 items-end gap-1.5 sm:h-32 sm:gap-2' aria-hidden='true'>
+      <div className='mt-3 flex h-20 items-end gap-1.5 sm:gap-2' aria-hidden='true'>
         {months.map((month, index) => (
           <div key={month.month} className='flex h-full flex-1 flex-col justify-end'>
             <motion.div
@@ -282,7 +293,7 @@ export default function ActivityCard({
       </div>
 
       {/* What ships from the "own" slice */}
-      <div className='mt-6 flex flex-wrap items-center gap-x-3 gap-y-2 border-t border-line pt-5'>
+      <div className='mt-4 flex flex-wrap items-center gap-x-2 gap-y-2 border-t border-line pt-4'>
         <span className='mr-1 font-mono text-xs tracking-[0.08em] text-muted-foreground uppercase'>
           {labels.shipping}
         </span>
@@ -296,36 +307,39 @@ export default function ActivityCard({
                 width={28}
                 height={28}
                 unoptimized={product.icon.endsWith('.svg')}
-                className='size-7 rounded-[8px] border border-white/10 bg-[#17141f] object-contain p-px transition-transform duration-300 group-hover:-rotate-6'
+                className='size-6 rounded-[7px] border border-white/10 bg-[#17141f] object-contain p-px transition-transform duration-300 group-hover:-rotate-6'
               />
-              <span className='flex flex-col leading-tight'>
-                <span className='text-xs font-medium'>{product.title.replace('Git Control for ', '')}</span>
-                <span className='font-mono text-[10px]' style={{ color: product.tone }}>
-                  {product.version}
-                </span>
+              <span className='text-xs font-medium'>
+                {product.title.replace('Git Control for ', '').replace(' Report', '')}
               </span>
             </>
           )
           const className =
-            'group inline-flex items-center gap-2 rounded-xl py-1 pr-2 transition-colors hover:bg-white/[0.04]'
+            'group inline-flex items-center gap-1.5 rounded-xl py-1 pr-1.5 transition-colors hover:bg-white/[0.04]'
           return external ? (
             <a
               key={product.key}
               href={product.href}
               target='_blank'
               rel='noreferrer'
-              aria-label={product.title}
+              aria-label={`${product.title} ${product.version}`}
+              title={product.version}
               className={className}>
               {body}
             </a>
           ) : (
-            <Link key={product.key} href={product.href} aria-label={product.title} className={className}>
+            <Link
+              key={product.key}
+              href={product.href}
+              aria-label={`${product.title} ${product.version}`}
+              title={product.version}
+              className={className}>
               {body}
             </Link>
           )
         })}
       </div>
-      <p className='mt-4 text-[11px] leading-relaxed text-muted-foreground'>{labels.footnote}</p>
+      <p className='mt-3 text-[11px] leading-relaxed text-muted-foreground'>{labels.footnote}</p>
     </div>
   )
 }

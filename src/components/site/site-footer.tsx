@@ -1,7 +1,9 @@
+import Link from 'next/link'
 import { Icon } from '@/components/ui/icon'
 import { appIcons } from '@/config/icons'
 import { profile } from '@/content/site'
 import { getI18n } from '@/lib/lang'
+import { PixelItem } from './pixel'
 
 import CopyEmail from './copy-email'
 import { Magnetic, Reveal } from './motion'
@@ -16,7 +18,10 @@ export default async function SiteFooter() {
       <div className='container-page flex flex-col gap-16 pt-24 pb-10 sm:pt-28'>
         <div className='grid gap-3 md:grid-cols-2'>
           <Reveal className='flex flex-col gap-3 rounded-[1.75rem] border border-line bg-card/50 p-6 sm:p-8'>
-            <span className='eyebrow text-primary'>{t('common.footer.clients-eyebrow', 'For clients')}</span>
+            <span className='eyebrow flex items-center gap-2 text-primary'>
+              <PixelItem name='rocket' size={32} />
+              {t('common.footer.clients-eyebrow', 'For clients')}
+            </span>
             <p className='text-xl leading-snug font-semibold tracking-tight'>
               {t('common.footer.clients-title', 'Have a system, a report or a tool in mind?')}
             </p>
@@ -30,7 +35,10 @@ export default async function SiteFooter() {
           <Reveal
             delay={0.05}
             className='flex flex-col gap-3 rounded-[1.75rem] border border-line bg-card/50 p-6 sm:p-8'>
-            <span className='eyebrow text-primary'>{t('common.footer.teams-eyebrow', 'For teams hiring')}</span>
+            <span className='eyebrow flex items-center gap-2 text-primary'>
+              <PixelItem name='coffee' size={32} />
+              {t('common.footer.teams-eyebrow', 'For teams hiring')}
+            </span>
             <p className='text-xl leading-snug font-semibold tracking-tight'>
               {t('common.footer.teams-title', 'Full-stack: .NET, Next.js, Flutter, PostgreSQL.')}
             </p>
@@ -40,6 +48,9 @@ export default async function SiteFooter() {
                 'Government systems by day, products after hours. Email me for my résumé and references.'
               )}
             </p>
+            <Link href='/experience' className='link-draw w-fit pb-0.5 text-sm text-primary'>
+              {t('common.footer.teams-link', 'See my experience →')}
+            </Link>
           </Reveal>
         </div>
         <Reveal className='flex flex-col gap-8'>

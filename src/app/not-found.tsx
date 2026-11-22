@@ -1,13 +1,17 @@
 import Link from 'next/link'
 
 import { Doodle } from '@/components/site/playful'
+import { PixelItem } from '@/components/site/pixel'
 import { getI18n } from '@/lib/lang'
 
 export default async function NotFound() {
   const { t } = await getI18n()
   return (
     <section className='container-page flex min-h-[80svh] flex-col justify-center gap-8 pt-32 pb-20'>
-      <span className='eyebrow text-primary'>404</span>
+      <span className='eyebrow flex items-center gap-3 text-primary'>
+        <PixelItem name='map' size={48} className='pixel-bob' />
+        404 · {t('common.notfound.lost', 'off the map')}
+      </span>
       <h1 className='display text-[clamp(56px,10vw,168px)]'>
         {t('common.notfound.title-before', 'Nothing')}{' '}
         <span className='accent-serif'>{t('common.notfound.title-accent', 'here.')}</span>
