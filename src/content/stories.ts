@@ -469,8 +469,8 @@ export const stories: Record<string, Story> = {
   },
   'eec-e-customs': {
     timeline: {
-      th: 'เม.ย. → พ.ย. 2026 · ~1,550 commits ใน 10 repo · เขียน schedule service ขึ้นมาเองตั้งแต่ศูนย์',
-      en: 'Apr → Nov 2026 · ~1,550 commits across 10 repos · built the schedule service from scratch'
+      th: 'เม.ย. → พ.ย. 2026 · ตั้งต้น 5 service เอง · 79% ของ commit ใน payment service',
+      en: 'Apr → Nov 2026 · bootstrapped 5 services · 79% of payment-service commits'
     },
     results: [
       {

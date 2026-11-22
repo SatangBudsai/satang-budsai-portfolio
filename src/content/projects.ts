@@ -872,8 +872,8 @@ export const cases: CaseStudy[] = [
       en: 'Phase 2 re-architected Phase 1 into microservices, and had to talk to outside systems — DGA digital signatures and the asynchronous NSW customs gateway.'
     },
     did: {
-      th: 'ช่วยวางโครง Phase 2 และเขียนงานทั้งในเว็บแอป, core service และ payment service',
-      en: 'Helped shape the Phase 2 structure and built across the web app, the core service and the payment service.'
+      th: 'ตั้งต้น 5 service ของ Phase 2 ตั้งแต่ commit แรก เป็นคนเขียนหลักของ payment service รีวิวและ approve MR ของทีม และเขียนงานในเว็บแอปกับ core service',
+      en: 'Bootstrapped five Phase 2 services from the first commit, wrote most of the payment service, review and approve the team’s MRs, and built across the web app and core service.'
     },
     challenges: [
       {

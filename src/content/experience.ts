@@ -63,8 +63,8 @@ export const roles: Role[] = [
         en: 'Created Sage, an AI-agent protocol (classify and plan before code; review, security-review and test commands; binding decision records), rolled out across 5+ e-Customs repos and extended by teammates.'
       },
       {
-        th: 'เป็นผู้รีวิวและ approve MR ของทีมประมาณ 10 คน merge งานของเพื่อนเข้า dev ไปแล้วราว 130 รายการ และเป็นคนเขียนหลักของชุดทดสอบ Playwright 275 เคสที่ใช้ในรอบ UAT พร้อมเครื่องมือ clone ข้อมูลทดสอบสำหรับทดสอบซ้ำ',
-        en: 'Review and approve merge requests for a team of about 10 — about 130 teammates’ MRs merged into dev; main contributor to the 275-case Playwright suite used in UAT, plus a tool that clones test data for retests.'
+        th: 'เป็นผู้รีวิวและ approve MR ของทีมประมาณ 10 คน approve และ merge งานของเพื่อนไปแล้วราว 130 รายการตั้งแต่ พ.ค. 2026 และเป็นคนเขียนหลักของชุดทดสอบ Playwright 275 เคสที่ใช้ในรอบ UAT พร้อมเครื่องมือ clone ข้อมูลทดสอบสำหรับทดสอบซ้ำ',
+        en: 'Review and approve merge requests for a team of about 10 — approved and merged about 130 teammates’ MRs since May 2026; main contributor to the 275-case Playwright suite used in UAT, plus a tool that clones test data for retests.'
       },
       {
         th: 'ดูแลระบบ SSO และ audit log ของการล็อกอิน (ไม่เก็บ token หรือข้อมูลส่วนบุคคลใน log) และตรวจยืนยันการแก้ไขตามผล pentest ของ e-Customs เฟส 1',
@@ -95,10 +95,6 @@ export const roles: Role[] = [
       {
         th: 'ทำให้ล็อกอินจากแอปพันธมิตรด้วยการกดครั้งเดียวใช้ได้บน iPhone ซึ่ง cookie ข้ามแอปไม่ได้ ทดสอบมา 7 แนวทางก่อนเลือกวิธีที่ใช้',
         en: 'Got one-tap sign-in from partner apps working on iPhone, where cookies don’t carry across apps — tested 7 approaches before choosing one.'
-      },
-      {
-        th: 'ย้ายการออกรายงานไปทำเป็น background process เพื่อแก้ปัญหา timeout',
-        en: 'Moved report generation to background processing to fix timeouts.'
       },
       {
         th: 'ทำเว็บ Suvarnabhumi Airport Gate ด้วย Next.js และ .NET และวางโครงรายงาน export ด้วย FastReport ให้ทั้งทีมใช้แบบเดียวกัน',

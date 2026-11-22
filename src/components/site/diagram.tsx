@@ -44,7 +44,7 @@ const diagrams: Record<Exclude<DiagramId, 'pdf-fixer'>, LayeredDiagram> = {
         ]
       }
     ],
-    footer: 'Kafka · SignalR · PostgreSQL'
+    footer: { th: 'stack ของทั้งระบบ: Kafka · SignalR · PostgreSQL', en: 'System stack: Kafka · SignalR · PostgreSQL' }
   },
   'eec-customs': {
     layers: [

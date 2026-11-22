@@ -11,7 +11,7 @@
   "activity.active-days": "days with commits",
   "activity.commit-total": "commits",
   "activity.commits": "tools shipped",
-  "activity.footnote": "Counted from my local repositories on 22 Nov 2026. Squares are days with commits, including AI-assisted work I review; releases count each minor version once.",
+  "activity.footnote": "Day job, freelance and personal projects combined, counted from my local repositories on 22 Nov 2026. Squares are days with commits, including AI-assisted work I review; releases count each minor version once.",
   "activity.freelance": "Freelance",
   "activity.hint": "Hover or tap a square to see that day",
   "activity.hint-touch": "Tap a square to see that day",
