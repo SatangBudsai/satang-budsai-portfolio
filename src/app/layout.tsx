@@ -15,7 +15,6 @@ import { profile } from '@/content/site'
 import SiteHeader from '@/components/site/site-header'
 import SiteFooter from '@/components/site/site-footer'
 import { EasterEggs } from '@/components/site/playful'
-import DesignPicker, { designBootScript } from '@/components/site/design-picker'
 import Providers from './providers'
 import '@/styles/globals.css'
 
@@ -61,7 +60,13 @@ export async function generateMetadata(): Promise<Metadata> {
   }
 }
 
-export const viewport: Viewport = { themeColor: '#0b0a10', colorScheme: 'dark' }
+export const viewport: Viewport = {
+  themeColor: [
+    { media: '(prefers-color-scheme: dark)', color: '#0b0a10' },
+    { media: '(prefers-color-scheme: light)', color: '#f7f5fb' }
+  ],
+  colorScheme: 'dark light'
+}
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const { lang, t } = await getI18n()
@@ -79,18 +84,19 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     openMenu: t('common.nav.open-menu', 'Open menu'),
     closeMenu: t('common.nav.close-menu', 'Close menu'),
     switchLanguage: t('common.nav.switch-language', 'เปลี่ยนเป็นภาษาไทย'),
-    home: t('common.nav.home', 'Home')
+    home: t('common.nav.home', 'Home'),
+    themeDark: t('common.nav.theme-dark', 'Switch to dark mode'),
+    themeLight: t('common.nav.theme-light', 'Switch to light mode')
   }
 
   return (
     <html
       lang={lang}
-      className={`dark ${interTight.variable} ${instrumentSerif.variable} ${jetbrainsMono.variable} ${notoSansThai.variable} ${caveat.variable} ${itim.variable} ${silkscreen.variable} ${pixelify.variable}`}
+      className={`${interTight.variable} ${instrumentSerif.variable} ${jetbrainsMono.variable} ${notoSansThai.variable} ${caveat.variable} ${itim.variable} ${silkscreen.variable} ${pixelify.variable}`}
       data-scroll-behavior='smooth'
       suppressHydrationWarning>
       {/* Browser extensions often add attributes to <body> before React loads. */}
       <body suppressHydrationWarning>
-        <script dangerouslySetInnerHTML={{ __html: designBootScript }} />
         <a
           href='#main'
           className='sr-only z-[100] rounded-full bg-primary px-5 py-3 font-medium text-primary-foreground focus:not-sr-only focus:fixed focus:top-4 focus:left-4'>
@@ -107,9 +113,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
               'Try typing "ship" anywhere on the page.'
             ]}
           />
-          <DesignPicker always={process.env.NODE_ENV !== 'production'} />
         </Providers>
-        <div className='grain' aria-hidden='true' />
       </body>
     </html>
   )

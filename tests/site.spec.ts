@@ -107,11 +107,23 @@ test('hydrates cleanly with reduced motion', async ({ browser }) => {
     await expect(page.getByRole('heading', { level: 1 })).toBeVisible()
   }
   await page.goto('/')
-  // The hero name must be in place, not stuck below the line.
-  const letter = page.locator('h1 [aria-hidden] span').first()
-  await expect(letter).toBeInViewport()
+  // The name must be on screen right away.
+  await expect(page.getByRole('heading', { level: 1, name: /Satang/ })).toBeInViewport()
   expect(errors).toEqual([])
   await context.close()
+})
+
+test('résumé PDF never links to a local server', async () => {
+  const { readFileSync } = await import('node:fs')
+  const pdf = readFileSync('public/Satang-Budsai-Resume.pdf').toString('latin1')
+  expect(pdf).not.toContain('127.0.0.1')
+  expect(pdf).not.toContain('localhost')
+})
+
+test('serves the résumé PDF', async ({ request }) => {
+  const response = await request.get('/Satang-Budsai-Resume.pdf')
+  expect(response.ok()).toBe(true)
+  expect(response.headers()['content-type']).toContain('application/pdf')
 })
 
 test('opens the screen gallery in a lightbox and closes it with Escape', async ({ page }) => {

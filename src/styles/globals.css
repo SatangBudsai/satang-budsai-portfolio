@@ -117,13 +117,13 @@
 @layer components {
   /* Small monospace labels above headings, on cards and in tables. */
   .eyebrow {
-    @apply font-mono text-xs tracking-[0.08em] text-muted-foreground uppercase;
+    @apply font-mono text-[13px] tracking-[0.06em] text-muted-foreground uppercase;
   }
 
   /* Oversized display type used for section titles. */
   .display {
-    @apply font-extrabold tracking-[-0.045em];
-    line-height: 0.9;
+    @apply font-extrabold tracking-[-0.03em];
+    line-height: 0.92;
   }
 
   /* An italic serif word set inside display type. Thai falls back to the sans face. */
@@ -138,41 +138,6 @@
 
   .container-page {
     @apply mx-auto w-full max-w-[90rem] px-4 sm:px-6 lg:px-[4vw];
-  }
-}
-
-/* Film grain over the whole page: one fixed layer, no repaint on scroll. */
-.grain {
-  pointer-events: none;
-  position: fixed;
-  inset: -50%;
-  z-index: 60;
-  opacity: 0.05;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .grain {
-    animation: grain 1.2s steps(6) infinite;
-  }
-}
-
-@keyframes grain {
-  0%,
-  100% {
-    transform: translate(0, 0);
-  }
-  20% {
-    transform: translate(-3%, 2%);
-  }
-  40% {
-    transform: translate(2%, -3%);
-  }
-  60% {
-    transform: translate(-2%, -1%);
-  }
-  80% {
-    transform: translate(3%, 3%);
   }
 }
 
@@ -431,7 +396,7 @@
 .pixel-bubble::after {
   content: '';
   position: absolute;
-  left: 53px;
+  left: 56px;
   top: calc(100% + 3px);
   width: 6px;
   height: 6px;
@@ -441,6 +406,31 @@
     3px 0 0 0 #120d1d,
     0 3px 0 0 #120d1d,
     0 -3px 0 0 #f4f1fb;
+}
+
+/* The desk under the half-body sprite: a lit top edge, stepped ends. */
+.pixel-desk {
+  background:
+    linear-gradient(var(--line-strong), var(--line-strong)) top / 100% 3px no-repeat,
+    color-mix(in oklab, var(--card) 70%, var(--primary) 30%);
+  clip-path: polygon(3% 0, 97% 0, 100% 40%, 100% 100%, 0 100%, 0 40%);
+  box-shadow: 0 8px 24px -8px rgb(0 0 0 / 0.5);
+}
+
+/* Section headings: the rule draws in when the section arrives. */
+@media (prefers-reduced-motion: no-preference) {
+  .section-rule {
+    transform-origin: left;
+    animation: section-rule linear both;
+    animation-timeline: view();
+    animation-range: entry 10% cover 30%;
+  }
+}
+
+@keyframes section-rule {
+  from {
+    transform: scaleX(0);
+  }
 }
 
 /* A soft oval shadow drawn in 3 px steps. */
@@ -463,154 +453,49 @@
 }
 
 /* ------------------------------------------------------------------ */
-/* Design options: palettes (data-palette) and styles (data-style).    */
-/* Picked with the Design panel (components/site/design-picker.tsx).   */
+/* Light theme (html.light), same violet accent.                       */
 /* ------------------------------------------------------------------ */
 
-:root[data-palette='mint'] {
-  --series-2: #a78bfa;
-  --series-3: #f472b6;
-  --background: #07100e;
-  --card: #0e1916;
-  --muted: #12201c;
-  --border: #1c2f29;
-  --line-strong: #2e4a41;
-  --primary: #4ee6b0;
-  --primary-foreground: #04110c;
-  --foreground: #eef7f3;
-  --soft: #c8dcd5;
-  --muted-foreground: #8fa9a0;
-}
-
-:root[data-palette='sunset'] {
-  --series-2: #5eead4;
-  --series-3: #c084fc;
-  --background: #120c0a;
-  --card: #1c1411;
-  --muted: #221813;
-  --border: #33241d;
-  --line-strong: #4d362b;
-  --primary: #ff8a4c;
-  --primary-foreground: #1a0d06;
-  --foreground: #fff3ec;
-  --soft: #e3d0c6;
-  --muted-foreground: #b39a8d;
-}
-
-:root[data-palette='ocean'] {
-  --series-2: #5eead4;
-  --series-3: #f472b6;
-  --background: #070b14;
-  --card: #0e1422;
-  --muted: #121a2b;
-  --border: #1d2840;
-  --line-strong: #2f3f60;
-  --primary: #5ab4ff;
-  --primary-foreground: #04101f;
-  --foreground: #eef3fb;
-  --soft: #c9d6ea;
-  --muted-foreground: #8e9bb5;
-}
-
-:root[data-palette='arcade'] {
-  --series-2: #5eead4;
-  --series-3: #f472b6;
-  --background: #0d0820;
-  --card: #170f33;
-  --muted: #1c133d;
-  --border: #2b1f57;
-  --line-strong: #43337f;
-  --primary: #ffd23f;
-  --primary-foreground: #1a1200;
-  --foreground: #f6f2ff;
-  --soft: #d8d0f0;
-  --muted-foreground: #a197c4;
-}
-
-:root[data-palette='sakura'] {
-  --series-2: #5eead4;
-  --series-3: #fbbf24;
-  --background: #100a0e;
-  --card: #1a1117;
-  --muted: #20141c;
-  --border: #33202c;
-  --line-strong: #4d3043;
-  --primary: #ff7eb6;
-  --primary-foreground: #1a0610;
-  --foreground: #fdf1f6;
-  --soft: #e6cfda;
-  --muted-foreground: #b494a4;
-}
-
-:root[data-palette='paper'] {
-  --series-2: #0f9f87;
-  --series-3: #db2777;
-  --background: #f6f3ec;
+:root.light {
+  color-scheme: light;
+  --background: #f7f5fb;
+  --foreground: #16131d;
   --card: #ffffff;
-  --muted: #eeeae0;
-  --border: #e2ddd0;
-  --line-strong: #cbc4b3;
+  --muted: #efebf6;
+  --muted-foreground: #615b6e;
+  --soft: #3a3545;
+  --border: #e4dfee;
+  --line-strong: #cdc5dc;
   --primary: #6d3fe0;
   --primary-foreground: #ffffff;
-  --foreground: #17141f;
-  --soft: #3d3848;
-  --muted-foreground: #6b6577;
+  --series-2: #0f9f87;
+  --series-3: #db2777;
 }
 
-/* Paper is light: drop shadows meant for a dark page soften. */
-:root[data-palette='paper'] [class*='shadow-['] {
-  --tw-shadow-color: rgb(40 30 60 / 0.12);
+/* Illustrations (diagrams, cover art, product stages) are drawn dark; in light mode
+   they keep the dark palette so their text stays readable. */
+:root.light
+  :is(
+    [class*='bg-[#100e16]'],
+    [class*='bg-[#0d0b13]'],
+    [class*='bg-[#0a0a0b]'],
+    [class*='bg-[#14121b]'],
+    [class*='bg-[#17141f]']
+  ) {
+  --foreground: #f2f2f0;
+  --soft: #cdcad9;
+  --muted-foreground: #a3a0b3;
+  --border: #25212f;
+  --line-strong: #3d3750;
+  --card: #14121b;
+  --muted: #18151f;
+  --primary: #9b6dff;
+  color: var(--foreground);
 }
 
-/* Style: Pixel — square corners, hard drop shadows, pixel headlines. */
-:root[data-style='pixel'] *,
-:root[data-style='pixel'] *::before,
-:root[data-style='pixel'] *::after {
-  border-radius: 0 !important;
-}
-
-:root[data-style='pixel'] [class*='border-line'][class*='rounded'],
-:root[data-style='pixel'] [class*='bg-card'][class*='rounded'] {
-  border-width: 2px;
-  box-shadow: 5px 5px 0 0 rgb(0 0 0 / 0.5);
-}
-
-:root[data-style='pixel'] [class*='bg-primary'][class*='min-h-'] {
-  box-shadow:
-    inset -3px -3px 0 0 rgb(0 0 0 / 0.25),
-    inset 3px 3px 0 0 rgb(255 255 255 / 0.25),
-    4px 4px 0 0 rgb(0 0 0 / 0.55);
-}
-
-:root[data-style='pixel'] .display {
-  font-family: var(--font-pixelify), var(--font-noto-thai), sans-serif;
-  font-weight: 700;
-  letter-spacing: 0;
-}
-
-:root[data-style='pixel'] .accent-serif {
-  font-family: var(--font-pixelify), var(--font-noto-thai), sans-serif;
-  font-style: normal;
-}
-
-/* Style: Editorial — serif headlines, tighter corners, hairline borders. */
-:root[data-style='editorial'] .display {
-  font-family: var(--font-instrument-serif), var(--font-noto-thai), serif;
-  font-weight: 400;
-  letter-spacing: -0.02em;
-  line-height: 0.95;
-}
-
-:root[data-style='editorial'] [class*='rounded-'] {
-  border-radius: 6px !important;
-}
-
-:root[data-style='editorial'] [class*='rounded-full'] {
-  border-radius: 999px !important;
-}
-
-:root[data-style='editorial'] .eyebrow {
-  letter-spacing: 0.16em;
+/* Shadows meant for a dark page are too heavy on light. */
+:root.light [class*='shadow-['] {
+  --tw-shadow-color: rgb(60 40 110 / 0.1);
 }
 
 /* ------------------------------------------------------------------ */
@@ -619,11 +504,13 @@
 @media print {
   @page {
     size: A4;
-    margin: 13mm 14mm;
+    margin: 13mm 14mm 15mm;
   }
 
   :root,
-  :root[data-palette] {
+  :root.light {
+    /* The theme provider sets color-scheme inline; a dark scheme paints the page margins dark. */
+    color-scheme: light !important;
     --background: #ffffff;
     --foreground: #15121c;
     --card: #ffffff;
@@ -653,11 +540,57 @@
     break-inside: avoid;
   }
 
+  /* One page: side roles show their top three bullets in print. */
+  .resume-side li:nth-child(n + 4) {
+    display: none;
+  }
+
   .resume-sheet h2 {
     break-after: avoid;
   }
 
   .resume-sheet a {
     text-decoration: none;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Thai typography: no faux italics, no letter-spacing, room for tone   */
+/* marks. Applied when the page language is Thai.                      */
+/* ------------------------------------------------------------------ */
+:lang(th) .accent-serif,
+:lang(th) .font-serif {
+  font-family: var(--font-sans);
+  font-style: normal;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
+:lang(th) .display,
+:lang(th) h1,
+:lang(th) h2 {
+  letter-spacing: 0 !important;
+  line-height: 1.2 !important;
+}
+
+:lang(th) .eyebrow,
+:lang(th) [class*='tracking-['][class*='uppercase'] {
+  font-family: var(--font-sans);
+  letter-spacing: 0 !important;
+  text-transform: none;
+}
+
+/* Heatmap cells fade in once, column by column; no per-cell JS animation. */
+@media (prefers-reduced-motion: no-preference) {
+  .heat-cell {
+    animation: heat-in 0.35s ease-out both;
+    animation-delay: calc(0.3s + var(--w, 0) * 12ms);
+  }
+}
+
+@keyframes heat-in {
+  from {
+    opacity: 0;
+    scale: 0.4;
   }
 }

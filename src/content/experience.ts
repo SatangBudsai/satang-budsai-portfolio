@@ -1,14 +1,23 @@
 /**
- * Work history for the Experience page. Dates and numbers come from the
- * résumé and the repos' commit history; nothing here is estimated.
+ * Work history for the home page, Experience page and résumé.
+ *
+ * Written the way résumé guides and hiring managers ask for it: each bullet
+ * leads with the outcome in plain words, then how; numbers only where the
+ * repos or reports have them, with the baseline or caveat that goes with
+ * them. Freelance and own products are outside working hours and marked so.
+ * Thai is written for Thai readers, not translated line by line.
  */
 import type { L } from './types'
 
 export type Role = {
   id: string
+  /** Display range ("— now" / "— ปัจจุบัน"); the résumé turns "now" into "Present". */
   when: L
+  /** "YYYY-MM"; used for the duration label. */
+  start: string
+  end?: string
   role: L
-  org: string
+  org: L
   kind: L
   /** A PixelLab item from public/pixel/items. */
   icon: string
@@ -18,62 +27,109 @@ export type Role = {
   projects: string[]
   stack: string[]
   current?: boolean
+  /** Done outside working hours, alongside the day job. */
+  side?: boolean
 }
 
 export const roles: Role[] = [
   {
-    id: 'chanwanich',
-    when: { th: 'เม.ย. 2024 — ปัจจุบัน', en: 'Apr 2024 — now' },
-    role: { th: 'Full-stack developer', en: 'Full-stack developer' },
-    org: 'Chanwanich',
+    id: 'chanwanich-senior',
+    start: '2026-04',
+    when: { th: 'เม.ย. 2026 — ปัจจุบัน', en: 'Apr 2026 — now' },
+    role: { th: 'Senior Software Engineer', en: 'Senior Software Engineer' },
+    org: { th: 'Chanwanich', en: 'Chanwanich' },
     kind: { th: 'งานประจำ · ระบบภาครัฐ', en: 'Full-time · government systems' },
     icon: 'laptop',
     current: true,
     summary: {
-      th: 'ทำระบบให้หน่วยงานรัฐในเขตพัฒนาพิเศษภาคตะวันออก (EEC) ทั้งแอปมือถือ เว็บ และ service หลังบ้าน',
-      en: 'Systems for government agencies in Thailand’s Eastern Economic Corridor — mobile app, web and back-end services.'
+      th: 'ได้เลื่อนตำแหน่งเมื่อ เม.ย. 2026 ตอนนี้ทำระบบ EEC e-Customs ทั้งระบบศุลกากร การชำระเงิน และงานตั้งเวลา ที่บริษัทและเจ้าหน้าที่ใช้',
+      en: 'Promoted in April 2026. I build EEC e-Customs — the customs, payment and scheduling services that companies and officers use.'
     },
     highlights: [
       {
-        th: 'EEC ID: เขียนแอปมือถือ 486 จาก 502 commits — อ่านชิปหนังสือเดินทางด้วย NFC, เทียบใบหน้า และล็อกอินข้ามแอป',
-        en: 'EEC ID: wrote 486 of the mobile app’s 502 commits — NFC passport reading, face match and app-to-app login'
+        th: 'สร้างระบบงานตั้งเวลาของ e-Customs ตั้งแต่ศูนย์ และเขียนระบบชำระเงินส่วนใหญ่',
+        en: 'Built e-Customs’ scheduling service from scratch and most of its payment service.'
       },
       {
-        th: 'EEC e-Customs: ~1,550 commits ใน 10 repo และสร้าง schedule service ตั้งแต่ศูนย์',
-        en: 'EEC e-Customs: ~1,550 commits across 10 repos, and built the schedule service from scratch'
+        th: 'กันไม่ให้ผู้ใช้โดนตัดเงินซ้ำเมื่อกดจ่ายอีกรอบ และไม่ให้เลขเอกสารซ้ำกันเมื่อมีคำขอพร้อมกัน',
+        en: 'Stopped double charges when a payment is retried, and duplicate document numbers under load.'
       },
       {
-        th: 'แก้ปัญหาชำระเงินซ้ำ เลขเอกสารชนกัน และ cache ค้าง พร้อมเพิ่ม test ทั้ง unit และ E2E',
-        en: 'Fixed duplicate payments, colliding running numbers and stale cache, with unit and E2E tests added'
+        th: 'วางชุดทดสอบอัตโนมัติให้ 4 service (248 ไฟล์) และทดสอบหน้าเว็บแบบ end-to-end อีก 35 ชุด ใช้ทุกรอบ UAT',
+        en: 'Added automated tests to four services (248 files) and 35 end-to-end browser tests used in every UAT round.'
       }
     ],
-    projects: ['eec-id', 'eec-e-customs', 'suvarnabhumi-airport-gate'],
-    stack: ['Flutter', '.NET / C#', 'Next.js', 'PostgreSQL', 'RabbitMQ', 'Redis', 'Hangfire', 'Playwright']
+    projects: ['eec-e-customs'],
+    stack: ['.NET / C#', 'Next.js', 'PostgreSQL', 'RabbitMQ', 'Redis', 'Hangfire', 'Playwright']
+  },
+  {
+    id: 'chanwanich',
+    start: '2024-04',
+    end: '2026-03',
+    when: { th: 'เม.ย. 2024 — มี.ค. 2026', en: 'Apr 2024 — Mar 2026' },
+    role: { th: 'Full-Stack Developer', en: 'Full-Stack Developer' },
+    org: { th: 'Chanwanich', en: 'Chanwanich' },
+    kind: { th: 'งานประจำ · เว็บและแอปมือถือ', en: 'Full-time · web and mobile' },
+    icon: 'compass',
+    summary: {
+      th: 'ทำเว็บและแอปร่วมกับทีมด้วย React/Next.js และ .NET ตั้งแต่เว็บสนามบินไปจนถึงแอปยืนยันตัวตนของภาครัฐ',
+      en: 'Built web and mobile systems with the development team in React/Next.js and .NET — from an airport website to a government identity app.'
+    },
+    highlights: [
+      {
+        th: 'เขียนแอปยืนยันตัวตน EEC ID แทบทั้งตัว ให้แรงงานยืนยันตัวตนผ่านมือถือได้โดยไม่ต้องไปสำนักงาน ทั้งอ่านชิปหนังสือเดินทาง เทียบใบหน้า และล็อกอินเข้าแอปพันธมิตร ลูกค้าทดสอบและรับรองแล้ว (SIT และ UAT)',
+        en: 'Wrote almost all of the EEC ID app, which lets workers verify their identity on a phone instead of at an office — passport-chip reading, face match and sign-in for partner apps; signed off in SIT and UAT.'
+      },
+      {
+        th: 'ทำให้ล็อกอินข้ามแอปด้วยการกดครั้งเดียวใช้ได้บน iPhone หลังลองมา 7 วิธี',
+        en: 'Made one-tap sign-in between apps work on iPhone, after comparing 7 approaches.'
+      },
+      {
+        th: 'ย้ายการออกรายงานไปทำเป็น background process เพื่อแก้ปัญหา timeout',
+        en: 'Moved report generation to background processing to fix timeouts.'
+      },
+      {
+        th: 'ทำเว็บ Suvarnabhumi Airport Gate ด้วย Next.js และ .NET และวางโครงรายงาน export ด้วย FastReport ให้ทั้งทีมใช้แบบเดียวกัน',
+        en: 'Built the Suvarnabhumi Airport Gate website (Next.js, .NET) and set up its FastReport export reports as a pattern the team followed.'
+      }
+    ],
+    projects: ['eec-id', 'suvarnabhumi-airport-gate'],
+    stack: ['Flutter', 'React', 'Next.js', '.NET / C#', 'PostgreSQL', 'FastReport']
   },
   {
     id: 'freelance',
+    start: '2025-08',
     when: { th: 'ส.ค. 2025 — ปัจจุบัน', en: 'Aug 2025 — now' },
-    role: { th: 'Full-stack developer ฟรีแลนซ์', en: 'Freelance full-stack developer' },
-    org: 'Chiang Mai University · Engenius',
-    kind: { th: 'ฟรีแลนซ์ · มหาวิทยาลัยและธุรกิจ', en: 'Freelance · universities and businesses' },
+    role: { th: 'Freelance Full-Stack Developer', en: 'Freelance Full-Stack Developer' },
+    org: { th: 'รับงานเอง', en: 'Independent' },
+    kind: { th: 'ฟรีแลนซ์ · นอกเวลางาน', en: 'Freelance · outside working hours' },
     icon: 'compass',
     current: true,
+    side: true,
     summary: {
-      th: 'รับทำระบบให้มหาวิทยาลัยเชียงใหม่และ Engenius ตั้งแต่ออกแบบฐานข้อมูลจนขึ้น production',
-      en: 'Systems for Chiang Mai University and Engenius, from database design to production.'
+      th: 'รับงานหลายแบบ ทั้งแพลตฟอร์มเว็บ ย้ายข้อมูลจากระบบเก่า ระบบสอบและอบรม และแอปอ่านหนังสือบนมือถือ ทำครบตั้งแต่ออกแบบฐานข้อมูลจนขึ้น production',
+      en: 'Web platforms, legacy data migrations, exam and training systems and a mobile reading app — delivered end to end, from database design to production.'
     },
     highlights: [
       {
-        th: 'CMU Journal: ย้ายวารสารครบ 1,014 บทความ ขึ้น production พ.ย. 2026',
-        en: 'CMU Journal: moved all 1,014 articles to a new platform, live in Nov 2026'
+        th: 'ย้ายวารสารวิจัยของมหาวิทยาลัยขึ้นระบบใหม่ครบ 1,014 บทความ ไม่มีบทความไหนหาย ตรวจความครบถ้วนของข้อมูล 25 ข้อ เปิดใช้งานจริงเมื่อ พ.ย. 2026',
+        en: 'Moved a university research journal to a new platform with nothing lost — 1,014 articles, checked by 25 integrity tests — live since Nov 2026.'
       },
       {
-        th: 'Junior Bootcamp: load test จนรู้ว่ารับสอบพร้อมกันได้ 600 คนก่อนวันจริง',
-        en: 'Junior Bootcamp: load-tested to a known 600 concurrent exam-takers before exam day'
+        th: 'ทำให้หน้ารายการบทความโหลดในราว 0.1 วินาทีแทน 41 วินาที โดยโหลดเฉพาะที่อยู่บนจอ (วัดจาก build จริงในเครื่อง)',
+        en: 'Made the journal’s article list load in about 0.1 s instead of 41 s by loading only what’s on screen (measured on a production build).'
       },
       {
-        th: 'ReadItGo: เขียนแอป 410 จาก 443 commits — อ่านออกเสียงพร้อมไฮไลต์ทีละคำ และอ่านออฟไลน์ได้',
-        en: 'ReadItGo: wrote 410 of the app’s 443 commits — word-synced read-aloud and offline reading'
+        th: 'ทดสอบระบบสอบก่อนเปิดใช้ ให้คนเข้าพร้อมกัน 600 คนแล้วไม่มีใครเจอข้อผิดพลาด (แต่ช้าลง) และไปไม่ไหวที่ 800 คน ลูกค้ารู้ขีดจำกัดก่อนวันสอบจริง',
+        en: 'Load-tested an exam platform with k6 before launch: 600 concurrent users with 0% errors (slow at that load), failing at 800 — the client knew the limit before exam day.'
+      },
+      {
+        th: 'จัดฐานข้อมูลงานวิจัยให้เรียบง่ายขึ้น จาก 90 ตารางเหลือ 72 และทำ index ครบทุกความเชื่อมโยง',
+        en: 'Simplified a research database from 90 to 72 tables, with every foreign key indexed.'
+      },
+      {
+        th: 'เขียนแอปอ่าน e-book ReadItGo เกือบทั้งหมด มีอ่านออกเสียงพร้อมไฮไลต์ทีละคำ และอ่านได้แม้ไม่มีเน็ต',
+        en: 'Built most of the ReadItGo e-book app: word-by-word read-aloud and offline reading.'
       }
     ],
     projects: ['cmu-journal', 'cmu-research-gallery', 'ora-cmu', 'junior-bootcamp', 'readitgo'],
@@ -81,49 +137,57 @@ export const roles: Role[] = [
   },
   {
     id: 'products',
+    start: '2026-01',
     when: { th: 'ม.ค. 2026 — ปัจจุบัน', en: 'Jan 2026 — now' },
-    role: { th: 'ผู้สร้างผลิตภัณฑ์', en: 'Product builder' },
-    org: 'Git Control · Qorstack · ScanHub · Clipath',
-    kind: { th: 'หลังเลิกงาน · โอเพนซอร์ส', en: 'After hours · open source' },
+    role: { th: 'Open-Source Developer', en: 'Open-Source Developer' },
+    org: { th: 'โปรเจกต์ส่วนตัว', en: 'Personal projects' },
+    kind: { th: 'โปรเจกต์ส่วนตัว · นอกเวลางาน', en: 'Personal projects · outside working hours' },
     icon: 'rocket',
     current: true,
+    side: true,
     summary: {
-      th: 'เครื่องมือสำหรับนักพัฒนาที่ใช้จริงทุกวัน ปล่อยเป็นโอเพนซอร์สหรือให้ดาวน์โหลด',
-      en: 'Developer tools I use every day, released as open source or downloads.'
+      th: 'ทำและดูแลเครื่องมือโอเพนซอร์สสำหรับนักพัฒนาที่ตัวเองใช้ทุกวัน',
+      en: 'Build and maintain open-source developer tools I use every day.'
     },
     highlights: [
-      { th: 'ปล่อยผลิตภัณฑ์ 6 ตัว รวม 29 feature release', en: '6 products shipped, 29 feature releases' },
       {
-        th: 'Qorstack Report ได้ 43 ดาวบน GitHub และใช้ในระบบภาครัฐจริง',
-        en: 'Qorstack Report: 43 GitHub stars, used in a real government e-service'
+        th: 'Qorstack Report: API แปลง template Word/Excel เป็น PDF มี SDK บน NuGet และ npm ใช้ออกใบรับรองจริงในระบบ e-service ภาครัฐ (43 ดาวบน GitHub)',
+        en: 'Qorstack Report: a Word/Excel-to-PDF document API with SDKs on NuGet and npm; renders certificates in a government e-service (43 GitHub stars).'
       },
       {
-        th: 'Git Control for Orca: มีคนนอกส่ง PR เข้ามาและถูก merge แล้ว',
-        en: 'Git Control for Orca: pull requests from outside contributors merged'
-      }
+        th: 'Git Control for Orca: Git client ที่ทำ PR/MR และ pipeline ได้ทั้ง GitHub, GitLab และ Bitbucket วัดด้วย perf script ได้ git status จาก 162 เหลือราว 106 ms และมีคนนอกส่ง PR มา merge แล้ว',
+        en: 'Git Control for Orca: PRs/MRs and pipelines for GitHub, GitLab and Bitbucket; checking changes about a third faster (162 → ~106 ms); outside pull requests merged.'
+      },
+      {
+        th: 'Clipath: เครื่องมือจับภาพหน้าจอบน Windows (Rust/Tauri) ลด memory ตอน idle ของเวอร์ชันแรกของเราเองจาก 506 MB เหลือ 28 MB',
+        en: 'Clipath: a Rust/Tauri capture tool for Windows; cut my own first build’s idle memory from 506 MB to 28 MB.'
+      },
+      { th: 'ปล่อยไปแล้ว 6 ตัว รวม 29 feature release', en: 'Six tools shipped, 29 feature releases.' }
     ],
     projects: ['git-control-orca', 'qorstack-report', 'scanhub', 'clipath', 'thai-pdf-fixer', 'sage'],
     stack: ['.NET', 'TypeScript', 'Rust (Tauri)', 'Python', 'Docker']
   },
   {
     id: 'intern',
+    start: '2022-12',
+    end: '2024-03',
     when: { th: 'ธ.ค. 2022 — มี.ค. 2024', en: 'Dec 2022 — Mar 2024' },
-    role: { th: 'นักศึกษาฝึกงาน Full-stack', en: 'Full-stack intern' },
-    org: 'Chanwanich',
-    kind: { th: 'ฝึกงาน · ระบบสาธารณสุข', en: 'Internship · health systems' },
+    role: { th: 'Junior Full-Stack Developer (ฝึกงาน)', en: 'Junior Full-Stack Developer (Internship)' },
+    org: { th: 'Chanwanich', en: 'Chanwanich' },
+    kind: { th: 'ฝึกงาน · ระหว่างเรียนปริญญาตรี', en: 'Internship · while finishing my degree' },
     icon: 'lantern',
     summary: {
-      th: 'ดูแลเว็บโรงพยาบาลส่งเสริมสุขภาพตำบลกว่า 200 แห่งในจังหวัดลำปาง',
-      en: 'Kept 200+ sub-district hospital websites in Lampang running.'
+      th: 'ทำเว็บด้วย React และ Node.js (Express) ออกแบบแพลตฟอร์มให้ผู้ใช้ค้นหา เปรียบเทียบ และติดต่อผู้ผลิตแบรนด์ OEM และดูแลเว็บโรงพยาบาลส่งเสริมสุขภาพตำบลกว่า 200 แห่งในจังหวัดลำปาง',
+      en: 'Built websites with React and Node.js (Express), designed a platform where users browse, compare and contact OEM brand manufacturers, and kept 200+ sub-district hospital websites in Lampang running.'
     },
     highlights: [],
     projects: ['lampang-health-network'],
-    stack: []
+    stack: ['React', 'Node.js', 'Express']
   }
 ]
 
 export const education = {
   when: { th: 'มี.ค. 2024', en: 'Mar 2024' },
-  degree: { th: 'ปริญญาตรี Digital Industry Integration', en: 'B.Sc. Digital Industry Integration' },
-  school: { th: 'มหาวิทยาลัยเชียงใหม่ · เกียรตินิยมอันดับ 1', en: 'Chiang Mai University · First-class honors' }
+  degree: { th: 'วท.บ. Digital Industry Integration', en: 'B.Sc. Digital Industry Integration' },
+  school: { th: 'มหาวิทยาลัยเชียงใหม่ · เกียรตินิยมอันดับ 1', en: 'Chiang Mai University · First-class honours' }
 }

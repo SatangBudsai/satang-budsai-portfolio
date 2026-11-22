@@ -14,6 +14,7 @@
     "ui:add": "node --experimental-strip-types scripts/shadcn/add-with-iconify.mts",
     "ui:check-icons": "node --experimental-strip-types scripts/shadcn/add-with-iconify.mts --check",
     "icons:generate": "node --experimental-strip-types scripts/icons/generate-offline-icons.mts --write",
+    "resume:pdf": "node scripts/resume/export-pdf.mjs",
     "activity:collect": "node --experimental-strip-types scripts/activity/collect-activity.mts",
     "icons:check": "node --experimental-strip-types scripts/icons/generate-offline-icons.mts",
     "generate": "node src/api/generated/configs/pre-processor.mjs && swagger-typescript-api generate -p ./src/api/generated/configs/swagger-processed.json -o ./src/api/generated/main-service -n apiGenerated.ts --axios --unwrap-response-data && node src/api/generated/configs/post-processor.mjs",

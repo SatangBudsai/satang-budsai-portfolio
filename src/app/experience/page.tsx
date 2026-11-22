@@ -1,15 +1,13 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 
-import CopyEmail from '@/components/site/copy-email'
 import { Reveal } from '@/components/site/motion'
 import { PixelItem } from '@/components/site/pixel'
-import activity from '@/content/activity.json'
 import { education, roles, type Role } from '@/content/experience'
 import { getProject } from '@/content/projects'
-import { profile } from '@/content/site'
 import { tr } from '@/content/types'
 import type { Lang } from '@/content/types'
+import { duration } from '@/lib/duration'
 import { getI18n } from '@/lib/lang'
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -23,29 +21,25 @@ export async function generateMetadata(): Promise<Metadata> {
   }
 }
 
-type Group = 'work' | 'freelance' | 'own'
-
-/** Commits per group over the last 12 months, from the same data as the home page chart. */
-function commitTotals() {
-  const totals: Record<Group, number> = { work: 0, freelance: 0, own: 0 }
-  for (const day of Object.values(activity.days) as Partial<Record<Group, number>>[]) {
-    for (const key of Object.keys(totals) as Group[]) totals[key] += day[key] ?? 0
-  }
-  return totals
-}
-
 export default async function Experience() {
   const { lang, t } = await getI18n()
-  const totals = commitTotals()
-  const current = roles.filter(role => role.current)
-  const past = roles.filter(role => !role.current)
-  const number = (value: number) => value.toLocaleString(lang === 'th' ? 'th-TH' : 'en-US')
+  const dayJob = roles.filter(role => !role.side && role.id !== 'intern')
+  const side = roles.filter(role => role.side)
+  const past = roles.filter(role => role.id === 'intern')
 
   const stats = [
-    { icon: 'laptop', value: number(totals.work), label: t('common.exp2.stat-work', 'day-job commits') },
-    { icon: 'compass', value: number(totals.freelance), label: t('common.exp2.stat-freelance', 'freelance commits') },
-    { icon: 'rocket', value: number(totals.own), label: t('common.exp2.stat-own', 'commits on my own products') },
-    { icon: 'trophy', value: '1st', label: t('common.exp2.stat-honors', 'class honors, CMU') }
+    {
+      icon: 'laptop',
+      value: '2.5+',
+      label: t('common.exp2.stat-years', 'years full-time at Chanwanich (since Apr 2024)')
+    },
+    { icon: 'book', value: '1,014', label: t('common.exp2.stat-articles', 'journal articles migrated, none lost') },
+    { icon: 'rocket', value: '6', label: t('common.exp2.stat-tools', 'open-source tools shipped') },
+    {
+      icon: 'trophy',
+      value: t('common.exp2.honors-value', '1st'),
+      label: t('common.exp2.stat-honors', 'class honours, Chiang Mai University')
+    }
   ]
 
   return (
@@ -83,9 +77,6 @@ export default async function Experience() {
               </li>
             ))}
           </ul>
-          <p className='mt-3 font-mono text-xs text-muted-foreground'>
-            {t('common.exp2.stat-note', 'Commit counts: last 12 months, including commits by the AI agents I direct.')}
-          </p>
         </Reveal>
       </header>
 
@@ -99,12 +90,21 @@ export default async function Experience() {
               <span className='animate-pulse-dot size-2.5 rounded-full bg-primary' aria-hidden='true' />
               {t('common.exp2.now', 'Now')}
             </h2>
-            <span className='font-mono text-xs tracking-[0.06em] text-soft uppercase'>
-              {t('common.exp2.now-note', 'All three at the same time')}
+            <span className='text-sm text-soft'>{t('common.exp2.now-note', 'Day job, full-time')}</span>
+          </div>
+          <div className='grid gap-4'>
+            {dayJob.map(role => (
+              <RoleCard key={role.id} role={role} lang={lang} />
+            ))}
+          </div>
+          <div className='mt-8 mb-4 flex flex-wrap items-baseline justify-between gap-3 border-t border-line pt-6'>
+            <h3 className='text-xl font-semibold'>{t('common.exp2.side', 'Outside working hours')}</h3>
+            <span className='text-sm text-soft'>
+              {t('common.exp2.side-note', 'Evenings and weekends, alongside the day job')}
             </span>
           </div>
-          <div className='grid gap-4 lg:grid-cols-3'>
-            {current.map(role => (
+          <div className='grid gap-4 xl:grid-cols-2'>
+            {side.map(role => (
               <RoleCard key={role.id} role={role} lang={lang} />
             ))}
           </div>
@@ -136,32 +136,6 @@ export default async function Experience() {
           </Reveal>
         </ol>
       </section>
-
-      <section className='container-page pb-28'>
-        <Reveal className='flex flex-col gap-6 rounded-[2rem] border border-line bg-card/60 p-8 sm:flex-row sm:items-center sm:justify-between sm:p-10'>
-          <div className='flex items-center gap-5'>
-            <PixelItem name='envelope' size={72} className='pixel-bob' />
-            <div className='flex flex-col gap-2'>
-              <p className='text-2xl font-semibold tracking-[-0.02em]'>
-                {t('common.exp2.cta-title', 'Want my résumé or references?')}
-              </p>
-              <p className='text-soft'>{t('common.exp2.cta-body', 'Email me and I’ll send them the same day.')}</p>
-            </div>
-          </div>
-          <div className='flex flex-wrap items-center gap-3'>
-            <Link
-              href='/resume'
-              className='inline-flex min-h-12 items-center rounded-full bg-primary px-6 font-semibold text-primary-foreground'>
-              {t('common.exp2.resume', 'View & export résumé')}
-            </Link>
-            <CopyEmail
-              email={profile.email}
-              label={profile.email}
-              copiedLabel={t('common.footer.copied', 'Copied to clipboard')}
-            />
-          </div>
-        </Reveal>
-      </section>
     </>
   )
 }
@@ -172,19 +146,21 @@ function RoleCard({ role, lang }: { role: Role; lang: Lang }) {
     <article className='flex h-full flex-col gap-4 rounded-3xl border border-line bg-background/40 p-5 sm:p-6'>
       <div className='flex items-start justify-between gap-3'>
         <PixelItem name={role.icon} size={48} />
-        <span className='font-mono text-xs tracking-[0.06em] text-soft uppercase'>{tr(role.when, lang)}</span>
+        <span className='font-mono text-xs tracking-[0.06em] text-soft uppercase'>
+          {tr(role.when, lang)} · {duration(role.start, role.end, lang)}
+        </span>
       </div>
       <div className='flex flex-col gap-1'>
         <h3 className='text-xl leading-snug font-semibold tracking-[-0.015em]'>{tr(role.role, lang)}</h3>
-        <span className='text-sm font-medium text-primary'>{role.org}</span>
+        <span className='text-sm font-medium text-primary'>{tr(role.org, lang)}</span>
         <span className='text-sm text-muted-foreground'>{tr(role.kind, lang)}</span>
       </div>
-      <p className='leading-relaxed text-soft'>{tr(role.summary, lang)}</p>
+      <p className='max-w-[72ch] leading-relaxed text-soft'>{tr(role.summary, lang)}</p>
       {role.highlights.length ? (
-        <ul className='flex flex-col gap-2.5 text-[15px] leading-relaxed'>
+        <ul className='flex max-w-[72ch] flex-col gap-2.5 text-[15px] leading-relaxed'>
           {role.highlights.map((item, index) => (
             <li key={index} className='flex gap-2.5'>
-              <PixelItem name='star' size={24} className='-mt-0.5' />
+              <span className='mt-[0.6em] size-1.5 shrink-0 bg-primary' aria-hidden='true' />
               {tr(item, lang)}
             </li>
           ))}

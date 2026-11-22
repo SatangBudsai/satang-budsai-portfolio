@@ -11,6 +11,8 @@ import type { Lang } from '@/content/types'
 import { setLocale } from '@/i18n/actions'
 import { cn } from '@/lib/utils'
 
+import ThemeToggle from './theme-toggle'
+
 type Labels = {
   work: string
   services: string
@@ -22,12 +24,14 @@ type Labels = {
   openMenu: string
   closeMenu: string
   switchLanguage: string
+  themeDark: string
+  themeLight: string
   home: string
 }
 
 const easeInOut = [0.76, 0, 0.24, 1] as const
 
-function LanguageSwitch({ lang, label }: { lang: Lang; label: string }) {
+export function LanguageSwitch({ lang, label, compact }: { lang: Lang; label: string; compact?: boolean }) {
   const router = useRouter()
   const [pending, startTransition] = useTransition()
   const next: Lang = lang === 'th' ? 'en' : 'th'
@@ -42,7 +46,10 @@ function LanguageSwitch({ lang, label }: { lang: Lang; label: string }) {
           router.refresh()
         })
       }
-      className='inline-flex min-h-11 items-center gap-1 rounded-full border border-line-strong px-4 font-mono text-xs transition-colors hover:border-foreground disabled:opacity-50'>
+      className={cn(
+        'inline-flex items-center gap-1 rounded-full font-mono text-xs transition-colors disabled:opacity-50',
+        compact ? 'h-8 px-3 hover:bg-foreground/10' : 'min-h-11 border border-line-strong px-4 hover:border-foreground'
+      )}>
       <span className={lang === 'th' ? 'text-foreground' : 'text-muted-foreground'}>TH</span>
       <span className='text-muted-foreground'>/</span>
       <span className={lang === 'en' ? 'text-foreground' : 'text-muted-foreground'}>EN</span>
@@ -101,6 +108,8 @@ export default function SiteHeader({ labels, lang }: { labels: Labels; lang: Lan
       <motion.header
         className={cn(
           'fixed inset-x-0 top-0 z-50 border-b transition-[background-color,border-color,backdrop-filter] duration-500 print:hidden',
+          // On the home page the sidebar is the navigation on large screens.
+          pathname === '/' && 'lg:hidden',
           scrolled || open ? 'border-line bg-background/80 backdrop-blur-xl' : 'border-transparent'
         )}
         animate={{ y: hidden && !open && !reduced ? '-100%' : '0%' }}
@@ -127,6 +136,7 @@ export default function SiteHeader({ labels, lang }: { labels: Labels; lang: Lan
 
           <div className='flex items-center gap-2'>
             <LanguageSwitch lang={lang} label={labels.switchLanguage} />
+            <ThemeToggle labels={{ dark: labels.themeDark, light: labels.themeLight }} />
             <Link
               href='/#contact'
               className='hidden min-h-11 items-center rounded-full bg-primary px-5 text-sm font-semibold text-primary-foreground transition-transform hover:scale-[1.03] sm:inline-flex'>

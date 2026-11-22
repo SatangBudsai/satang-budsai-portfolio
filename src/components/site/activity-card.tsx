@@ -37,7 +37,6 @@ const iso = (date: Date) => date.toISOString().slice(0, 10)
 export default function ActivityCard({
   days,
   until,
-  repos,
   featureReleases,
   products,
   lang,
@@ -77,9 +76,9 @@ export default function ActivityCard({
     () => window.matchMedia('(hover: none)').matches,
     () => false
   )
-  const locale = lang === 'th' ? 'th-TH' : 'en-GB'
+  const locale = lang === 'th' ? 'th-TH' : 'en-US'
 
-  const { weeks, months, totals, levels, monthLabels } = useMemo(() => {
+  const { weeks, months, levels, monthLabels } = useMemo(() => {
     // 53 columns of Monday→Sunday, ending with the week that holds `until`.
     const end = new Date(`${until}T00:00:00Z`)
     const endWeekday = (end.getUTCDay() + 6) % 7
@@ -137,22 +136,13 @@ export default function ActivityCard({
   const status = hover
     ? `${new Intl.DateTimeFormat(locale, { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' }).format(
         new Date(`${hover}T00:00:00Z`)
-      )} · ${number(sum(hovered))} ${labels.commitsUnit}${
-        hovered
-          ? ` — ${order
-              .filter(key => hovered[key])
-              .map(key => `${labels.categories[key]} ${hovered[key]}`)
-              .join(' · ')}`
-          : ''
-      }`
+      )} · ${number(sum(hovered))} ${labels.commitsUnit}`
     : touch
       ? labels.hintTouch
       : labels.hint
 
   const stats = [
-    { value: number(totals.activeDays), label: labels.activeDays },
-    { value: number(repos), label: labels.repos },
-    { value: `${number(totals.commits)}*`, label: labels.commits },
+    { value: number(products.length), label: labels.commits },
     { value: number(featureReleases), label: labels.releases }
   ]
 
@@ -160,27 +150,15 @@ export default function ActivityCard({
     <div className='rounded-[1.75rem] border border-line bg-card/80 p-5 shadow-[0_30px_80px_rgba(0,0,0,0.45)] backdrop-blur-sm sm:p-6'>
       <div className='flex flex-wrap items-center justify-between gap-3'>
         <span className='font-mono text-xs tracking-[0.08em] text-muted-foreground uppercase'>{labels.period}</span>
-        <ul className='flex flex-wrap gap-x-4 gap-y-1 text-xs text-soft'>
-          {order.map(key => (
-            <li key={key} className='inline-flex items-center gap-1.5'>
-              <span
-                className='size-2.5 rounded-[3px]'
-                style={{ backgroundColor: categoryTone[key] }}
-                aria-hidden='true'
-              />
-              {labels.categories[key]} <span className='font-mono text-muted-foreground'>{number(totals[key])}</span>
-            </li>
-          ))}
-        </ul>
       </div>
 
-      <dl className='mt-4 grid grid-cols-2 gap-x-4 gap-y-3 sm:grid-cols-4'>
+      <dl className='mt-4 grid grid-cols-2 gap-x-4 gap-y-3'>
         {stats.map(stat => (
-          <div key={stat.label} className='flex flex-col gap-1'>
+          <div key={stat.label} className='flex flex-col-reverse gap-1'>
+            <dt className='text-xs text-muted-foreground'>{stat.label}</dt>
             <dd className='text-[clamp(24px,2.2vw,34px)] leading-none font-extrabold tracking-[-0.035em] tabular-nums'>
               {stat.value}
             </dd>
-            <dt className='text-xs text-muted-foreground'>{stat.label}</dt>
           </div>
         ))}
       </dl>
@@ -191,7 +169,7 @@ export default function ActivityCard({
           {monthLabels.map((label, index) => (
             <span
               key={index}
-              className='h-4 overflow-visible font-mono text-[9px] leading-4 whitespace-nowrap text-muted-foreground sm:text-[10px]'>
+              className='h-4 overflow-visible font-mono text-[11px] leading-4 whitespace-nowrap text-muted-foreground sm:text-[12px]'>
               {label}
             </span>
           ))}
@@ -203,28 +181,26 @@ export default function ActivityCard({
             week.map(day => {
               const count = sum(days[day.date])
               return (
-                <motion.span
+                <span
                   key={day.date}
                   onPointerEnter={() => day.inRange && setHover(day.date)}
                   onPointerLeave={() => setHover(null)}
                   onClick={() => day.inRange && setHover(day.date)}
-                  initial={{ opacity: 0, scale: 0.4 }}
-                  animate={{ opacity: day.inRange ? 1 : 0, scale: 1 }}
-                  transition={{ duration: 0.35, delay: reduced ? 0 : 0.3 + w * 0.012 }}
                   className={cn(
-                    'block aspect-square rounded-[2px] sm:rounded-[3px]',
+                    'heat-cell block aspect-square rounded-[2px] sm:rounded-[3px]',
+                    !day.inRange && 'invisible',
                     hover === day.date && 'ring-1 ring-foreground'
                   )}
-                  style={{ backgroundColor: heat[level(count)] }}
+                  style={{ backgroundColor: heat[level(count)], '--w': w } as React.CSSProperties}
                 />
               )
             })
           )}
         </div>
-        <p className='mt-2 min-h-4 truncate font-mono text-[11px] text-muted-foreground' aria-live='polite'>
-          {status}
-        </p>
       </div>
+      <p className='mt-2 min-h-4 truncate font-mono text-[12px] text-muted-foreground' aria-hidden='true'>
+        {status}
+      </p>
 
       <div className='sr-only'>
         <table>
@@ -266,15 +242,7 @@ export default function ActivityCard({
               initial={{ scaleY: 0 }}
               animate={{ scaleY: 1 }}
               transition={{ type: 'spring', stiffness: 140, damping: 18, delay: reduced ? 0 : 0.6 + index * 0.04 }}>
-              {order.map(key =>
-                month.counts[key] ? (
-                  <span
-                    key={key}
-                    className='block'
-                    style={{ flexGrow: month.counts[key], backgroundColor: categoryTone[key] }}
-                  />
-                ) : null
-              )}
+              <span className='block flex-1 bg-primary/80' />
             </motion.div>
           </div>
         ))}
@@ -284,7 +252,7 @@ export default function ActivityCard({
           <span
             key={month.month}
             className={cn(
-              'flex-1 text-center font-mono text-[10px] text-muted-foreground',
+              'flex-1 text-center font-mono text-[11px] text-muted-foreground sm:text-[12px]',
               index % 2 === 1 && 'max-sm:invisible'
             )}>
             {new Intl.DateTimeFormat(locale, { month: 'short' }).format(new Date(`${month.month}-01T00:00:00Z`))}
@@ -339,7 +307,7 @@ export default function ActivityCard({
           )
         })}
       </div>
-      <p className='mt-3 text-[11px] leading-relaxed text-muted-foreground'>{labels.footnote}</p>
+      <p className='mt-3 text-[12px] leading-relaxed text-muted-foreground'>{labels.footnote}</p>
     </div>
   )
 }

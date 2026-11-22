@@ -17,5 +17,10 @@ export const appIcons = {
   mail: 'lucide:mail',
   github: 'lucide:github',
   linkedin: 'lucide:linkedin',
-  lock: 'lucide:lock'
+  lock: 'lucide:lock',
+  globe: 'lucide:globe',
+  mapPin: 'lucide:map-pin',
+  printer: 'lucide:printer',
+  pause: 'lucide:pause',
+  play: 'lucide:play'
 } as const

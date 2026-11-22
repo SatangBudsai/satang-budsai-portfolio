@@ -2,7 +2,9 @@ import Link from 'next/link'
 import { Icon } from '@/components/ui/icon'
 import { appIcons } from '@/config/icons'
 import { profile } from '@/content/site'
+import { briefHref } from '@/lib/brief'
 import { getI18n } from '@/lib/lang'
+import HideOnHome from './hide-on-home'
 import { PixelItem } from './pixel'
 
 import CopyEmail from './copy-email'
@@ -16,43 +18,53 @@ export default async function SiteFooter() {
   return (
     <footer id='contact' className='relative border-t border-line print:hidden'>
       <div className='container-page flex flex-col gap-16 pt-24 pb-10 sm:pt-28'>
-        <div className='grid gap-3 md:grid-cols-2'>
-          <Reveal className='flex flex-col gap-3 rounded-[1.75rem] border border-line bg-card/50 p-6 sm:p-8'>
-            <span className='eyebrow flex items-center gap-2 text-primary'>
-              <PixelItem name='rocket' size={32} />
-              {t('common.footer.clients-eyebrow', 'For clients')}
-            </span>
-            <p className='text-xl leading-snug font-semibold tracking-tight'>
-              {t('common.footer.clients-title', 'Have a system, a report or a tool in mind?')}
-            </p>
-            <p className='leading-relaxed text-soft'>
-              {t(
-                'common.footer.clients-body',
-                'Send a short brief — what it should do, who will use it, and when you need it — and I’ll come back with questions and a plan.'
-              )}
-            </p>
-          </Reveal>
-          <Reveal
-            delay={0.05}
-            className='flex flex-col gap-3 rounded-[1.75rem] border border-line bg-card/50 p-6 sm:p-8'>
-            <span className='eyebrow flex items-center gap-2 text-primary'>
-              <PixelItem name='coffee' size={32} />
-              {t('common.footer.teams-eyebrow', 'For teams hiring')}
-            </span>
-            <p className='text-xl leading-snug font-semibold tracking-tight'>
-              {t('common.footer.teams-title', 'Full-stack: .NET, Next.js, Flutter, PostgreSQL.')}
-            </p>
-            <p className='leading-relaxed text-soft'>
-              {t(
-                'common.footer.teams-body',
-                'Government systems by day, products after hours. Email me for my résumé and references.'
-              )}
-            </p>
-            <Link href='/experience' className='link-draw w-fit pb-0.5 text-sm text-primary'>
-              {t('common.footer.teams-link', 'See my experience →')}
-            </Link>
-          </Reveal>
-        </div>
+        <HideOnHome>
+          <div className='grid gap-3 md:grid-cols-2'>
+            <Reveal className='flex flex-col gap-3 rounded-[1.75rem] border border-line bg-card/50 p-6 sm:p-8'>
+              <span className='eyebrow flex items-center gap-2 text-primary'>
+                <PixelItem name='rocket' size={32} />
+                {t('common.footer.clients-eyebrow', 'For clients')}
+              </span>
+              <p className='text-xl leading-snug font-semibold tracking-tight'>
+                {t('common.footer.clients-title', 'Have a system, a report or a tool in mind?')}
+              </p>
+              <p className='leading-relaxed text-soft'>
+                {t(
+                  'common.footer.clients-body',
+                  'Send a short brief — what it should do, who will use it, and when you need it — and I’ll come back with questions and a plan.'
+                )}
+              </p>
+              <a
+                href={briefHref(profile.email, t)}
+                className='link-draw inline-block w-fit py-1.5 text-sm text-primary'>
+                {t('common.footer.clients-link', 'Send a brief →')}
+              </a>
+            </Reveal>
+            <Reveal
+              delay={0.05}
+              className='flex flex-col gap-3 rounded-[1.75rem] border border-line bg-card/50 p-6 sm:p-8'>
+              <span className='eyebrow flex items-center gap-2 text-primary'>
+                <PixelItem name='coffee' size={32} />
+                {t('common.footer.teams-eyebrow', 'For teams hiring')}
+              </span>
+              <p className='text-xl leading-snug font-semibold tracking-tight'>
+                {t('common.footer.teams-title', 'Full-stack: .NET, Next.js, Flutter, PostgreSQL.')}
+              </p>
+              <p className='leading-relaxed text-soft'>
+                {t(
+                  'common.footer.teams-body',
+                  'Government systems by day, products after hours. Email me for my résumé and references.'
+                )}
+              </p>
+              <a
+                href='/Satang-Budsai-Resume.pdf'
+                download
+                className='link-draw inline-block w-fit py-1.5 text-sm text-primary'>
+                {t('common.footer.teams-link', 'Download résumé (PDF) →')}
+              </a>
+            </Reveal>
+          </div>
+        </HideOnHome>
         <Reveal className='flex flex-col gap-8'>
           <span className='eyebrow'>{t('common.footer.eyebrow', 'Have a project or a role?')}</span>
           <a
@@ -62,7 +74,10 @@ export default async function SiteFooter() {
             <br />
             <RotatingWord
               className='accent-serif text-primary transition-colors group-hover:text-foreground'
-              words={t('common.footer.words', 'a back office.|a report engine.|your next tool.|something.').split('|')}
+              words={t(
+                'common.footer.words',
+                'something people rely on.|your next system.|a tool your team keeps.'
+              ).split('|')}
             />
           </a>
           <div className='flex flex-wrap items-center gap-3'>
@@ -94,7 +109,7 @@ export default async function SiteFooter() {
               href={profile.github}
               target='_blank'
               rel='noreferrer'
-              className='link-draw inline-flex items-center gap-2 hover:text-foreground'>
+              className='link-draw inline-flex min-h-10 items-center gap-2 hover:text-foreground'>
               <Icon icon={appIcons.github} className='size-4' aria-hidden='true' />
               GitHub
             </a>
@@ -102,7 +117,7 @@ export default async function SiteFooter() {
               href={profile.linkedin}
               target='_blank'
               rel='noreferrer'
-              className='link-draw inline-flex items-center gap-2 hover:text-foreground'>
+              className='link-draw inline-flex min-h-10 items-center gap-2 hover:text-foreground'>
               <Icon icon={appIcons.linkedin} className='size-4' aria-hidden='true' />
               LinkedIn
             </a>

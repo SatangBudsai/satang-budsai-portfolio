@@ -7,7 +7,7 @@ import { defaultLocale, isAppLocale, type AppLocale } from './routing'
  * and English otherwise, so international readers don't land on a Thai page.
  */
 function localeFromAcceptLanguage(header: string | null): AppLocale {
-  if (!header) return defaultLocale
+  if (!header) return 'en'
   const languages = header
     .split(',')
     .map(part => part.split(';')[0].trim().toLowerCase())

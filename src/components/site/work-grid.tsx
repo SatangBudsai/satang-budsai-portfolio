@@ -51,7 +51,11 @@ function Visual({ visual, lang, size }: { visual: WorkVisual; lang: Lang; size: 
     )
   }
   if (visual.kind === 'art') {
-    return <CoverArt id={visual.id} label={visual.alt} fill className='absolute inset-0 rounded-[1.25rem] border-0' />
+    return (
+      <div className='absolute inset-0 flex items-center justify-center p-4 sm:p-6'>
+        <CoverArt id={visual.id} label={visual.alt} className='h-full w-auto max-w-full rounded-[1rem] border-0' />
+      </div>
+    )
   }
   // Screenshots are often bright: dim them slightly and fade the bottom edge into the card.
   return (

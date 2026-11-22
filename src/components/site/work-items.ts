@@ -121,6 +121,7 @@ export function buildWorkItems(lang: Lang, t: AppTranslate, options: { featured?
 
   // Only three cards run large, so the rhythm stays one large card to two medium ones.
   const medium = new Set(['clipath', 'thai-pdf-fixer', 'sage'])
+  const large = new Set(['eec-id'])
   const badges: Record<string, string> = {
     'git-control-orca': t('common.grid.badge-orca', 'my daily Git client'),
     'qorstack-report': t('common.grid.badge-qorstack', '43 ★ on GitHub'),
@@ -132,14 +133,14 @@ export function buildWorkItems(lang: Lang, t: AppTranslate, options: { featured?
   const order = options.featured
     ? featured
     : [
-        'git-control-orca',
         'eec-id',
+        'eec-e-customs',
+        'cmu-journal',
+        'git-control-orca',
         'cmu-research-gallery',
         'clipath',
         'qorstack-report',
-        'eec-e-customs',
         'scanhub',
-        'cmu-journal',
         'age-of-lost-knowledge',
         'ora-cmu',
         'thai-pdf-fixer',
@@ -154,6 +155,6 @@ export function buildWorkItems(lang: Lang, t: AppTranslate, options: { featured?
   return order.flatMap(key => {
     const item = items.get(key)
     if (!item) return []
-    return [{ ...item, size: medium.has(key) ? 'md' : item.size, badge: badges[key] }]
+    return [{ ...item, size: large.has(key) ? 'lg' : medium.has(key) ? 'md' : item.size, badge: badges[key] }]
   })
 }

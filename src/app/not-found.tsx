@@ -18,11 +18,18 @@ export default async function NotFound() {
       </h1>
       <Doodle className='ml-[4%]'>{t('common.note.notfound', 'consolation prize: type “ship”')}</Doodle>
       <p className='max-w-xl text-lg text-soft'>{t('common.notfound.body', 'The page moved or never existed.')}</p>
-      <Link
-        href='/'
-        className='inline-flex min-h-12 w-fit items-center rounded-full bg-primary px-6 font-semibold text-primary-foreground'>
-        {t('common.notfound.home', 'Back home')}
-      </Link>
+      <div className='flex flex-wrap items-center gap-3'>
+        <Link
+          href='/work'
+          className='inline-flex min-h-12 w-fit items-center rounded-full bg-primary px-6 font-semibold text-primary-foreground'>
+          {t('common.notfound.work', 'See all work')}
+        </Link>
+        <Link
+          href='/'
+          className='inline-flex min-h-12 w-fit items-center rounded-full border border-line-strong px-6 transition-colors hover:border-foreground'>
+          {t('common.notfound.home', 'Back home')}
+        </Link>
+      </div>
     </section>
   )
 }

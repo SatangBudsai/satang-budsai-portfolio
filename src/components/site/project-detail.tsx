@@ -78,17 +78,11 @@ export function ProductDetail({ project, lang, t }: Props<Product>) {
             </span>
             <span className='pill'>{tr(project.category, lang)}</span>
           </Reveal>
-          <Reveal delay={0.05}>
-            <h1 className='display flex flex-wrap items-center gap-4 text-[clamp(44px,5.6vw,88px)] leading-[0.95]'>
-              {itemIcon[project.slug] ? (
-                <PixelItem src={itemIcon[project.slug]} size={72} className='pixel-bob' />
-              ) : null}
-              {project.title}
-            </h1>
-          </Reveal>
-          <Reveal delay={0.1}>
-            <p className='text-[clamp(19px,1.7vw,24px)] leading-[1.45]'>{tr(project.tagline, lang)}</p>
-          </Reveal>
+          <h1 className='display flex flex-wrap items-center gap-4 text-[clamp(44px,5.6vw,88px)] leading-[0.95]'>
+            {itemIcon[project.slug] ? <PixelItem src={itemIcon[project.slug]} size={72} className='pixel-bob' /> : null}
+            {project.title}
+          </h1>
+          <p className='text-[clamp(19px,1.7vw,24px)] leading-[1.45]'>{tr(project.tagline, lang)}</p>
           <Reveal delay={0.15}>
             <p className='leading-relaxed text-muted-foreground'>{tr(project.summary, lang)}</p>
           </Reveal>
@@ -115,11 +109,13 @@ export function ProductDetail({ project, lang, t }: Props<Product>) {
       <section aria-label={t('common.detail.facts', 'Key facts')} className='container-page pb-20'>
         <dl className='grid grid-cols-2 gap-3 lg:grid-cols-4'>
           {project.facts.map((fact, index) => (
-            <div key={index} className='flex flex-col gap-2 rounded-2xl border border-line bg-card/50 p-5 sm:p-6'>
-              <dd className='order-1 text-[clamp(26px,2.8vw,40px)] leading-none font-extrabold tracking-[-0.035em]'>
+            <div
+              key={index}
+              className='flex flex-col-reverse gap-2 rounded-2xl border border-line bg-card/50 p-5 sm:p-6'>
+              <dt className='text-sm text-muted-foreground'>{tr(fact.label, lang)}</dt>
+              <dd className='text-[clamp(26px,2.8vw,40px)] leading-none font-extrabold tracking-[-0.035em]'>
                 {fact.value}
               </dd>
-              <dt className='order-2 text-sm text-muted-foreground'>{tr(fact.label, lang)}</dt>
             </div>
           ))}
         </dl>
@@ -216,9 +212,7 @@ export function CaseDetail({ project, lang, t }: Props<CaseStudy>) {
           <Reveal>
             <span className='eyebrow text-primary'>{tr(project.client, lang)}</span>
           </Reveal>
-          <Reveal delay={0.05}>
-            <h1 className='display text-[clamp(44px,5.6vw,88px)] leading-[0.95]'>{project.title}</h1>
-          </Reveal>
+          <h1 className='display text-[clamp(44px,5.6vw,88px)] leading-[0.95]'>{project.title}</h1>
           <Reveal delay={0.1}>
             <p className='text-[clamp(18px,1.6vw,22px)] leading-[1.55] text-soft'>{tr(project.summary, lang)}</p>
           </Reveal>
@@ -243,7 +237,7 @@ export function CaseDetail({ project, lang, t }: Props<CaseStudy>) {
           <dl
             className={`grid gap-px overflow-hidden rounded-3xl border border-line bg-line ${tldr.length === 3 ? 'md:grid-cols-3' : 'md:grid-cols-2'}`}>
             {tldr.map(item => (
-              <div key={item.label} className='flex flex-col gap-3 bg-[#100e16] p-6 sm:p-7'>
+              <div key={item.label} className='flex flex-col gap-3 bg-card p-6 sm:p-7'>
                 <dt className='eyebrow text-primary'>{item.label}</dt>
                 <dd className='leading-relaxed'>{item.body}</dd>
               </div>

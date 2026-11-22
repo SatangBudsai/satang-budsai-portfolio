@@ -182,9 +182,8 @@ export default function Diagram({
   const diagram = diagrams[id]
   return (
     <figure
-      role='img'
       aria-label={label}
-      className={cn('rounded-2xl border border-line bg-[#100e16] px-4 py-8 sm:px-10 sm:py-12', className)}>
+      className={cn('rounded-2xl border border-line bg-card px-4 py-8 sm:px-10 sm:py-12', className)}>
       <div className='flex flex-col'>
         {diagram.layers.map((layer, index) => (
           <div key={index}>

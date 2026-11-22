@@ -30,7 +30,7 @@ export function ResultsSection({
         </h2>
         {timeline ? <span className='font-mono text-xs text-muted-foreground'>{tr(timeline, lang)}</span> : null}
       </div>
-      <ul className='grid gap-3 sm:grid-cols-2'>
+      <ul className='grid gap-3 sm:grid-cols-2 sm:[&>li:last-child:nth-child(odd)]:col-span-2'>
         {results.map((result, index) => (
           <Reveal
             as='li'
