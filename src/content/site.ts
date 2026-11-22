@@ -11,7 +11,6 @@ export const profile = {
    * Export a public copy without them, put it in /public, and set the path here
    * to show the resume buttons, e.g. '/satang-budsai-resume.pdf'.
    */
-  resumeHref: undefined as string | undefined,
   /**
    * Profile photo (from the GitHub profile), cropped 4:5 in /public.
    */

@@ -50,7 +50,7 @@ function LanguageSwitch({ lang, label }: { lang: Lang; label: string }) {
   )
 }
 
-export default function SiteHeader({ labels, lang, resumeHref }: { labels: Labels; lang: Lang; resumeHref?: string }) {
+export default function SiteHeader({ labels, lang }: { labels: Labels; lang: Lang }) {
   const pathname = usePathname()
   const reduced = useReducedMotion()
   const { scrollY } = useScroll()
@@ -92,14 +92,15 @@ export default function SiteHeader({ labels, lang, resumeHref }: { labels: Label
     { href: '/work', label: labels.work },
     { href: '/experience', label: labels.experience },
     { href: '/learning', label: labels.learning },
-    { href: '/about', label: labels.about }
+    { href: '/about', label: labels.about },
+    { href: '/resume', label: labels.resume }
   ]
 
   return (
     <>
       <motion.header
         className={cn(
-          'fixed inset-x-0 top-0 z-50 border-b transition-[background-color,border-color,backdrop-filter] duration-500',
+          'fixed inset-x-0 top-0 z-50 border-b transition-[background-color,border-color,backdrop-filter] duration-500 print:hidden',
           scrolled || open ? 'border-line bg-background/80 backdrop-blur-xl' : 'border-transparent'
         )}
         animate={{ y: hidden && !open && !reduced ? '-100%' : '0%' }}
@@ -122,11 +123,6 @@ export default function SiteHeader({ labels, lang, resumeHref }: { labels: Label
                 {link.label}
               </Link>
             ))}
-            {resumeHref ? (
-              <a href={resumeHref} className='link-draw pb-0.5 text-soft hover:text-foreground' download>
-                {labels.resume}
-              </a>
-            ) : null}
           </nav>
 
           <div className='flex items-center gap-2'>
@@ -183,11 +179,6 @@ export default function SiteHeader({ labels, lang, resumeHref }: { labels: Label
                 className='inline-flex min-h-12 items-center rounded-full bg-primary px-6 font-semibold text-primary-foreground'>
                 {labels.talk}
               </Link>
-              {resumeHref ? (
-                <a href={resumeHref} download className='text-soft underline underline-offset-4'>
-                  {labels.resume}
-                </a>
-              ) : null}
             </div>
           </motion.div>
         ) : null}

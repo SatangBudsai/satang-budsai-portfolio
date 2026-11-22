@@ -97,7 +97,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           {t('common.nav.skip', 'Skip to content')}
         </a>
         <Providers language={lang} staticData={staticData}>
-          <SiteHeader labels={nav} lang={lang} resumeHref={profile.resumeHref} />
+          <SiteHeader labels={nav} lang={lang} />
           <main id='main'>{children}</main>
           <SiteFooter />
           <EasterEggs

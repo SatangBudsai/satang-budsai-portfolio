@@ -20,6 +20,7 @@ const routes = [
   '/work/readitgo',
   '/learning',
   '/experience',
+  '/resume',
   '/about'
 ]
 

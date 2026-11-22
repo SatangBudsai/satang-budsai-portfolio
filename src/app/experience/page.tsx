@@ -148,11 +148,18 @@ export default async function Experience() {
               <p className='text-soft'>{t('common.exp2.cta-body', 'Email me and I’ll send them the same day.')}</p>
             </div>
           </div>
-          <CopyEmail
-            email={profile.email}
-            label={profile.email}
-            copiedLabel={t('common.footer.copied', 'Copied to clipboard')}
-          />
+          <div className='flex flex-wrap items-center gap-3'>
+            <Link
+              href='/resume'
+              className='inline-flex min-h-12 items-center rounded-full bg-primary px-6 font-semibold text-primary-foreground'>
+              {t('common.exp2.resume', 'View & export résumé')}
+            </Link>
+            <CopyEmail
+              email={profile.email}
+              label={profile.email}
+              copiedLabel={t('common.footer.copied', 'Copied to clipboard')}
+            />
+          </div>
         </Reveal>
       </section>
     </>

@@ -63,7 +63,7 @@ export default function DesignPicker({ always }: { always: boolean }) {
   if (!visible) return null
 
   return (
-    <div className='fixed bottom-4 left-4 z-[90] flex flex-col items-start gap-2'>
+    <div className='fixed bottom-4 left-4 z-[90] flex flex-col items-start gap-2 print:hidden'>
       {open ? (
         <div
           role='dialog'

@@ -612,3 +612,52 @@
 :root[data-style='editorial'] .eyebrow {
   letter-spacing: 0.16em;
 }
+
+/* ------------------------------------------------------------------ */
+/* Print: the résumé exports as a light A4 page with violet accents.   */
+/* ------------------------------------------------------------------ */
+@media print {
+  @page {
+    size: A4;
+    margin: 13mm 14mm;
+  }
+
+  :root,
+  :root[data-palette] {
+    --background: #ffffff;
+    --foreground: #15121c;
+    --card: #ffffff;
+    --muted: #f3f1f7;
+    --soft: #34303d;
+    --muted-foreground: #5d5868;
+    --border: #e3dfea;
+    --line-strong: #cfc8dc;
+    --primary: #6d3fe0;
+  }
+
+  html,
+  body {
+    background: #fff !important;
+    color: var(--foreground);
+    font-size: 11.5px;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  body > a[href='#main'],
+  .grain {
+    display: none !important;
+  }
+
+  .resume-entry {
+    break-inside: avoid;
+  }
+
+  .resume-sheet h2 {
+    break-after: avoid;
+  }
+
+  .resume-sheet a {
+    text-decoration: none;
+  }
+}

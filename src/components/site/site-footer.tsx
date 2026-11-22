@@ -14,7 +14,7 @@ export default async function SiteFooter() {
   const year = new Date().getFullYear()
 
   return (
-    <footer id='contact' className='relative border-t border-line'>
+    <footer id='contact' className='relative border-t border-line print:hidden'>
       <div className='container-page flex flex-col gap-16 pt-24 pb-10 sm:pt-28'>
         <div className='grid gap-3 md:grid-cols-2'>
           <Reveal className='flex flex-col gap-3 rounded-[1.75rem] border border-line bg-card/50 p-6 sm:p-8'>
@@ -79,15 +79,12 @@ export default async function SiteFooter() {
               label={profile.email}
               copiedLabel={t('common.footer.copied', 'Copied to clipboard')}
             />
-            {profile.resumeHref ? (
-              <a
-                href={profile.resumeHref}
-                download
-                className='inline-flex min-h-12 items-center gap-2 rounded-full border border-line-strong px-6 text-sm transition-colors hover:border-foreground'>
-                <Icon icon={appIcons.download} className='size-4' aria-hidden='true' />
-                {t('common.footer.resume', 'Download resume')}
-              </a>
-            ) : null}
+            <Link
+              href='/resume'
+              className='inline-flex min-h-12 items-center gap-2 rounded-full border border-line-strong px-6 text-sm transition-colors hover:border-foreground'>
+              <Icon icon={appIcons.download} className='size-4' aria-hidden='true' />
+              {t('common.footer.resume', 'Résumé (PDF)')}
+            </Link>
           </div>
         </Reveal>
 
