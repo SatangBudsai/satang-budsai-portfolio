@@ -70,6 +70,12 @@ export default function Resume() {
             {t('common.resume.download', 'Download PDF')}
           </a>
           <ExportResume label={t('common.resume.print', 'Print')} fileName='Satang-Budsai-Resume' />
+          <a
+            href='/Satang-Budsai-Resume-no-photo.pdf'
+            download
+            className='text-sm text-primary underline-offset-4 hover:underline'>
+            PDF without photo
+          </a>
         </div>
       </div>
 
@@ -82,7 +88,7 @@ export default function Resume() {
               alt={profile.name}
               width={96}
               height={120}
-              className='h-28 w-[5.6rem] shrink-0 rounded-xl object-cover print:h-[5.4rem] print:w-[4.3rem]'
+              className='resume-photo h-28 w-[5.6rem] shrink-0 rounded-xl object-cover print:h-[5.4rem] print:w-[4.3rem]'
             />
             <div className='flex flex-col gap-1.5'>
               <h1 className='text-[clamp(32px,4vw,46px)] leading-none font-extrabold tracking-[-0.04em] print:text-[30px]'>

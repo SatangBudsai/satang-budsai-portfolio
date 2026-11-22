@@ -794,7 +794,7 @@ export const cases: CaseStudy[] = [
       en: 'The customs-privilege e-service for Thailand’s Eastern Economic Corridor: companies submit machinery and raw-material imports, BOQs, fast-track releases and e-payments; officers review and approve.'
     },
     role: {
-      en: 'Full-stack · web app, core service, the scheduling service (from scratch) and most of the payment service'
+      en: 'Senior engineer · bootstrapped 5 Phase 2 services · main author of the payment service · MR reviewer for a ~10-person team'
     },
     confidential: true,
     problem: {
@@ -838,9 +838,12 @@ export const cases: CaseStudy[] = [
       }
     ],
     owned: [
-      { en: 'Features across the Next.js 16 web app' },
-      { en: 'Endpoints in the .NET 10 core service' },
-      { en: 'Most of the payment service' }
+      { en: 'Five Phase 2 services bootstrapped (payment, scheduling, workers, reports, integrations)' },
+      { en: 'Most of the payment service: idempotency, callback checks, expiry, audit trail' },
+      { en: 'Advisory-lock standard for document numbers, adopted by five teammates' },
+      { en: 'Sage AI-agent rules and decision records across the repos' },
+      { en: 'MR review and approval for the team; the 275-case Playwright UAT suite' },
+      { en: 'Features across the Next.js 16 web app and .NET 10 core service' }
     ],
     gallery: [],
     stack: [

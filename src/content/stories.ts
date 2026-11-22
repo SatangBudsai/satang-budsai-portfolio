@@ -327,7 +327,7 @@ export const stories: Record<string, Story> = {
   },
   'eec-id': {
     timeline: {
-      en: 'Jun 2025 → May 2026 · wrote 486 of the mobile app’s 502 commits'
+      en: 'Jun 2025 → May 2026 (continued into the Senior role) · wrote 486 of the mobile app’s 502 commits'
     },
     results: [
       {
@@ -385,11 +385,11 @@ export const stories: Record<string, Story> = {
   },
   'eec-e-customs': {
     timeline: {
-      en: 'Apr → Nov 2026 · bootstrapped 5 services · 79% of payment-service commits'
+      en: 'Apr → Nov 2026 · Phase 2 signed off in SIT/UAT, awaiting launch · bootstrapped 5 services · 79% of payment-service commits'
     },
     results: [
       {
-        en: 'Retrying a payment no longer charges twice, and document numbers no longer collide under load'
+        en: 'In SIT/UAT, retrying a payment returns the existing payment link instead of charging twice, and document numbers no longer collide under load'
       },
       {
         en: 'Adding a scheduled job is quicker — no queue listener to build in every service — and jobs can only call approved services'

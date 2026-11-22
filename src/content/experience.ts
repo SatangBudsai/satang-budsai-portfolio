@@ -42,23 +42,20 @@ export const roles: Role[] = [
     icon: 'laptop',
     current: true,
     summary: {
-      en: 'Promoted in April 2026. On EEC e-Customs — the customs, payment and scheduling system companies and officers use — I set up services, team patterns and the rules our AI agents follow, as well as writing code.'
+      en: 'Promoted in April 2026 to lead services, standards and reviews on EEC e-Customs (customs, payments and scheduling for companies and officers).'
     },
     highlights: [
       {
-        en: 'Bootstrapped five .NET microservices for e-Customs (payment, scheduling, workers, reports, external integrations) — from the first commit to GitLab CI and Kubernetes manifests.'
+        en: 'Bootstrapped five .NET microservices (payment, scheduling, workers, reports, integrations), from first commit to GitLab CI and Kubernetes manifests.'
       },
       {
-        en: 'Main author of the payment service (79% of commits): idempotent payment initiation and webhooks, constant-time callback checks, payment expiry and an audit row for every attempt — about 250 unit tests.'
+        en: 'Main author of the payment service (79% of commits): idempotent payments and webhooks, constant-time callback checks, expiry and a full audit trail; ~250 unit tests.'
       },
       {
-        en: 'Introduced PostgreSQL advisory locks for running document numbers and wrote it up as a team decision; five teammates have since applied the pattern (about 25 lock classes).'
+        en: 'Set team standards: PostgreSQL advisory locks for document numbers (now used by five teammates) and Sage, our AI-agent rules and decision records, across 5+ repos.'
       },
       {
-        en: 'Created Sage, an AI-agent protocol (classify and plan before code; review, security-review and test commands; binding decision records), rolled out across 5+ e-Customs repos and extended by teammates.'
-      },
-      {
-        en: 'Review and approve merge requests for a team of about 10 — approved and merged about 130 teammates’ MRs since May 2026; main contributor to the 275-case Playwright suite used in UAT, plus a tool that clones test data for retests.'
+        en: 'Review and approve merge requests for a team of ~10 (about 130 approved since May 2026); main contributor to the 275-case Playwright suite run in every UAT round.'
       },
       {
         en: 'Owned SSO and sign-in audit logging (no tokens or personal data in logs) and verified the pentest fixes for e-Customs phase 1.'
@@ -111,7 +108,7 @@ export const roles: Role[] = [
         en: 'Moved a university research journal to a new platform with nothing lost — 1,014 articles, checked by 25 integrity tests — live since Nov 2026.'
       },
       {
-        en: 'Made the journal’s article list load in about 0.1 s instead of 41 s by loading only what’s on screen (measured on a production build).'
+        en: 'Made the journal’s article list load in about 0.1 s instead of 41 s by loading only what’s on screen (measured on a local production build).'
       },
       {
         en: 'Load-tested an exam platform with k6 before launch: 0% errors at 600 concurrent users and a breaking point at 800, reported to the client before exam day.'
