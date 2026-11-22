@@ -532,6 +532,7 @@ function activityLabels(t: AppTranslate) {
   return {
     period: t('common.activity.period', 'Last 12 months · all my repos'),
     commits: t('common.activity.commits', 'tools shipped'),
+    commitTotal: t('common.activity.commit-total', 'commits'),
     activeDays: t('common.activity.active-days', 'days with commits'),
     repos: t('common.activity.repos', 'repositories'),
     releases: t('common.activity.releases', 'feature releases'),

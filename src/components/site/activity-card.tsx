@@ -37,6 +37,7 @@ const iso = (date: Date) => date.toISOString().slice(0, 10)
 export default function ActivityCard({
   days,
   until,
+  repos,
   featureReleases,
   products,
   lang,
@@ -52,6 +53,7 @@ export default function ActivityCard({
   labels: {
     period: string
     commits: string
+    commitTotal: string
     activeDays: string
     repos: string
     releases: string
@@ -78,7 +80,7 @@ export default function ActivityCard({
   )
   const locale = lang === 'th' ? 'th-TH' : 'en-US'
 
-  const { weeks, months, levels, monthLabels } = useMemo(() => {
+  const { weeks, months, totals, levels, monthLabels } = useMemo(() => {
     // 53 columns of Monday→Sunday, ending with the week that holds `until`.
     const end = new Date(`${until}T00:00:00Z`)
     const endWeekday = (end.getUTCDay() + 6) % 7
@@ -141,7 +143,11 @@ export default function ActivityCard({
       ? labels.hintTouch
       : labels.hint
 
+  // Volume first (commits, days, repos), then what came out of it (tools, releases).
   const stats = [
+    { value: number(totals.commits), label: labels.commitTotal },
+    { value: number(totals.activeDays), label: labels.activeDays },
+    { value: number(repos), label: labels.repos },
     { value: number(products.length), label: labels.commits },
     { value: number(featureReleases), label: labels.releases }
   ]
@@ -152,9 +158,9 @@ export default function ActivityCard({
         <span className='font-mono text-xs tracking-[0.08em] text-muted-foreground uppercase'>{labels.period}</span>
       </div>
 
-      <dl className='mt-4 grid grid-cols-2 gap-x-4 gap-y-3'>
+      <dl className='mt-4 grid grid-cols-3 gap-x-4 gap-y-4 sm:grid-cols-5'>
         {stats.map(stat => (
-          <div key={stat.label} className='flex flex-col-reverse gap-1'>
+          <div key={stat.label} className='flex flex-col-reverse justify-end gap-1'>
             <dt className='text-xs text-muted-foreground'>{stat.label}</dt>
             <dd className='text-[clamp(24px,2.2vw,34px)] leading-none font-extrabold tracking-[-0.035em] tabular-nums'>
               {stat.value}
