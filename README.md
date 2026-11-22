@@ -1,39 +1,70 @@
-# Satang Budsai Portfolio
+# Satang Budsai — Portfolio & Résumé
 
-A dark-only, editorial portfolio: big-type home page, product pages for my own tools, case studies for client work, and an AI-coding experiments log. The shared stack and package versions follow CMU Journal; the development port is 3031.
+A résumé-style portfolio for a Senior Software Engineer: the home page reads like a CV (fixed profile card and section menu on the left, About → Experience → Projects → Learning → Skills on the right), every project has its own page with results and "what went wrong" stories, and the one-page résumé exports to PDF. English only, dark by default with a light theme, violet accent and small pixel-art touches (a typing sprite and a pixel "S + cursor" logo).
+
+## Pages
+
+| Route                                                                      | What it is                                                                                                            |
+| -------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| `/`                                                                        | Résumé-style home: profile card, activity card, experience with durations, projects, learning, skills, "work with me" |
+| `/experience`                                                              | Every role in detail, with outcome tiles                                                                              |
+| `/work`, `/work/[slug]`                                                    | All projects; product pages for own tools, case studies for client work                                               |
+| `/resume`                                                                  | Printable one-page résumé (A4) with PDF downloads                                                                     |
+| `/about`, `/learning`                                                      | Background; AI-coding studies                                                                                         |
+| `/resume.txt`                                                              | Plain-text résumé for applicant-tracking systems                                                                      |
+| `/llms.txt`                                                                | Markdown site map for AI assistants ([llmstxt.org](https://llmstxt.org))                                              |
+| `/sitemap.xml`, `/robots.txt`, `/manifest.webmanifest`, `/opengraph-image` | SEO and sharing                                                                                                       |
 
 ## Content
 
-All portfolio content lives in typed files, in Thai and English side by side:
+All content lives in typed files under `src/content/`:
 
-- src/content/projects.ts: products (/work/[slug] product template) and case studies (case-study template).
-- src/content/site.ts: profile, contact links, services, timeline, experiments and lab cards.
-- public/work/{slug}/: project media as WebP. Animated WebP files are served as-is.
+- `experience.ts`: roles (title, dates, `start`/`end` for computed durations, bullets, linked projects). `side: true` marks work done outside working hours.
+- `projects.ts`, `stories.ts`, `galleries.ts`: project pages, results, problem → fix stories and screen galleries. Media lives in `public/work/{slug}/` as WebP.
+- `site.ts`: profile, contact links, availability, skills, services. `resume.ts`: which projects the résumé features.
+- `activity.json`: the 12-month activity card, refreshed with `pnpm activity:collect`.
+- UI strings: `langs/common/en.json` (Tolgee/next-intl, English only).
 
-Confidential client work (confidential: true) uses drawn diagrams from src/components/site/diagram.tsx, never screenshots. Search for TODO(satang) for facts that still need filling in. The resume buttons stay hidden until profile.resumeHref points at a public PDF.
+Rules for content: no invented metrics; Senior-role claims are checked against the employer's git history; client systems that aren't live say "signed off in SIT/UAT, ahead of launch"; confidential client work (`confidential: true`) uses redrawn diagrams from `src/components/site/diagram.tsx`, never screenshots; the résumé never shows a phone number or home address.
+
+## Résumé PDF
+
+```sh
+pnpm build && pnpm start            # or pnpm dev
+pnpm resume:pdf http://localhost:3031
+```
+
+Writes `public/Satang-Budsai-Resume.pdf` and `public/Satang-Budsai-Resume-no-photo.pdf` (A4, one page). Re-run after changing résumé content and commit both files. Project titles become links only when `NEXT_PUBLIC_SITE_URL` is set, so the PDF never links to a local server.
+
+## SEO and AI discovery
+
+- Metadata, canonical URLs, Open Graph (`profile`) and Twitter cards: `src/app/layout.tsx` and each page's `generateMetadata`.
+- JSON-LD (`WebSite` + `ProfilePage` + `Person` on the home page; `SoftwareApplication`/`CreativeWork` + breadcrumbs on project pages): `src/lib/seo.ts`.
+- `robots.txt` allows search engines and AI crawlers (GPTBot, ClaudeBot, PerplexityBot, Google-Extended…); `llms.txt` and `resume.txt` give assistants a clean text version.
+- **Set `NEXT_PUBLIC_SITE_URL` (e.g. `https://your-domain.dev`) at build time in production.** Without it, canonical URLs, the sitemap and JSON-LD point at localhost.
+
+## Brand
+
+The pixel "S + cursor" mark (designed with Codex CLI) lives in `public/brand/` — mark, light-theme mark, wordmark, social-card mark. App icons are file conventions: `src/app/icon.svg`, `src/app/favicon.ico` (16/32/48), `src/app/apple-icon.png`; the share card is generated by `src/app/opengraph-image.tsx`. The header draws the mark inline so it follows the theme accent.
 
 ## Stack
 
-- Next.js 16.4.5 App Router, React 19.2.8, TypeScript 5.9.3
-- Tailwind CSS 4.3.3 with CSS theme tokens in src/styles/globals.css
-- shadcn/ui base-nova components built on Base UI 1.8.0; ReUI registry configured
-- Motion 13.2.0, next-themes, Sonner, and offline Iconify icons
-- Redux Toolkit, TanStack Query, Axios, React Hook Form, date-fns
-- next-intl for request locale and Tolgee for English/Thai translations
-- pnpm 10.13.1, ESLint 9, Prettier, Playwright
-
-HeroUI, Vite/Vinext, Tailwind 3, Framer Motion imports, i18next, Day.js, and unused template dependencies have been removed. The existing API, socket, and progress helpers remain available.
+- Next.js 16 App Router, React 19, TypeScript 5.9
+- Tailwind CSS 4 with theme tokens in `src/styles/globals.css` (dark default, `:root.light` tokens, print styles for the résumé)
+- shadcn/ui on Base UI, Motion, next-themes, offline Iconify icons
+- next-intl + Tolgee for UI strings (English only)
+- pnpm 10, ESLint 9, Prettier, Playwright
 
 ## Development
 
-Use Node.js 22 or newer and pnpm 10.13.1.
+Use Node.js 22+ and pnpm 10.13.1.
 
 ```sh
 pnpm install --frozen-lockfile
 pnpm dev
 ```
 
-Open http://localhost:3031. Environment variables are optional for the portfolio; see .env.example for API helpers and Tolgee development settings. Keep API credentials server-side.
+Open http://localhost:3031. See `.env.example` for optional settings; keep credentials server-side.
 
 ## Checks
 
@@ -41,23 +72,12 @@ Open http://localhost:3031. Environment variables are optional for the portfolio
 pnpm lint
 pnpm typecheck
 pnpm format:check
-pnpm ui:check-icons
 pnpm build
 pnpm test
 ```
 
-Playwright tests use the production build on port 3131. Run pnpm build before pnpm test. If Chromium is missing, run pnpm exec playwright install chromium.
+Playwright runs against the production build on port 3131 (build first). Tests cover every route at desktop and mobile widths, hydration, the lightbox, the résumé PDF, and the SEO/AI files. If Chromium is missing: `pnpm exec playwright install chromium`.
 
 ## Components and icons
 
-Add components with pnpm ui:add <component>. The wrapper converts generated Lucide imports to the shared Iconify component. Add icon IDs to src/config/icons.ts and run pnpm icons:generate. Development regenerates icons; builds check that the generated data is current.
-
-## Translations
-
-Translations live in langs/{namespace}/{en,th}.json with flat keys and ICU placeholders, for example {username}. Register new namespaces in src/tolgee/config.ts. Use useLang() on the client or getTranslate() from src/tolgee/server.tsx on the server, with namespace.key names.
-
-The NEXT_LOCALE cookie selects English or Thai without changing the existing URLs. SwitchLanguage updates it through a server action. Translations work locally without Tolgee credentials. Optional CLI commands: pnpm i18n:extract, pnpm i18n:pull, and pnpm i18n:push. Remote operations require your own Tolgee project credentials in .env.local.
-
-## API generation
-
-Run pnpm generate to preprocess the checked-in Swagger schema, regenerate its Axios client, and apply the existing postprocessor. The scripts use ESM and the current Swagger CLI syntax.
+Add components with `pnpm ui:add <component>` (Lucide imports are converted to the shared Iconify component). Add icon IDs to `src/config/icons.ts` and run `pnpm icons:generate`; builds check that the generated data is current.
