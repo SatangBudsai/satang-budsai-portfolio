@@ -25,8 +25,8 @@ const OUTCOME: Record<string, L> = {
     en: 'Signed off in client testing (SIT and UAT); one-tap sign-in on iPhone solved after comparing 7 approaches.'
   },
   'eec-e-customs': {
-    th: 'ไม่มีการตัดเงินซ้ำเมื่อกดจ่ายอีกรอบ เลขเอกสารไม่ชนกัน และมี test ครอบ 4 service',
-    en: 'No double charges on payment retries, no colliding document numbers, and test suites across four services.'
+    th: 'ตั้งต้น 5 service จ่ายซ้ำไม่ตัดเงินซ้ำ เลขเอกสารไม่ชนกันด้วย advisory lock ที่ทีมใช้ต่อ และชุดทดสอบ Playwright 275 เคสในรอบ UAT',
+    en: 'Bootstrapped five services; idempotent payments, advisory-locked document numbers the team adopted, and a 275-case Playwright suite run in UAT.'
   },
   'cmu-journal': {
     th: 'ขึ้น production เมื่อ พ.ย. 2026 ผ่าน SonarQube quality gate และ integrity check 25 ข้อ',

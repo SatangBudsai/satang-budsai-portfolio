@@ -84,8 +84,8 @@ export const roles: Role[] = [
     kind: { th: 'งานประจำ · เว็บและแอปมือถือ', en: 'Full-time · web and mobile' },
     icon: 'compass',
     summary: {
-      th: 'ทำเว็บและแอปร่วมกับทีมด้วย React/Next.js และ .NET ตั้งแต่เว็บสนามบินไปจนถึงแอปยืนยันตัวตนของภาครัฐ',
-      en: 'Built web and mobile systems with the development team in React/Next.js and .NET — from an airport website to a government identity app.'
+      th: 'ทำเว็บและแอปมือถือด้วย React/Next.js, Flutter และ .NET ตั้งแต่เว็บสนามบินไปจนถึงแอปยืนยันตัวตนของภาครัฐ',
+      en: 'Built web and mobile systems in React/Next.js, Flutter and .NET — from an airport website to a government identity app.'
     },
     highlights: [
       {

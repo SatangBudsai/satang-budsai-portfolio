@@ -70,61 +70,63 @@ export default async function Home() {
               </span>
             </div>
 
-            <div className='mt-6'>
-              <HeroSprite
-                sheet='/pixel/hero-typing.png'
-                frames={6}
-                cellWidth={64}
-                cellHeight={72}
-                sectionLines={{
-                  about: t('common.cv.say-about', 'hi, I’m Satang!'),
-                  experience: t('common.cv.say-experience', 'where I’ve worked ↓'),
-                  projects: t('common.cv.say-projects', 'my favourite part: projects'),
-                  services: t('common.cv.say-services', 'got a project? let’s talk'),
-                  learning: t('common.cv.say-learning', 'I learn by building things'),
-                  skills: t('common.cv.say-skills', 'my everyday toolbox')
-                }}
-                alt={t('common.hero.sprite-alt', 'Pixel-art Satang typing on a laptop')}
-                lines={[
-                  t('common.hero.bubble-1', 'hi, that’s me!'),
-                  t('common.hero.bubble-2', 'move your mouse — I’ll look'),
-                  t('common.hero.bubble-3', 'shipping Orca v0.12.1…'),
-                  t('common.hero.bubble-4', 'git commit -m "fix it for real"'),
-                  t('common.hero.bubble-5', 'coffee → code → coffee'),
-                  t('common.hero.bubble-6', 'open for freelance & full-time')
-                ]}
-                labels={{
-                  pause: t('common.cv.pause', 'Pause animation'),
-                  play: t('common.cv.play', 'Play animation')
-                }}>
-                <div className='flex min-w-0 flex-col gap-2 pt-6 pb-1'>
-                  <h1
-                    lang='en'
-                    className='text-[clamp(40px,4vw,58px)] leading-[0.92] font-extrabold tracking-[-0.045em]'>
-                    Satang <br />
-                    Budsai
-                  </h1>
-                  <p className='text-base font-semibold text-primary sm:text-lg'>
-                    {t('common.cv.role', 'Senior Software Engineer')}
-                  </p>
-                </div>
-              </HeroSprite>
-            </div>
+            <div className='hero-card overflow-hidden rounded-3xl border border-line'>
+              <div className='hero-stage px-5 pt-5 pb-7 sm:px-6'>
+                <HeroSprite
+                  sheet='/pixel/hero-typing.png'
+                  frames={6}
+                  cellWidth={64}
+                  cellHeight={72}
+                  sectionLines={{
+                    about: t('common.cv.say-about', 'hi, I’m Satang!'),
+                    experience: t('common.cv.say-experience', 'where I’ve worked ↓'),
+                    projects: t('common.cv.say-projects', 'my favourite part: projects'),
+                    services: t('common.cv.say-services', 'got a project? let’s talk'),
+                    learning: t('common.cv.say-learning', 'I learn by building things'),
+                    skills: t('common.cv.say-skills', 'my everyday toolbox')
+                  }}
+                  alt={t('common.hero.sprite-alt', 'Pixel-art Satang typing on a laptop')}
+                  lines={[
+                    t('common.hero.bubble-1', 'hi, that’s me!'),
+                    t('common.hero.bubble-2', 'move your mouse — I’ll look'),
+                    t('common.hero.bubble-3', 'shipping Orca v0.12.1…'),
+                    t('common.hero.bubble-4', 'git commit -m "fix it for real"'),
+                    t('common.hero.bubble-5', 'coffee → code → coffee'),
+                    t('common.hero.bubble-6', 'open for freelance & full-time')
+                  ]}
+                  labels={{
+                    pause: t('common.cv.pause', 'Pause animation'),
+                    play: t('common.cv.play', 'Play animation')
+                  }}>
+                  <div className='flex min-w-0 flex-col gap-2 pb-0.5'>
+                    <h1
+                      lang='en'
+                      className='text-[clamp(40px,4vw,58px)] leading-[0.92] font-extrabold tracking-[-0.045em]'>
+                      Satang <br />
+                      Budsai
+                    </h1>
+                    <p className='text-base font-semibold text-primary sm:text-lg'>
+                      {t('common.cv.role', 'Senior Software Engineer')}
+                    </p>
+                  </div>
+                </HeroSprite>
+              </div>
 
-            <dl className='grid grid-cols-[4.5rem_1fr] gap-x-3 gap-y-1.5 rounded-2xl border border-line bg-card/50 p-4 text-sm [@media(min-width:1024px)_and_(max-height:820px)]:hidden'>
-              {[
-                ['at', t('common.cv.fact-at', 'Chanwanich · Senior Software Engineer')],
-                ['path', t('common.cv.fact-path', 'Intern → Full-stack developer → Senior')],
-                ['focus', t('common.cv.fact-focus', 'Government & enterprise systems')],
-                ['edu', t('common.cv.fact-edu', 'Chiang Mai University · first-class honours')],
-                ['loc', t('common.cv.fact-loc', 'Chiang Mai, Thailand · UTC+7')]
-              ].map(([key, value]) => (
-                <div key={key} className='contents'>
-                  <dt className='font-mono text-[12px] leading-6 text-primary'>{key}</dt>
-                  <dd className='leading-6 text-soft'>{value}</dd>
-                </div>
-              ))}
-            </dl>
+              <dl className='grid grid-cols-[3.5rem_1fr] gap-x-3 gap-y-1 border-t border-line px-5 py-4 text-[13px] sm:px-6 [@media(min-width:1024px)_and_(max-height:820px)]:hidden'>
+                {[
+                  ['at', t('common.cv.fact-at', 'Chanwanich · Senior Software Engineer')],
+                  ['path', t('common.cv.fact-path', 'Intern → Full-stack developer → Senior')],
+                  ['focus', t('common.cv.fact-focus', 'Government & enterprise systems')],
+                  ['edu', t('common.cv.fact-edu', 'Chiang Mai University · first-class honours')],
+                  ['loc', t('common.cv.fact-loc', 'Chiang Mai, Thailand · UTC+7')]
+                ].map(([key, value]) => (
+                  <div key={key} className='contents'>
+                    <dt className='font-mono text-[12px] leading-6 text-primary/80'>{key}</dt>
+                    <dd className='leading-6 text-soft'>{value}</dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
 
             <div className='hidden flex-col lg:flex'>
               <SectionNav items={sections} label={t('common.cv.contents', 'Contents')} />
