@@ -63,8 +63,8 @@ export const roles: Role[] = [
         en: 'Created Sage, an AI-agent protocol (classify and plan before code; review, security-review and test commands; binding decision records), rolled out across 5+ e-Customs repos and extended by teammates.'
       },
       {
-        th: 'merge MR ของเพื่อนร่วมทีมเข้า dev ราว 130 รายการ ในทีมประมาณ 10 คน และเป็นคนเขียนหลักของชุดทดสอบ Playwright 275 เคสที่ใช้ในรอบ UAT พร้อมเครื่องมือ clone ข้อมูลทดสอบสำหรับทดสอบซ้ำ',
-        en: 'Merged about 130 teammates’ merge requests into dev on a team of about 10; main contributor to the 275-case Playwright suite used in UAT, plus a tool that clones test data for retests.'
+        th: 'เป็นผู้รีวิวและ approve MR ของทีมประมาณ 10 คน merge งานของเพื่อนเข้า dev ไปแล้วราว 130 รายการ และเป็นคนเขียนหลักของชุดทดสอบ Playwright 275 เคสที่ใช้ในรอบ UAT พร้อมเครื่องมือ clone ข้อมูลทดสอบสำหรับทดสอบซ้ำ',
+        en: 'Review and approve merge requests for a team of about 10 — about 130 teammates’ MRs merged into dev; main contributor to the 275-case Playwright suite used in UAT, plus a tool that clones test data for retests.'
       },
       {
         th: 'ดูแลระบบ SSO และ audit log ของการล็อกอิน (ไม่เก็บ token หรือข้อมูลส่วนบุคคลใน log) และตรวจยืนยันการแก้ไขตามผล pentest ของ e-Customs เฟส 1',
@@ -89,12 +89,12 @@ export const roles: Role[] = [
     },
     highlights: [
       {
-        th: 'ทำแอป Flutter ของ EEC ID (97% ของ commit) และ backend .NET ของแอป (92%) ให้แรงงานยืนยันตัวตนผ่านมือถือได้โดยไม่ต้องไปสำนักงาน ทั้งอ่านชิปหนังสือเดินทาง เทียบใบหน้า และล็อกอินเข้าแอปพันธมิตร ลูกค้าทดสอบและรับรองแล้ว (SIT และ UAT)',
-        en: 'Built the EEC ID Flutter app (97% of commits) and its .NET backend (92%), letting workers verify their identity on a phone instead of at an office — ePassport chip reading, face match and sign-in for partner apps; signed off in SIT and UAT.'
+        th: 'ทำแอป Flutter ของ EEC ID (97% ของ commit) และ backend .NET ของแอป (92%) ให้แรงงานยืนยันตัวตนผ่านมือถือได้โดยไม่ต้องไปสำนักงาน ทั้งอ่านชิปหนังสือเดินทาง เทียบใบหน้า และล็อกอินเข้าแอปพันธมิตร ลูกค้าทดสอบและรับรองแล้ว (SIT และ UAT) รอเปิดใช้งานจริง',
+        en: 'Built the EEC ID Flutter app (97% of commits) and its .NET backend (92%), letting workers verify their identity on a phone instead of at an office — ePassport chip reading, face match and sign-in for partner apps; signed off in SIT and UAT, ahead of launch.'
       },
       {
-        th: 'ทำให้ล็อกอินข้ามแอปด้วยการกดครั้งเดียวใช้ได้บน iPhone หลังลองมา 7 วิธี',
-        en: 'Made one-tap sign-in between apps work on iPhone, after comparing 7 approaches.'
+        th: 'ทำให้ล็อกอินจากแอปพันธมิตรด้วยการกดครั้งเดียวใช้ได้บน iPhone ซึ่ง cookie ข้ามแอปไม่ได้ ทดสอบมา 7 แนวทางก่อนเลือกวิธีที่ใช้',
+        en: 'Got one-tap sign-in from partner apps working on iPhone, where cookies don’t carry across apps — tested 7 approaches before choosing one.'
       },
       {
         th: 'ย้ายการออกรายงานไปทำเป็น background process เพื่อแก้ปัญหา timeout',

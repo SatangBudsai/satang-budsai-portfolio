@@ -402,8 +402,8 @@ export const stories: Record<string, Story> = {
     },
     results: [
       {
-        th: 'แรงงานต่างชาติยืนยันตัวตนจากมือถือได้เลย ไม่ต้องไปต่อคิวที่สำนักงาน ลูกค้าทดสอบและรับรองแล้ว (SIT และ UAT)',
-        en: 'Foreign workers can prove their identity from a phone instead of queuing at an office — signed off in client testing (SIT and UAT)'
+        th: 'แรงงานต่างชาติยืนยันตัวตนจากมือถือได้เลย ไม่ต้องไปต่อคิวที่สำนักงาน ลูกค้าทดสอบและรับรองแล้ว (SIT และ UAT) รอเปิดใช้งานจริง',
+        en: 'Foreign workers can prove their identity from a phone instead of queuing at an office — signed off in client testing (SIT and UAT), ahead of launch'
       },
       {
         th: 'ล็อกอินข้ามแอปด้วยการกดครั้งเดียวใช้ได้บน iPhone หลังเทียบมา 7 วิธี',

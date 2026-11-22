@@ -21,8 +21,8 @@ export const resumeProjects = [
  */
 const OUTCOME: Record<string, L> = {
   'eec-id': {
-    th: 'ลูกค้าทดสอบและรับรองแล้ว (SIT และ UAT) และแก้ล็อกอินข้ามแอปบน iPhone ได้หลังเทียบมา 7 วิธี',
-    en: 'Signed off in client testing (SIT and UAT); one-tap sign-in on iPhone solved after comparing 7 approaches.'
+    th: 'ลูกค้ารับรองแล้วใน SIT และ UAT รอเปิดใช้งานจริง และล็อกอินจากแอปพันธมิตรใช้ได้บน iPhone',
+    en: 'Signed off in SIT and UAT ahead of launch; one-tap sign-in from partner apps works on iPhone.'
   },
   'eec-e-customs': {
     th: 'ตั้งต้น 5 service จ่ายซ้ำไม่ตัดเงินซ้ำ เลขเอกสารไม่ชนกันด้วย advisory lock ที่ทีมใช้ต่อ และชุดทดสอบ Playwright 275 เคสในรอบ UAT',

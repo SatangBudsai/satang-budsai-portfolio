@@ -164,7 +164,7 @@ export default function Resume() {
                     {t('common.resume.quality', 'Quality & tooling')}
                   </dt>
                   <dd>
-                    <Chips items={['REST APIs', 'Git', 'Playwright', 'k6', 'SonarQube', 'CI/CD']} />
+                    <Chips items={['Playwright', 'k6', 'SonarQube', 'OpenAPI']} />
                   </dd>
                 </div>
               </dl>

@@ -836,7 +836,7 @@ export const cases: CaseStudy[] = [
       { th: 'ฟีเจอร์ใน web portal ของเจ้าหน้าที่', en: 'Features in the officer web portal' }
     ],
     gallery: [],
-    stack: ['Flutter', '.NET 8', 'Next.js', 'ZITADEL', 'Kafka', 'SignalR', 'PostgreSQL', 'FastAPI'],
+    stack: ['Flutter', '.NET 8', 'Next.js', 'ZITADEL', 'SignalR', 'PostgreSQL', 'FastAPI'],
     links: [],
     architecture: { kind: 'diagram', id: 'eec-id', alt: { th: 'สถาปัตยกรรมของ EEC ID', en: 'EEC ID architecture' } },
     cover: {

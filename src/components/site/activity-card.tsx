@@ -53,7 +53,6 @@ export default function ActivityCard({
   labels: {
     period: string
     commits: string
-    commitTotal: string
     activeDays: string
     repos: string
     releases: string
@@ -145,7 +144,6 @@ export default function ActivityCard({
 
   // Volume first (commits, days, repos), then what came out of it (tools, releases).
   const stats = [
-    { value: number(totals.commits), label: labels.commitTotal },
     { value: number(totals.activeDays), label: labels.activeDays },
     { value: number(repos), label: labels.repos },
     { value: number(products.length), label: labels.commits },
@@ -158,7 +156,7 @@ export default function ActivityCard({
         <span className='font-mono text-xs tracking-[0.08em] text-muted-foreground uppercase'>{labels.period}</span>
       </div>
 
-      <dl className='mt-4 grid grid-cols-3 gap-x-4 gap-y-4 sm:grid-cols-5'>
+      <dl className='mt-4 grid grid-cols-2 gap-x-4 gap-y-4 sm:grid-cols-4'>
         {stats.map(stat => (
           <div key={stat.label} className='flex flex-col-reverse justify-end gap-1'>
             <dt className='text-xs text-muted-foreground'>{stat.label}</dt>
