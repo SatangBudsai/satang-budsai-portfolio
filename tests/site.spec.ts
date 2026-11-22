@@ -68,33 +68,13 @@ test('returns 404 for an unknown project', async ({ page }) => {
   expect(response?.status()).toBe(404)
 })
 
-test('picks the language from the cookie, then from Accept-Language', async ({ browser }) => {
-  const english = await browser.newContext({ locale: 'en-US' })
-  const page = await english.newPage()
+test('serves English even when the browser prefers Thai', async ({ browser }) => {
+  const thai = await browser.newContext({ locale: 'th-TH' })
+  const page = await thai.newPage()
+  await thai.addCookies([{ name: 'NEXT_LOCALE', value: 'th', url: 'http://127.0.0.1:3131' }])
   await page.goto('/about')
   await expect(page.locator('html')).toHaveAttribute('lang', 'en')
-  await english.addCookies([{ name: 'NEXT_LOCALE', value: 'th', url: 'http://127.0.0.1:3131' }])
-  await page.reload()
-  await expect(page.locator('html')).toHaveAttribute('lang', 'th')
-  await english.addCookies([{ name: 'NEXT_LOCALE', value: 'invalid', url: 'http://127.0.0.1:3131' }])
-  await page.reload()
-  await expect(page.locator('html')).toHaveAttribute('lang', 'en')
-  await english.close()
-
-  const thai = await browser.newContext({ locale: 'th-TH' })
-  const thaiPage = await thai.newPage()
-  await thaiPage.goto('/about')
-  await expect(thaiPage.locator('html')).toHaveAttribute('lang', 'th')
   await thai.close()
-})
-
-test('switches language from the header', async ({ browser }) => {
-  const context = await browser.newContext({ locale: 'en-US' })
-  const page = await context.newPage()
-  await page.goto('/', { waitUntil: 'networkidle' })
-  await page.getByRole('button', { name: 'เปลี่ยนเป็นภาษาไทย' }).click()
-  await expect(page.locator('html')).toHaveAttribute('lang', 'th')
-  await context.close()
 })
 
 test('hydrates cleanly with reduced motion', async ({ browser }) => {

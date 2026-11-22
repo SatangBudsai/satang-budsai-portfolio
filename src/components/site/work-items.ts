@@ -21,15 +21,15 @@ const toneBySlug: Record<string, string> = {
 }
 
 const shortClient: Record<string, L> = {
-  'eec-id': { th: 'รัฐ · EEC', en: 'Gov · EEC' },
-  'eec-e-customs': { th: 'รัฐ · EEC', en: 'Gov · EEC' },
-  'suvarnabhumi-airport-gate': { th: 'สนามบิน', en: 'Airport' },
-  'lampang-health-network': { th: 'สาธารณสุข', en: 'Health' },
-  'cmu-journal': { th: 'มช.', en: 'CMU' },
-  'cmu-research-gallery': { th: 'มช.', en: 'CMU' },
-  'ora-cmu': { th: 'มช.', en: 'CMU' },
-  'junior-bootcamp': { th: 'มช.', en: 'CMU' },
-  readitgo: { th: 'Engenius', en: 'Engenius' }
+  'eec-id': { en: 'Gov · EEC' },
+  'eec-e-customs': { en: 'Gov · EEC' },
+  'suvarnabhumi-airport-gate': { en: 'Airport' },
+  'lampang-health-network': { en: 'Health' },
+  'cmu-journal': { en: 'CMU' },
+  'cmu-research-gallery': { en: 'CMU' },
+  'ora-cmu': { en: 'CMU' },
+  'junior-bootcamp': { en: 'CMU' },
+  readitgo: { en: 'Engenius' }
 }
 
 function visualOf(media: Media, lang: Lang): WorkVisual {

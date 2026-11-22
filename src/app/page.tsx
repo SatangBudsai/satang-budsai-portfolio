@@ -8,7 +8,6 @@ import { Reveal } from '@/components/site/motion'
 import { itemIcon, PixelItem } from '@/components/site/pixel'
 import ScrollRail from '@/components/site/scroll-rail'
 import SectionNav from '@/components/site/section-nav'
-import { LanguageSwitch } from '@/components/site/site-header'
 import ThemeToggle from '@/components/site/theme-toggle'
 import { Icon } from '@/components/ui/icon'
 import { appIcons } from '@/config/icons'
@@ -66,7 +65,6 @@ export default async function Home() {
                     light: t('common.nav.theme-light', 'Switch to light mode')
                   }}
                 />
-                <LanguageSwitch compact lang={lang} label={t('common.nav.switch-language', 'เปลี่ยนเป็นภาษาไทย')} />
               </span>
             </div>
 
@@ -189,7 +187,7 @@ export default async function Home() {
                   <li key={role.id}>
                     <Entry
                       when={`${tr(role.when, lang)}
-${duration(role.start, role.end, lang)}`}>
+${duration(role.start, role.end)}`}>
                       <div className='flex items-start gap-3'>
                         <PixelItem name={role.icon} size={32} className='mt-0.5' />
                         <div>

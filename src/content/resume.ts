@@ -21,27 +21,21 @@ export const resumeProjects = [
  */
 const OUTCOME: Record<string, L> = {
   'eec-id': {
-    th: 'ลูกค้ารับรองแล้วใน SIT และ UAT รอเปิดใช้งานจริง และล็อกอินจากแอปพันธมิตรใช้ได้บน iPhone',
     en: 'Signed off in SIT and UAT ahead of launch; one-tap sign-in from partner apps works on iPhone.'
   },
   'eec-e-customs': {
-    th: 'ตั้งต้น 5 service จ่ายซ้ำไม่ตัดเงินซ้ำ เลขเอกสารไม่ชนกันด้วย advisory lock ที่ทีมใช้ต่อ และชุดทดสอบ Playwright 275 เคสในรอบ UAT',
     en: 'Bootstrapped five services; idempotent payments, advisory-locked document numbers the team adopted, and a 275-case Playwright suite run in UAT.'
   },
   'cmu-journal': {
-    th: 'ขึ้น production เมื่อ พ.ย. 2026 ผ่าน SonarQube quality gate และ integrity check 25 ข้อ',
     en: 'Live since Nov 2026; SonarQube quality gate and 25 integrity checks passed.'
   },
   'junior-bootcamp': {
-    th: 'เข้าพร้อมกัน 600 คนไม่มีข้อผิดพลาด และเจอจุดที่ระบบรับไม่ไหวที่ 800 คน ก่อนวันสอบจริง',
     en: '600 people at once with no errors; the breaking point at 800 was found before exam day.'
   },
   'qorstack-report': {
-    th: 'ใช้ออกใบรับรองจริงในระบบ e-service ภาครัฐ มี SDK บน NuGet และ npm',
     en: 'Renders certificates in a government e-service; SDKs on NuGet and npm.'
   },
   'git-control-orca': {
-    th: 'ใช้เองทุกวัน git status จาก 162 เหลือราว 106 ms และมีคนนอกส่ง PR มา merge แล้ว',
     en: 'Used daily; git status 162 → ~106 ms; outside pull requests merged.'
   }
 }

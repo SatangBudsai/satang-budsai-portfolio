@@ -214,8 +214,7 @@ function RoleEntry({ role }: { role: Role }) {
           {tr(role.role, lang)} <span className='text-primary'>· {tr(role.org, lang)}</span>
         </h3>
         <span className='flex items-center gap-2 text-sm text-muted-foreground tabular-nums print:text-[10.5px]'>
-          {tr(role.when, lang).replace(' — now', ' – Present').replace(' — ', ' – ')} ·{' '}
-          {duration(role.start, role.end, lang)}
+          {tr(role.when, lang).replace(' — now', ' – Present').replace(' — ', ' – ')} · {duration(role.start, role.end)}
         </span>
       </div>
       <p className='text-sm text-muted-foreground print:text-[10.5px]'>{tr(role.kind, lang)}</p>

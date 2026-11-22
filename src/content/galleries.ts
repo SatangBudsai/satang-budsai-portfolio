@@ -8,7 +8,7 @@ export const galleries: Record<string, ImageMedia[]> = {
       src: '/work/git-control-orca/g/graph.webp',
       width: 1440,
       height: 900,
-      alt: { th: 'Commit graph — แต่ละ branch มีสีของตัวเอง', en: 'Commit graph — every branch in its own colour' },
+      alt: { en: 'Commit graph — every branch in its own colour' },
       frame: 'browser'
     },
     {
@@ -17,7 +17,6 @@ export const galleries: Record<string, ImageMedia[]> = {
       width: 1440,
       height: 900,
       alt: {
-        th: 'เปิด merge request ได้โดยไม่ต้องออกจาก editor',
         en: 'Opening a merge request without leaving the editor'
       },
       frame: 'browser'
@@ -27,7 +26,7 @@ export const galleries: Record<string, ImageMedia[]> = {
       src: '/work/git-control-orca/g/pipeline.webp',
       width: 1440,
       height: 900,
-      alt: { th: 'stage และ job ทั้งหมดของ pipeline หนึ่งตัว', en: 'One pipeline’s stages and jobs' },
+      alt: { en: 'One pipeline’s stages and jobs' },
       frame: 'browser'
     },
     {
@@ -35,7 +34,7 @@ export const galleries: Record<string, ImageMedia[]> = {
       src: '/work/git-control-orca/g/commit.webp',
       width: 1440,
       height: 900,
-      alt: { th: 'แท็บ Commit: ไฟล์ที่แก้และ diff', en: 'Commit tab: changed files and the diff' },
+      alt: { en: 'Commit tab: changed files and the diff' },
       frame: 'browser'
     },
     {
@@ -43,7 +42,7 @@ export const galleries: Record<string, ImageMedia[]> = {
       src: '/work/git-control-orca/g/repos.webp',
       width: 1440,
       height: 900,
-      alt: { th: 'ภาพรวมทุก repository', en: 'All repositories at a glance' },
+      alt: { en: 'All repositories at a glance' },
       frame: 'browser'
     },
     {
@@ -51,7 +50,7 @@ export const galleries: Record<string, ImageMedia[]> = {
       src: '/work/git-control-orca/g/ssh.webp',
       width: 1440,
       height: 900,
-      alt: { th: 'โปรเจกต์บน server ผ่าน SSH ก็ใช้เครื่องมือชุดเดิม', en: 'Projects on SSH servers, same tools' },
+      alt: { en: 'Projects on SSH servers, same tools' },
       frame: 'browser'
     },
     {
@@ -59,7 +58,7 @@ export const galleries: Record<string, ImageMedia[]> = {
       src: '/work/git-control-orca/g/tags.webp',
       width: 1440,
       height: 900,
-      alt: { th: 'repository ที่มี tag หลายร้อยตัว', en: 'A repository with hundreds of tags' },
+      alt: { en: 'A repository with hundreds of tags' },
       frame: 'browser'
     }
   ],
@@ -70,7 +69,6 @@ export const galleries: Record<string, ImageMedia[]> = {
       width: 1280,
       height: 720,
       alt: {
-        th: 'อ่าน placeholder จากไฟล์ Word มาให้กรอกได้เลย',
         en: 'Placeholders read from the Word file, ready to fill'
       },
       frame: 'browser'
@@ -80,7 +78,7 @@ export const galleries: Record<string, ImageMedia[]> = {
       src: '/work/qorstack-report/g/result.webp',
       width: 1280,
       height: 720,
-      alt: { th: 'กด Generate PDF แล้วดูผลข้างฟอร์มได้ทันที', en: 'Generate PDF and see the result beside the form' },
+      alt: { en: 'Generate PDF and see the result beside the form' },
       frame: 'browser'
     },
     {
@@ -88,7 +86,7 @@ export const galleries: Record<string, ImageMedia[]> = {
       src: '/work/qorstack-report/g/site-hero.webp',
       width: 1440,
       height: 900,
-      alt: { th: 'เว็บของโปรดักต์', en: 'The product site' },
+      alt: { en: 'The product site' },
       frame: 'browser'
     },
     {
@@ -97,7 +95,6 @@ export const galleries: Record<string, ImageMedia[]> = {
       width: 1440,
       height: 900,
       alt: {
-        th: 'สิ่งที่ template ทำได้: field, ตาราง, รูป, QR code',
         en: 'Template features: fields, tables, images, QR codes'
       },
       frame: 'browser'
@@ -107,7 +104,7 @@ export const galleries: Record<string, ImageMedia[]> = {
       src: '/work/qorstack-report/g/editions.webp',
       width: 1440,
       height: 900,
-      alt: { th: 'core ที่เป็น open source กับ licence รุ่น pro', en: 'Open-source core and the pro licence' },
+      alt: { en: 'Open-source core and the pro licence' },
       frame: 'browser'
     }
   ],
@@ -117,7 +114,7 @@ export const galleries: Record<string, ImageMedia[]> = {
       src: '/work/scanhub/g/results.webp',
       width: 1280,
       height: 800,
-      alt: { th: 'ผลจากทุก scanner รวมไว้ที่เดียว', en: 'Results from every scanner, merged' },
+      alt: { en: 'Results from every scanner, merged' },
       frame: 'browser'
     },
     {
@@ -125,7 +122,7 @@ export const galleries: Record<string, ImageMedia[]> = {
       src: '/work/scanhub/g/filter.webp',
       width: 1280,
       height: 800,
-      alt: { th: 'กรอง finding ตามความรุนแรงและเครื่องมือ', en: 'Filter findings by severity and tool' },
+      alt: { en: 'Filter findings by severity and tool' },
       frame: 'browser'
     },
     {
@@ -133,7 +130,7 @@ export const galleries: Record<string, ImageMedia[]> = {
       src: '/work/scanhub/g/share.webp',
       width: 1280,
       height: 800,
-      alt: { th: 'ลิงก์แชร์ที่ตั้งรหัสผ่านได้', en: 'Password-protected share links' },
+      alt: { en: 'Password-protected share links' },
       frame: 'browser'
     },
     {
@@ -141,7 +138,7 @@ export const galleries: Record<string, ImageMedia[]> = {
       src: '/work/scanhub/g/scanners.webp',
       width: 1280,
       height: 800,
-      alt: { th: 'เวอร์ชันของ scanner และการอัปเดต', en: 'Scanner versions and updates' },
+      alt: { en: 'Scanner versions and updates' },
       frame: 'browser'
     },
     {
@@ -149,7 +146,7 @@ export const galleries: Record<string, ImageMedia[]> = {
       src: '/work/scanhub/g/mobile.webp',
       width: 390,
       height: 844,
-      alt: { th: 'เปิดบนมือถือก็ใช้ได้', en: 'Works on a phone too' },
+      alt: { en: 'Works on a phone too' },
       frame: 'none'
     }
   ],
@@ -159,7 +156,7 @@ export const galleries: Record<string, ImageMedia[]> = {
       src: '/work/clipath/g/site.webp',
       width: 1440,
       height: 900,
-      alt: { th: 'เว็บของโปรดักต์และหน้าดาวน์โหลด', en: 'The product site and download' },
+      alt: { en: 'The product site and download' },
       frame: 'browser'
     },
     {
@@ -167,7 +164,7 @@ export const galleries: Record<string, ImageMedia[]> = {
       src: '/work/clipath/g/flow.webp',
       width: 1440,
       height: 900,
-      alt: { th: 'กด ลาก วาง — จบในรอบเดียว', en: 'Press, drag, paste — the whole loop' },
+      alt: { en: 'Press, drag, paste — the whole loop' },
       frame: 'browser'
     },
     {
@@ -175,7 +172,7 @@ export const galleries: Record<string, ImageMedia[]> = {
       src: '/work/clipath/g/features.webp',
       width: 1440,
       height: 900,
-      alt: { th: 'โหมดจับภาพและเครื่องมือ annotate', en: 'Capture modes and annotation tools' },
+      alt: { en: 'Capture modes and annotation tools' },
       frame: 'browser'
     },
     {
@@ -184,7 +181,6 @@ export const galleries: Record<string, ImageMedia[]> = {
       width: 1440,
       height: 900,
       alt: {
-        th: 'วัดจริง: ~200 ms, ตอน idle 24 MB, installer ~2 MB',
         en: 'Measured: ~200 ms, 24 MB idle, ~2 MB installer'
       },
       frame: 'browser'
@@ -194,7 +190,7 @@ export const galleries: Record<string, ImageMedia[]> = {
       src: '/work/clipath/g/shortcuts.webp',
       width: 1440,
       height: 900,
-      alt: { th: 'คีย์ลัดทั้งหมดในหน้าเดียว', en: 'Every shortcut on one page' },
+      alt: { en: 'Every shortcut on one page' },
       frame: 'browser'
     },
     {
@@ -202,7 +198,7 @@ export const galleries: Record<string, ImageMedia[]> = {
       src: '/work/clipath/g/promo-shortcut.webp',
       width: 588,
       height: 1090,
-      alt: { th: 'วิดีโอโปรโมต: คีย์ลัดเดียวจากทุกที่', en: 'Promo reel: one shortcut from anywhere' },
+      alt: { en: 'Promo reel: one shortcut from anywhere' },
       frame: 'none'
     },
     {
@@ -210,7 +206,7 @@ export const galleries: Record<string, ImageMedia[]> = {
       src: '/work/clipath/g/promo-saved.webp',
       width: 588,
       height: 1090,
-      alt: { th: 'วิดีโอโปรโมต: เซฟให้อัตโนมัติ ไม่มี dialog ถาม', en: 'Promo reel: auto-saved, no dialog' },
+      alt: { en: 'Promo reel: auto-saved, no dialog' },
       frame: 'none'
     },
     {
@@ -218,7 +214,7 @@ export const galleries: Record<string, ImageMedia[]> = {
       src: '/work/clipath/g/promo-annotate.webp',
       width: 588,
       height: 1090,
-      alt: { th: 'วิดีโอโปรโมต: annotate ได้ทุกอย่าง', en: 'Promo reel: annotate anything' },
+      alt: { en: 'Promo reel: annotate anything' },
       frame: 'none'
     },
     {
@@ -226,7 +222,7 @@ export const galleries: Record<string, ImageMedia[]> = {
       src: '/work/clipath/g/promo-modes.webp',
       width: 588,
       height: 1090,
-      alt: { th: 'วิดีโอโปรโมต: หลายจอ DPI ไม่เท่ากันก็ได้', en: 'Promo reel: multi-monitor, mixed DPI' },
+      alt: { en: 'Promo reel: multi-monitor, mixed DPI' },
       frame: 'none'
     }
   ],
@@ -236,7 +232,7 @@ export const galleries: Record<string, ImageMedia[]> = {
       src: '/work/thai-pdf-fixer/g/app.webp',
       width: 1100,
       height: 760,
-      alt: { th: 'หน้าแอป: ปุ่มใหญ่ปุ่มเดียว เน้นใช้คีย์บอร์ด', en: 'The app: one big keyboard-first button' },
+      alt: { en: 'The app: one big keyboard-first button' },
       frame: 'browser'
     }
   ],
@@ -247,7 +243,6 @@ export const galleries: Record<string, ImageMedia[]> = {
       width: 1440,
       height: 900,
       alt: {
-        th: 'Sage — protocol ให้ coding agent คิดก่อนลงมือ',
         en: 'Sage — a first-thought protocol for coding agents'
       },
       frame: 'browser'
@@ -257,7 +252,7 @@ export const galleries: Record<string, ImageMedia[]> = {
       src: '/work/sage/g/problem.webp',
       width: 1440,
       height: 900,
-      alt: { th: 'ทำไม: เขียนโค้ดเร็วมันถูก แต่โค้ดผิดมันแพง', en: 'Why: fast code is cheap, wrong code is expensive' },
+      alt: { en: 'Why: fast code is cheap, wrong code is expensive' },
       frame: 'browser'
     },
     {
@@ -265,7 +260,7 @@ export const galleries: Record<string, ImageMedia[]> = {
       src: '/work/sage/g/flow.webp',
       width: 1440,
       height: 900,
-      alt: { th: 'คิดตามลำดับเดิมทุกครั้งก่อนแก้อะไร', en: 'A repeatable thought before every change' },
+      alt: { en: 'A repeatable thought before every change' },
       frame: 'browser'
     },
     {
@@ -273,7 +268,7 @@ export const galleries: Record<string, ImageMedia[]> = {
       src: '/work/sage/g/compare.webp',
       width: 1440,
       height: 900,
-      alt: { th: 'agent ตัวเดียวกัน ตอนมีกับไม่มี Sage', en: 'The same agent, with and without Sage' },
+      alt: { en: 'The same agent, with and without Sage' },
       frame: 'browser'
     },
     {
@@ -281,7 +276,7 @@ export const galleries: Record<string, ImageMedia[]> = {
       src: '/work/sage/g/install.webp',
       width: 1440,
       height: 900,
-      alt: { th: 'ติดตั้งด้วยคำสั่งเดียว', en: 'One command to install' },
+      alt: { en: 'One command to install' },
       frame: 'browser'
     },
     {
@@ -289,7 +284,7 @@ export const galleries: Record<string, ImageMedia[]> = {
       src: '/work/sage/g/workspace.webp',
       width: 1440,
       height: 900,
-      alt: { th: 'เก็บ decision และหลักฐานไว้ที่เดียว', en: 'Decisions and evidence kept in one place' },
+      alt: { en: 'Decisions and evidence kept in one place' },
       frame: 'browser'
     }
   ],
@@ -299,7 +294,7 @@ export const galleries: Record<string, ImageMedia[]> = {
       src: '/work/cmu-journal/g/home.webp',
       width: 1440,
       height: 1440,
-      alt: { th: 'หน้าแรกบน production', en: 'Production home page' },
+      alt: { en: 'Production home page' },
       frame: 'browser'
     },
     {
@@ -307,7 +302,7 @@ export const galleries: Record<string, ImageMedia[]> = {
       src: '/work/cmu-journal/g/article.webp',
       width: 1440,
       height: 900,
-      alt: { th: 'บทความที่ย้ายมาแล้ว เปิดอ่านได้เลย', en: 'A migrated article, ready to read' },
+      alt: { en: 'A migrated article, ready to read' },
       frame: 'browser'
     },
     {
@@ -315,7 +310,7 @@ export const galleries: Record<string, ImageMedia[]> = {
       src: '/work/cmu-journal/g/issues.webp',
       width: 1440,
       height: 1440,
-      alt: { th: 'เลือกดูตามเล่มและฉบับ', en: 'Browsing volumes and issues' },
+      alt: { en: 'Browsing volumes and issues' },
       frame: 'browser'
     },
     {
@@ -323,7 +318,7 @@ export const galleries: Record<string, ImageMedia[]> = {
       src: '/work/cmu-journal/g/search.webp',
       width: 1440,
       height: 1440,
-      alt: { th: 'ค้นหาพร้อมตัวกรอง', en: 'Search with filters' },
+      alt: { en: 'Search with filters' },
       frame: 'browser'
     },
     {
@@ -331,7 +326,7 @@ export const galleries: Record<string, ImageMedia[]> = {
       src: '/work/cmu-journal/g/board.webp',
       width: 1440,
       height: 900,
-      alt: { th: 'หน้ากองบรรณาธิการ', en: 'Editorial board page' },
+      alt: { en: 'Editorial board page' },
       frame: 'browser'
     },
     {
@@ -339,7 +334,7 @@ export const galleries: Record<string, ImageMedia[]> = {
       src: '/work/cmu-journal/g/admin-list.webp',
       width: 1440,
       height: 1440,
-      alt: { th: 'หลังบ้าน: รายการบทความ', en: 'Back office: article list' },
+      alt: { en: 'Back office: article list' },
       frame: 'browser'
     },
     {
@@ -347,7 +342,7 @@ export const galleries: Record<string, ImageMedia[]> = {
       src: '/work/cmu-journal/g/editor.webp',
       width: 1440,
       height: 1000,
-      alt: { th: 'หลังบ้าน: rich-text editor สำหรับแก้บทความ', en: 'Back office: rich-text article editor' },
+      alt: { en: 'Back office: rich-text article editor' },
       frame: 'browser'
     },
     {
@@ -355,7 +350,7 @@ export const galleries: Record<string, ImageMedia[]> = {
       src: '/work/cmu-journal/g/dashboard.webp',
       width: 1440,
       height: 900,
-      alt: { th: 'แดชบอร์ดบรรณาธิการที่ออกแบบใหม่', en: 'Redesigned editor dashboard' },
+      alt: { en: 'Redesigned editor dashboard' },
       frame: 'browser'
     },
     {
@@ -363,7 +358,7 @@ export const galleries: Record<string, ImageMedia[]> = {
       src: '/work/cmu-journal/g/mobile.webp',
       width: 390,
       height: 846,
-      alt: { th: 'หน้าแรกบนมือถือ', en: 'Home page on a phone' },
+      alt: { en: 'Home page on a phone' },
       frame: 'phone'
     },
     {
@@ -371,7 +366,7 @@ export const galleries: Record<string, ImageMedia[]> = {
       src: '/work/cmu-journal/g/mobile-figure.webp',
       width: 390,
       height: 844,
-      alt: { th: 'ดูรูปประกอบบทความบนมือถือ', en: 'Figure viewer on a phone' },
+      alt: { en: 'Figure viewer on a phone' },
       frame: 'phone'
     }
   ],
@@ -381,7 +376,7 @@ export const galleries: Record<string, ImageMedia[]> = {
       src: '/work/cmu-research-gallery/g/landing.webp',
       width: 1600,
       height: 756,
-      alt: { th: 'ค้นหานักวิจัยจากหน้าแรก', en: 'Find a researcher from the landing page' },
+      alt: { en: 'Find a researcher from the landing page' },
       frame: 'browser'
     },
     {
@@ -389,7 +384,7 @@ export const galleries: Record<string, ImageMedia[]> = {
       src: '/work/cmu-research-gallery/g/directory.webp',
       width: 1600,
       height: 800,
-      alt: { th: 'ทำเนียบนักวิจัย', en: 'The researcher directory' },
+      alt: { en: 'The researcher directory' },
       frame: 'browser'
     },
     {
@@ -397,7 +392,7 @@ export const galleries: Record<string, ImageMedia[]> = {
       src: '/work/cmu-research-gallery/g/profile.webp',
       width: 1600,
       height: 800,
-      alt: { th: 'โปรไฟล์นักวิจัยพร้อมผลงานเด่น', en: 'A researcher profile with highlights' },
+      alt: { en: 'A researcher profile with highlights' },
       frame: 'browser'
     },
     {
@@ -405,7 +400,7 @@ export const galleries: Record<string, ImageMedia[]> = {
       src: '/work/cmu-research-gallery/g/pdpa.webp',
       width: 1600,
       height: 900,
-      alt: { th: 'ขอ consent ตาม PDPA ก่อนจะเผยแพร่อะไรออกไป', en: 'PDPA consent before anything goes public' },
+      alt: { en: 'PDPA consent before anything goes public' },
       frame: 'browser'
     },
     {
@@ -413,7 +408,7 @@ export const galleries: Record<string, ImageMedia[]> = {
       src: '/work/cmu-research-gallery/g/onboarding.webp',
       width: 1424,
       height: 1424,
-      alt: { th: 'onboarding: กรอกโปรไฟล์แล้วเห็นพรีวิวสด', en: 'Onboarding: profile with a live preview' },
+      alt: { en: 'Onboarding: profile with a live preview' },
       frame: 'browser'
     },
     {
@@ -421,7 +416,7 @@ export const galleries: Record<string, ImageMedia[]> = {
       src: '/work/cmu-research-gallery/g/workspace.webp',
       width: 1600,
       height: 800,
-      alt: { th: 'พื้นที่ทำงานของนักวิจัยเอง', en: 'The researcher’s own workspace' },
+      alt: { en: 'The researcher’s own workspace' },
       frame: 'browser'
     },
     {
@@ -429,7 +424,7 @@ export const galleries: Record<string, ImageMedia[]> = {
       src: '/work/cmu-research-gallery/g/privacy.webp',
       width: 1600,
       height: 799,
-      alt: { th: 'ตั้งค่าความเป็นส่วนตัวได้ทีละ field', en: 'Privacy settings per field' },
+      alt: { en: 'Privacy settings per field' },
       frame: 'browser'
     },
     {
@@ -437,7 +432,7 @@ export const galleries: Record<string, ImageMedia[]> = {
       src: '/work/cmu-research-gallery/g/admin.webp',
       width: 1600,
       height: 755,
-      alt: { th: 'หลังบ้าน: จัดการนักวิจัย', en: 'Admin: researcher management' },
+      alt: { en: 'Admin: researcher management' },
       frame: 'browser'
     },
     {
@@ -445,7 +440,7 @@ export const galleries: Record<string, ImageMedia[]> = {
       src: '/work/cmu-research-gallery/g/mobile.webp',
       width: 375,
       height: 814,
-      alt: { th: 'onboarding บนมือถือ', en: 'Onboarding on a phone' },
+      alt: { en: 'Onboarding on a phone' },
       frame: 'phone'
     }
   ],
@@ -455,7 +450,7 @@ export const galleries: Record<string, ImageMedia[]> = {
       src: '/work/ora-cmu/g/home.webp',
       width: 1440,
       height: 900,
-      alt: { th: 'หน้าแรกของสำนักงาน', en: 'The office home page' },
+      alt: { en: 'The office home page' },
       frame: 'browser'
     },
     {
@@ -463,7 +458,7 @@ export const galleries: Record<string, ImageMedia[]> = {
       src: '/work/ora-cmu/g/closing.webp',
       width: 1440,
       height: 900,
-      alt: { th: 'ทุนที่ใกล้ปิดรับและไทม์ไลน์ 90 วัน', en: 'Calls closing soon and a 90-day timeline' },
+      alt: { en: 'Calls closing soon and a 90-day timeline' },
       frame: 'browser'
     },
     {
@@ -471,7 +466,7 @@ export const galleries: Record<string, ImageMedia[]> = {
       src: '/work/ora-cmu/g/funding.webp',
       width: 1440,
       height: 900,
-      alt: { th: 'ค้นหาทุนวิจัย', en: 'Funding search' },
+      alt: { en: 'Funding search' },
       frame: 'browser'
     },
     {
@@ -479,7 +474,7 @@ export const galleries: Record<string, ImageMedia[]> = {
       src: '/work/ora-cmu/g/calendar.webp',
       width: 1440,
       height: 900,
-      alt: { th: 'ปฏิทินกิจกรรมวิจัย', en: 'Research events calendar' },
+      alt: { en: 'Research events calendar' },
       frame: 'browser'
     },
     {
@@ -487,7 +482,7 @@ export const galleries: Record<string, ImageMedia[]> = {
       src: '/work/ora-cmu/g/resources.webp',
       width: 1440,
       height: 900,
-      alt: { th: 'คลังแบบฟอร์มและคู่มือ', en: 'Forms and guides library' },
+      alt: { en: 'Forms and guides library' },
       frame: 'browser'
     },
     {
@@ -495,7 +490,7 @@ export const galleries: Record<string, ImageMedia[]> = {
       src: '/work/ora-cmu/g/news.webp',
       width: 1440,
       height: 900,
-      alt: { th: 'ข่าวที่ย้ายมาจาก WordPress เดิม', en: 'News, migrated from the old WordPress site' },
+      alt: { en: 'News, migrated from the old WordPress site' },
       frame: 'browser'
     },
     {
@@ -503,7 +498,7 @@ export const galleries: Record<string, ImageMedia[]> = {
       src: '/work/ora-cmu/g/systems.webp',
       width: 1440,
       height: 900,
-      alt: { th: 'รวมระบบงานวิจัย', en: 'Research systems directory' },
+      alt: { en: 'Research systems directory' },
       frame: 'browser'
     },
     {
@@ -511,7 +506,7 @@ export const galleries: Record<string, ImageMedia[]> = {
       src: '/work/ora-cmu/g/about.webp',
       width: 1440,
       height: 900,
-      alt: { th: 'เกี่ยวกับสำนักงาน', en: 'About the office' },
+      alt: { en: 'About the office' },
       frame: 'browser'
     }
   ],
@@ -521,7 +516,7 @@ export const galleries: Record<string, ImageMedia[]> = {
       src: '/work/junior-bootcamp/g/login-guide.webp',
       width: 1440,
       height: 1000,
-      alt: { th: 'คู่มือเข้าสู่ระบบสำหรับผู้เข้าอบรม', en: 'Participant sign-in guide' },
+      alt: { en: 'Participant sign-in guide' },
       frame: 'browser'
     },
     {
@@ -529,7 +524,7 @@ export const galleries: Record<string, ImageMedia[]> = {
       src: '/work/junior-bootcamp/g/login.webp',
       width: 1440,
       height: 1000,
-      alt: { th: 'เข้าสู่ระบบด้วยอีเมลกับเบอร์โทร แล้วยืนยัน OTP', en: 'Sign-in with email and phone, then OTP' },
+      alt: { en: 'Sign-in with email and phone, then OTP' },
       frame: 'browser'
     },
     {
@@ -537,7 +532,7 @@ export const galleries: Record<string, ImageMedia[]> = {
       src: '/work/junior-bootcamp/g/qr.webp',
       width: 1440,
       height: 1000,
-      alt: { th: 'QR เช็กอินที่ขึ้นบนจอโปรเจกเตอร์', en: 'QR check-in shown on the projector' },
+      alt: { en: 'QR check-in shown on the projector' },
       frame: 'browser'
     },
     {
@@ -545,7 +540,7 @@ export const galleries: Record<string, ImageMedia[]> = {
       src: '/work/junior-bootcamp/g/dashboard.webp',
       width: 1440,
       height: 1265,
-      alt: { th: 'แดชบอร์ดผู้เข้าอบรม', en: 'Participant dashboard' },
+      alt: { en: 'Participant dashboard' },
       frame: 'browser'
     },
     {
@@ -553,7 +548,7 @@ export const galleries: Record<string, ImageMedia[]> = {
       src: '/work/junior-bootcamp/g/monitor.webp',
       width: 1440,
       height: 1151,
-      alt: { th: 'หน้า live monitor ของแอดมิน', en: 'Admin live monitor' },
+      alt: { en: 'Admin live monitor' },
       frame: 'browser'
     },
     {
@@ -561,7 +556,7 @@ export const galleries: Record<string, ImageMedia[]> = {
       src: '/work/junior-bootcamp/g/modules.webp',
       width: 1440,
       height: 1440,
-      alt: { th: 'ชุดข้อสอบแยกตามโมดูล', en: 'Exam sets per module' },
+      alt: { en: 'Exam sets per module' },
       frame: 'browser'
     },
     {
@@ -569,7 +564,7 @@ export const galleries: Record<string, ImageMedia[]> = {
       src: '/work/junior-bootcamp/g/exams.webp',
       width: 1440,
       height: 1440,
-      alt: { th: 'ภาพรวมการจัดการข้อสอบ', en: 'Exam management overview' },
+      alt: { en: 'Exam management overview' },
       frame: 'browser'
     },
     {
@@ -577,7 +572,7 @@ export const galleries: Record<string, ImageMedia[]> = {
       src: '/work/junior-bootcamp/g/teacher.webp',
       width: 1440,
       height: 1000,
-      alt: { th: 'หน้ามอนิเตอร์ของผู้สอน', en: 'Teacher’s monitoring view' },
+      alt: { en: 'Teacher’s monitoring view' },
       frame: 'browser'
     }
   ],
@@ -587,7 +582,7 @@ export const galleries: Record<string, ImageMedia[]> = {
       src: '/work/readitgo/g/home.webp',
       width: 410,
       height: 732,
-      alt: { th: 'หน้าแรก: หนังสือและวิดีโอแนะนำ', en: 'Home: recommended books and videos' },
+      alt: { en: 'Home: recommended books and videos' },
       frame: 'phone'
     },
     {
@@ -595,7 +590,7 @@ export const galleries: Record<string, ImageMedia[]> = {
       src: '/work/readitgo/g/library.webp',
       width: 405,
       height: 726,
-      alt: { th: 'ห้องสมุดแยกตามหมวด', en: 'Library by category' },
+      alt: { en: 'Library by category' },
       frame: 'phone'
     },
     {
@@ -603,7 +598,7 @@ export const galleries: Record<string, ImageMedia[]> = {
       src: '/work/readitgo/g/reader.webp',
       width: 318,
       height: 571,
-      alt: { th: 'player อ่านออกเสียง', en: 'Read-aloud player' },
+      alt: { en: 'Read-aloud player' },
       frame: 'phone'
     },
     {
@@ -611,7 +606,7 @@ export const galleries: Record<string, ImageMedia[]> = {
       src: '/work/readitgo/g/video.webp',
       width: 409,
       height: 503,
-      alt: { th: 'วิดีโอบทเรียน', en: 'Video lessons' },
+      alt: { en: 'Video lessons' },
       frame: 'phone'
     },
     {
@@ -619,7 +614,7 @@ export const galleries: Record<string, ImageMedia[]> = {
       src: '/work/readitgo/g/web.webp',
       width: 1440,
       height: 900,
-      alt: { th: 'เวอร์ชันเว็บ', en: 'The web version' },
+      alt: { en: 'The web version' },
       frame: 'browser'
     }
   ]
@@ -632,105 +627,105 @@ export const experimentGalleries: Record<string, ImageMedia[]> = {
       src: '/work/age-of-lost-knowledge/g/boss.webp',
       width: 1600,
       height: 900,
-      alt: { th: 'สู้บอสในป่า (3D แบบ HD-2D)', en: 'Boss fight in the Grove (3D, HD-2D)' }
+      alt: { en: 'Boss fight in the Grove (3D, HD-2D)' }
     },
     {
       kind: 'image',
       src: '/work/age-of-lost-knowledge/g/crowd.webp',
       width: 1600,
       height: 900,
-      alt: { th: 'โดนมอนสเตอร์รุมรอบตัว', en: 'Surrounded by monsters' }
+      alt: { en: 'Surrounded by monsters' }
     },
     {
       kind: 'image',
       src: '/work/age-of-lost-knowledge/g/crit.webp',
       width: 1600,
       height: 900,
-      alt: { th: 'ติดคริติคอล', en: 'A critical hit' }
+      alt: { en: 'A critical hit' }
     },
     {
       kind: 'image',
       src: '/work/age-of-lost-knowledge/g/telegraph.webp',
       width: 1600,
       height: 900,
-      alt: { th: 'วงเตือนก่อนท่าโจมตีเป็นพื้นที่ลง', en: 'An area attack telegraphed on the ground' }
+      alt: { en: 'An area attack telegraphed on the ground' }
     },
     {
       kind: 'image',
       src: '/work/age-of-lost-knowledge/g/dodge.webp',
       width: 1600,
       height: 900,
-      alt: { th: 'กลิ้งหลบออกจากจุดอันตราย', en: 'Dodge roll out of danger' }
+      alt: { en: 'Dodge roll out of danger' }
     },
     {
       kind: 'image',
       src: '/work/age-of-lost-knowledge/g/loot.webp',
       width: 1600,
       height: 900,
-      alt: { th: 'ของดรอปหลังล้มมอนสเตอร์', en: 'Loot after a kill' }
+      alt: { en: 'Loot after a kill' }
     },
     {
       kind: 'image',
       src: '/work/age-of-lost-knowledge/g/grove-day.webp',
       width: 1600,
       height: 900,
-      alt: { th: 'ป่าตอนกลางวัน', en: 'The Grove by day' }
+      alt: { en: 'The Grove by day' }
     },
     {
       kind: 'image',
       src: '/work/age-of-lost-knowledge/g/grove-night.webp',
       width: 1600,
       height: 900,
-      alt: { th: 'ป่าเดียวกันตอนกลางคืน', en: 'The same Grove at night' }
+      alt: { en: 'The same Grove at night' }
     },
     {
       kind: 'image',
       src: '/work/age-of-lost-knowledge/g/village.webp',
       width: 1600,
       height: 900,
-      alt: { th: 'หมู่บ้าน Echo Rest ตอนกลางคืน', en: 'Echo Rest village at night' }
+      alt: { en: 'Echo Rest village at night' }
     },
     {
       kind: 'image',
       src: '/work/age-of-lost-knowledge/g/town.webp',
       width: 1600,
       height: 900,
-      alt: { th: 'เมืองมุมสูง', en: 'The town from above' }
+      alt: { en: 'The town from above' }
     },
     {
       kind: 'image',
       src: '/work/age-of-lost-knowledge/g/shop.webp',
       width: 1600,
       height: 900,
-      alt: { th: 'หน้าต่างร้านค้า NPC', en: 'NPC shop window' }
+      alt: { en: 'NPC shop window' }
     },
     {
       kind: 'image',
       src: '/work/age-of-lost-knowledge/g/healer.webp',
       width: 1600,
       height: 900,
-      alt: { th: 'คุยกับหมอประจำเมือง', en: 'Talking to the town healer' }
+      alt: { en: 'Talking to the town healer' }
     },
     {
       kind: 'image',
       src: '/work/age-of-lost-knowledge/g/pond.webp',
       width: 1600,
       height: 900,
-      alt: { th: 'บ่อบัวในทุ่งหญ้า', en: 'The lily pond in the Meadow' }
+      alt: { en: 'The lily pond in the Meadow' }
     },
     {
       kind: 'image',
       src: '/work/age-of-lost-knowledge/g/map.webp',
       width: 1600,
       height: 795,
-      alt: { th: 'แผนที่ภาพรวมทั้งภูมิภาค', en: 'Region overview map' }
+      alt: { en: 'Region overview map' }
     },
     {
       kind: 'image',
       src: '/work/age-of-lost-knowledge/g/before-2d.webp',
       width: 1600,
       height: 900,
-      alt: { th: 'ก่อนย้าย: ป่าเดียวกันในเวอร์ชัน 2D', en: 'Before: the same Grove in 2D' }
+      alt: { en: 'Before: the same Grove in 2D' }
     }
   ],
   'zoo-together': [
@@ -739,7 +734,7 @@ export const experimentGalleries: Record<string, ImageMedia[]> = {
       src: '/work/zoo-together/g/game.webp',
       width: 1280,
       height: 800,
-      alt: { th: 'ผู้เล่นสองคนสร้างสวนสัตว์ร่วมกัน', en: 'Two players building one zoo' }
+      alt: { en: 'Two players building one zoo' }
     },
     {
       kind: 'image',
@@ -747,7 +742,6 @@ export const experimentGalleries: Record<string, ImageMedia[]> = {
       width: 1280,
       height: 800,
       alt: {
-        th: 'สวนสัตว์โหลดกลับจาก PostgreSQL ครบหลังรีสตาร์ต',
         en: 'The zoo reopened from PostgreSQL after a restart'
       }
     },
@@ -756,28 +750,28 @@ export const experimentGalleries: Record<string, ImageMedia[]> = {
       src: '/work/zoo-together/g/animals.webp',
       width: 1600,
       height: 1614,
-      alt: { th: 'ชีตตรวจ sprite สัตว์', en: 'Animal sprite review sheet' }
+      alt: { en: 'Animal sprite review sheet' }
     },
     {
       kind: 'image',
       src: '/work/zoo-together/g/hybrids.webp',
       width: 1600,
       height: 1614,
-      alt: { th: 'สัตว์ลูกผสม', en: 'Hybrid animals' }
+      alt: { en: 'Hybrid animals' }
     },
     {
       kind: 'image',
       src: '/work/zoo-together/g/buildings.webp',
       width: 1600,
       height: 1304,
-      alt: { th: 'sprite สิ่งก่อสร้าง', en: 'Building sprites' }
+      alt: { en: 'Building sprites' }
     },
     {
       kind: 'image',
       src: '/work/zoo-together/g/title.webp',
       width: 1600,
       height: 900,
-      alt: { th: 'ภาพหน้า title ของเกม', en: 'Title screen art' }
+      alt: { en: 'Title screen art' }
     }
   ]
 }

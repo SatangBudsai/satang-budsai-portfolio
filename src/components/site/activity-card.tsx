@@ -40,7 +40,6 @@ export default function ActivityCard({
   repos,
   featureReleases,
   products,
-  lang,
   labels
 }: {
   days: Record<string, Day>
@@ -49,7 +48,7 @@ export default function ActivityCard({
   /** Minor-version releases (patch tags left out). */
   featureReleases: number
   products: readonly Product[]
-  lang: 'th' | 'en'
+  lang: 'en'
   labels: {
     period: string
     commits: string
@@ -77,7 +76,7 @@ export default function ActivityCard({
     () => window.matchMedia('(hover: none)').matches,
     () => false
   )
-  const locale = lang === 'th' ? 'th-TH' : 'en-US'
+  const locale = 'en-US'
 
   const { weeks, months, totals, levels, monthLabels } = useMemo(() => {
     // 53 columns of Monday→Sunday, ending with the week that holds `until`.

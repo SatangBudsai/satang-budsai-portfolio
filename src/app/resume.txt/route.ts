@@ -22,7 +22,7 @@ export function GET() {
     lines.push(
       '',
       `${role.role.en} · ${role.org.en}${role.side ? ' (outside working hours)' : ''}`,
-      `${range} · ${duration(role.start, role.end, 'en')} · ${role.kind.en}`,
+      `${range} · ${duration(role.start, role.end)} · ${role.kind.en}`,
       role.summary.en,
       ...role.highlights.map(item => `- ${item.en}`)
     )

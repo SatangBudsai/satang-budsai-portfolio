@@ -147,7 +147,7 @@ function RoleCard({ role, lang }: { role: Role; lang: Lang }) {
       <div className='flex items-start justify-between gap-3'>
         <PixelItem name={role.icon} size={48} />
         <span className='font-mono text-xs tracking-[0.06em] text-soft uppercase'>
-          {tr(role.when, lang)} · {duration(role.start, role.end, lang)}
+          {tr(role.when, lang)} · {duration(role.start, role.end)}
         </span>
       </div>
       <div className='flex flex-col gap-1'>

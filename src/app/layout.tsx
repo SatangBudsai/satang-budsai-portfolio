@@ -1,14 +1,5 @@
 import type { Metadata, Viewport } from 'next'
-import {
-  Caveat,
-  Inter_Tight,
-  Instrument_Serif,
-  Itim,
-  JetBrains_Mono,
-  Noto_Sans_Thai,
-  Pixelify_Sans,
-  Silkscreen
-} from 'next/font/google'
+import { Caveat, Inter_Tight, Instrument_Serif, JetBrains_Mono, Pixelify_Sans, Silkscreen } from 'next/font/google'
 import { getTolgee } from '@/tolgee/server'
 import { getI18n } from '@/lib/lang'
 import { profile } from '@/content/site'
@@ -27,10 +18,9 @@ const instrumentSerif = Instrument_Serif({
   display: 'swap'
 })
 const jetbrainsMono = JetBrains_Mono({ subsets: ['latin'], variable: '--font-jetbrains-mono', display: 'swap' })
-const notoSansThai = Noto_Sans_Thai({ subsets: ['thai'], variable: '--font-noto-thai', display: 'swap' })
-// Handwritten notes: Caveat for Latin, Itim for Thai.
+// Handwritten notes.
 const caveat = Caveat({ subsets: ['latin'], weight: ['500', '700'], variable: '--font-caveat', display: 'swap' })
-// Pixel UI text (speech bubbles, item labels). Thai falls back to Noto Sans Thai.
+// Pixel UI text (speech bubbles, item labels).
 const silkscreen = Silkscreen({ subsets: ['latin'], weight: '400', variable: '--font-silkscreen', display: 'swap' })
 // Headings in the "Pixel" style.
 const pixelify = Pixelify_Sans({
@@ -40,7 +30,6 @@ const pixelify = Pixelify_Sans({
   display: 'swap',
   preload: false
 })
-const itim = Itim({ subsets: ['thai'], weight: '400', variable: '--font-itim', display: 'swap' })
 
 export async function generateMetadata(): Promise<Metadata> {
   const { t } = await getI18n()
@@ -83,7 +72,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     talk: t('common.nav.talk', 'Let’s talk'),
     openMenu: t('common.nav.open-menu', 'Open menu'),
     closeMenu: t('common.nav.close-menu', 'Close menu'),
-    switchLanguage: t('common.nav.switch-language', 'เปลี่ยนเป็นภาษาไทย'),
     home: t('common.nav.home', 'Home'),
     themeDark: t('common.nav.theme-dark', 'Switch to dark mode'),
     themeLight: t('common.nav.theme-light', 'Switch to light mode')
@@ -92,7 +80,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html
       lang={lang}
-      className={`${interTight.variable} ${instrumentSerif.variable} ${jetbrainsMono.variable} ${notoSansThai.variable} ${caveat.variable} ${itim.variable} ${silkscreen.variable} ${pixelify.variable}`}
+      className={`${interTight.variable} ${instrumentSerif.variable} ${jetbrainsMono.variable} ${caveat.variable} ${silkscreen.variable} ${pixelify.variable}`}
       data-scroll-behavior='smooth'
       suppressHydrationWarning>
       {/* Browser extensions often add attributes to <body> before React loads. */}
@@ -108,7 +96,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <SiteFooter />
           <EasterEggs
             consoleLines={[
-              'สวัสดี / Hello, fellow developer 👋',
+              'Hello, fellow developer 👋',
               'This site: Next.js 16, Tailwind 4, Motion — source at https://github.com/SatangBudsai',
               'Try typing "ship" anywhere on the page.'
             ]}

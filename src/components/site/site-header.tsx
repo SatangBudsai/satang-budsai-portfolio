@@ -2,13 +2,12 @@
 
 import { AnimatePresence, motion, useMotionValueEvent, useReducedMotion, useScroll } from 'motion/react'
 import Link from 'next/link'
-import { usePathname, useRouter } from 'next/navigation'
-import { useEffect, useRef, useState, useTransition } from 'react'
+import { usePathname } from 'next/navigation'
+import { useEffect, useRef, useState } from 'react'
 
 import { Icon } from '@/components/ui/icon'
 import { appIcons } from '@/config/icons'
 import type { Lang } from '@/content/types'
-import { setLocale } from '@/i18n/actions'
 import { cn } from '@/lib/utils'
 
 import ThemeToggle from './theme-toggle'
@@ -23,7 +22,6 @@ type Labels = {
   talk: string
   openMenu: string
   closeMenu: string
-  switchLanguage: string
   themeDark: string
   themeLight: string
   home: string
@@ -31,33 +29,7 @@ type Labels = {
 
 const easeInOut = [0.76, 0, 0.24, 1] as const
 
-export function LanguageSwitch({ lang, label, compact }: { lang: Lang; label: string; compact?: boolean }) {
-  const router = useRouter()
-  const [pending, startTransition] = useTransition()
-  const next: Lang = lang === 'th' ? 'en' : 'th'
-  return (
-    <button
-      type='button'
-      disabled={pending}
-      aria-label={label}
-      onClick={() =>
-        startTransition(async () => {
-          await setLocale(next)
-          router.refresh()
-        })
-      }
-      className={cn(
-        'inline-flex items-center gap-1 rounded-full font-mono text-xs transition-colors disabled:opacity-50',
-        compact ? 'h-8 px-3 hover:bg-foreground/10' : 'min-h-11 border border-line-strong px-4 hover:border-foreground'
-      )}>
-      <span className={lang === 'th' ? 'text-foreground' : 'text-muted-foreground'}>TH</span>
-      <span className='text-muted-foreground'>/</span>
-      <span className={lang === 'en' ? 'text-foreground' : 'text-muted-foreground'}>EN</span>
-    </button>
-  )
-}
-
-export default function SiteHeader({ labels, lang }: { labels: Labels; lang: Lang }) {
+export default function SiteHeader({ labels }: { labels: Labels; lang: Lang }) {
   const pathname = usePathname()
   const reduced = useReducedMotion()
   const { scrollY } = useScroll()
@@ -135,7 +107,6 @@ export default function SiteHeader({ labels, lang }: { labels: Labels; lang: Lan
           </nav>
 
           <div className='flex items-center gap-2'>
-            <LanguageSwitch lang={lang} label={labels.switchLanguage} />
             <ThemeToggle labels={{ dark: labels.themeDark, light: labels.themeLight }} />
             <Link
               href='/#contact'

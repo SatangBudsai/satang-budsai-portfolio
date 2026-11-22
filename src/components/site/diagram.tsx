@@ -18,15 +18,15 @@ const diagrams: Record<Exclude<DiagramId, 'pdf-fixer'>, LayeredDiagram> = {
       {
         nodes: [
           { label: 'Flutter app', sub: 'NFC · OCR · face', strong: true },
-          { label: { th: 'เว็บเจ้าหน้าที่', en: 'Officer portal' }, sub: 'Next.js' },
-          { label: { th: 'แอปพันธมิตร', en: 'Partner apps' }, sub: 'OIDC + PKCE' }
+          { label: { en: 'Officer portal' }, sub: 'Next.js' },
+          { label: { en: 'Partner apps' }, sub: 'OIDC + PKCE' }
         ]
       },
       {
         via: 'OIDC',
         nodes: [
           {
-            label: { th: 'ผู้ให้บริการตัวตน', en: 'Identity provider' },
+            label: { en: 'Identity provider' },
             sub: 'ZITADEL + custom auth web',
             strong: true
           }
@@ -44,14 +44,14 @@ const diagrams: Record<Exclude<DiagramId, 'pdf-fixer'>, LayeredDiagram> = {
         ]
       }
     ],
-    footer: { th: 'stack ของทั้งระบบ: Kafka · SignalR · PostgreSQL', en: 'System stack: Kafka · SignalR · PostgreSQL' }
+    footer: { en: 'System stack: Kafka · SignalR · PostgreSQL' }
   },
   'eec-customs': {
     layers: [
       {
         nodes: [
-          { label: { th: 'บริษัทผู้ยื่นคำขอ', en: 'Companies' }, sub: 'Next.js 16' },
-          { label: { th: 'เจ้าหน้าที่', en: 'Officers' }, sub: 'Next.js 16' }
+          { label: { en: 'Companies' }, sub: 'Next.js 16' },
+          { label: { en: 'Officers' }, sub: 'Next.js 16' }
         ]
       },
       {
@@ -71,9 +71,9 @@ const diagrams: Record<Exclude<DiagramId, 'pdf-fixer'>, LayeredDiagram> = {
         ]
       },
       {
-        via: { th: 'ระบบภายนอก', en: 'outside systems' },
+        via: { en: 'outside systems' },
         nodes: [
-          { label: 'DGA', sub: { th: 'ลายเซ็นดิจิทัล · sync', en: 'digital signature · sync' } },
+          { label: 'DGA', sub: { en: 'digital signature · sync' } },
           { label: 'NSW customs', sub: 'async · polling' }
         ]
       }
@@ -82,35 +82,35 @@ const diagrams: Record<Exclude<DiagramId, 'pdf-fixer'>, LayeredDiagram> = {
   },
   'airport-gate': {
     layers: [
-      { nodes: [{ label: { th: 'หน้าเว็บ', en: 'Web app' }, sub: 'Next.js', strong: true }] },
+      { nodes: [{ label: { en: 'Web app' }, sub: 'Next.js', strong: true }] },
       { via: 'REST', nodes: [{ label: 'API', sub: 'C# .NET', strong: true }] },
       {
-        via: { th: 'ข้อมูลรายงาน', en: 'report data' },
-        nodes: [{ label: 'FastReport', sub: { th: 'template', en: 'templates' } }]
+        via: { en: 'report data' },
+        nodes: [{ label: 'FastReport', sub: { en: 'templates' } }]
       },
       { via: 'export', nodes: [{ label: 'PDF' }, { label: 'Excel' }] }
     ]
   },
   'lampang-health': {
     layers: [
-      { nodes: [{ label: { th: 'เว็บ รพ.สต. 200+ แห่ง', en: '200+ hospital sites' }, sub: 'React', strong: true }] },
+      { nodes: [{ label: { en: '200+ hospital sites' }, sub: 'React', strong: true }] },
       {
-        via: { th: 'ขอรายงาน', en: 'request a report' },
+        via: { en: 'request a report' },
         nodes: [
           { label: 'API', sub: '.NET', strong: true },
-          { label: { th: 'ล็อกอิน', en: 'Sign-in' }, sub: 'Cognito | FusionAuth' }
+          { label: { en: 'Sign-in' }, sub: 'Cognito | FusionAuth' }
         ]
       },
       {
-        via: { th: 'เข้าคิว', en: 'queued' },
+        via: { en: 'queued' },
         nodes: [
           {
-            label: { th: 'Background worker', en: 'Background worker' },
-            sub: { th: 'สร้างรายงาน', en: 'builds the report' }
+            label: { en: 'Background worker' },
+            sub: { en: 'builds the report' }
           }
         ]
       },
-      { via: { th: 'เสร็จแล้ว', en: 'ready' }, nodes: [{ label: { th: 'ดาวน์โหลดไฟล์', en: 'File download' } }] }
+      { via: { en: 'ready' }, nodes: [{ label: { en: 'File download' } }] }
     ]
   }
 }
@@ -129,9 +129,9 @@ function Connector({ label, lang }: { label?: string | L; lang: Lang }) {
   )
 }
 
-function PdfFixer({ lang, className }: { lang: Lang; className?: string }) {
-  const before = lang === 'th' ? 'ก่อน' : 'Before'
-  const after = lang === 'th' ? 'หลัง' : 'After'
+function PdfFixer({ className }: { lang: Lang; className?: string }) {
+  const before = 'Before'
+  const after = 'After'
   return (
     <div className={cn('grid gap-px overflow-hidden rounded-2xl border border-line bg-line sm:grid-cols-2', className)}>
       <div className='flex flex-col gap-5 bg-card p-6 sm:p-8'>
@@ -141,9 +141,7 @@ function PdfFixer({ lang, className }: { lang: Lang; className?: string }) {
           <br />
           ผู ้ขอรับบริกำร
         </p>
-        <p className='font-mono text-xs text-muted-foreground'>
-          {lang === 'th' ? 'โปรแกรมอ่านหน้าจออ่านเป็นคำที่ไม่มีความหมาย' : 'Screen reader: unreadable'}
-        </p>
+        <p className='font-mono text-xs text-muted-foreground'>Screen reader: unreadable</p>
       </div>
       <div className='flex flex-col gap-5 bg-card p-6 sm:p-8'>
         <span className='eyebrow text-primary'>{after} · Word</span>
@@ -152,9 +150,7 @@ function PdfFixer({ lang, className }: { lang: Lang; className?: string }) {
           <br />
           ผู้ขอรับบริการ
         </p>
-        <p className='font-mono text-xs text-primary'>
-          {lang === 'th' ? 'NVDA อ่านได้ถูกต้อง' : 'NVDA reads it correctly'}
-        </p>
+        <p className='font-mono text-xs text-primary'>NVDA reads it correctly</p>
       </div>
     </div>
   )
