@@ -540,8 +540,9 @@
     break-inside: avoid;
   }
 
-  /* One page: side roles show their top three bullets in print. */
-  .resume-side li:nth-child(n + 4) {
+  /* One page: side roles show only their top two bullets in print, no summary line. */
+  .resume-side li:nth-child(n + 3),
+  .resume-side .resume-summary {
     display: none;
   }
 

@@ -244,7 +244,7 @@
   "resume.side": "Outside working hours",
   "resume.skills": "Skills",
   "resume.summary": "Summary",
-  "resume.summary-body": "Senior Software Engineer at Chanwanich Company Limited (promoted April 2026), full-stack developer there since April 2024 after a 16-month internship. I build government systems for Thailand’s Eastern Economic Corridor in .NET, Next.js and Flutter: I wrote almost all of the EEC ID identity app (NFC passport reading, face match, sign-in for partner apps) and built e-Customs’ scheduling service and most of its payment service. Outside working hours I deliver freelance projects — a university journal migrated with nothing lost, an exam platform load-tested before launch — and maintain open-source developer tools; Qorstack Report renders certificates in a government e-service.",
+  "resume.summary-body": "Senior Software Engineer at Chanwanich Company Limited, a Thai software house building government systems for the Eastern Economic Corridor. Full-stack in .NET, Next.js and Flutter: I bootstrapped five e-Customs microservices, wrote most of its payment service and set the locking and AI-agent patterns my team of about ten now follows; before that I built the EEC ID identity app (97% of commits). Outside working hours: freelance systems and open-source developer tools.",
   "resume.title": "Senior Software Engineer · Full-stack: .NET, Next.js, Flutter",
   "story.close": "Close",
   "story.counter": "{current} / {total}",

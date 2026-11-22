@@ -176,7 +176,7 @@ export const stackGroups: { label: L; items: string }[] = [
   { label: { th: 'หลังบ้าน', en: 'Back end' }, items: '.NET / C# · NestJS · Express · Rust (Tauri)' },
   {
     label: { th: 'Data และ infra', en: 'Data & infra' },
-    items: 'SQL · PostgreSQL · Redis · RabbitMQ · Kafka · MinIO · Docker · Kubernetes'
+    items: 'SQL · PostgreSQL · Redis · RabbitMQ · MinIO · Docker · Kubernetes · GitLab CI'
   }
 ]
 

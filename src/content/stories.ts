@@ -482,8 +482,8 @@ export const stories: Record<string, Story> = {
         en: 'Adding a scheduled job is quicker — no queue listener to build in every service — and jobs can only call approved services'
       },
       {
-        th: 'ทุกรอบที่ลูกค้าทดสอบ มีชุดทดสอบอัตโนมัติ 35 ชุดรันทั้งเส้นทางของผู้ใช้ และ test อีก 248 ไฟล์ใน 4 ระบบ',
-        en: 'Every client test round re-runs 35 automated end-to-end checks, on top of 248 test files across four services'
+        th: 'ทุกรอบ UAT รันชุดทดสอบ Playwright 275 เคสทั้งเส้นทางของผู้ใช้ และระบบชำระเงินตัวเดียวก็มี unit test ราว 250 ชุด',
+        en: 'Every UAT round re-runs a 275-case Playwright suite; the payment service alone has about 250 unit tests'
       }
     ],
     obstacles: [

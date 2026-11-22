@@ -33,8 +33,8 @@ const OUTCOME: Record<string, L> = {
     en: 'Live since Nov 2026; SonarQube quality gate and 25 integrity checks passed.'
   },
   'junior-bootcamp': {
-    th: 'ทดสอบให้คนเข้าพร้อมกัน 600 คนแล้วไม่มีใครเจอข้อผิดพลาด (แต่ช้าลง) และระบบไปไม่ไหวที่ 800 คน',
-    en: '600 people at once with no errors (slower at that load); it gave out at 800.'
+    th: 'เข้าพร้อมกัน 600 คนไม่มีข้อผิดพลาด และเจอจุดที่ระบบรับไม่ไหวที่ 800 คน ก่อนวันสอบจริง',
+    en: '600 people at once with no errors; the breaking point at 800 was found before exam day.'
   },
   'qorstack-report': {
     th: 'ใช้ออกใบรับรองจริงในระบบ e-service ภาครัฐ มี SDK บน NuGet และ npm',

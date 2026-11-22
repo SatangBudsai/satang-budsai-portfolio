@@ -6,7 +6,7 @@ import { Icon } from '@/components/ui/icon'
 import { appIcons } from '@/config/icons'
 import { education, roles, type Role } from '@/content/experience'
 import { resumePdf } from '@/content/resume'
-import { principles, profile, stackGroups } from '@/content/site'
+import { profile, stackGroups } from '@/content/site'
 import { tr } from '@/content/types'
 import { duration } from '@/lib/duration'
 
@@ -118,7 +118,7 @@ export default function Resume() {
               <p className='text-[15px] leading-relaxed text-soft print:text-[11px] print:leading-snug'>
                 {t(
                   'common.resume.summary-body',
-                  'Senior Software Engineer at Chanwanich Company Limited (promoted April 2026), full-stack developer there since April 2024 after a 16-month internship. I build government systems for Thailand’s Eastern Economic Corridor in .NET, Next.js and Flutter: I wrote almost all of the EEC ID identity app (NFC passport reading, face match, sign-in for partner apps) and built e-Customs’ scheduling service and most of its payment service. Outside working hours I deliver freelance projects — a university journal migrated with nothing lost, an exam platform load-tested before launch — and maintain open-source developer tools; Qorstack Report renders certificates in a government e-service.'
+                  'Senior Software Engineer at Chanwanich Company Limited, a Thai software house building government systems for the Eastern Economic Corridor. Full-stack in .NET, Next.js and Flutter: I bootstrapped five e-Customs microservices, wrote most of its payment service and set the locking and AI-agent patterns my team of about ten now follows; before that I built the EEC ID identity app (97% of commits). Outside working hours: freelance systems and open-source developer tools.'
                 )}
               </p>
             </Section>
@@ -178,17 +178,6 @@ export default function Resume() {
               </div>
             </Section>
 
-            <Section title={t('common.resume.how', 'How I work')}>
-              <ul className='flex flex-col gap-2.5 text-sm print:gap-2 print:text-[10.5px]'>
-                {principles.map(item => (
-                  <li key={tr(item.tag, lang)} className='resume-entry'>
-                    <p className='font-semibold'>{tr(item.tag, lang)}</p>
-                    <p className='leading-snug text-soft'>{tr(item.body, lang)}</p>
-                  </li>
-                ))}
-              </ul>
-            </Section>
-
             <Section title={t('common.resume.availability', 'Availability')}>
               <ul className='flex flex-col gap-1.5 text-sm print:text-[10.5px]'>
                 <li>{t('common.resume.avail-1', 'Open to full-time roles and freelance projects')}</li>
@@ -230,7 +219,7 @@ function RoleEntry({ role }: { role: Role }) {
         </span>
       </div>
       <p className='text-sm text-muted-foreground print:text-[10.5px]'>{tr(role.kind, lang)}</p>
-      <p className='text-sm leading-relaxed text-soft print:text-[10.5px] print:leading-snug'>
+      <p className='resume-summary text-sm leading-relaxed text-soft print:text-[10.5px] print:leading-snug'>
         {tr(role.summary, lang)}
       </p>
       {role.highlights.length ? (

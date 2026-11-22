@@ -42,25 +42,37 @@ export const roles: Role[] = [
     icon: 'laptop',
     current: true,
     summary: {
-      th: 'ได้เลื่อนตำแหน่งเมื่อ เม.ย. 2026 ตอนนี้ทำระบบ EEC e-Customs ทั้งระบบศุลกากร การชำระเงิน และงานตั้งเวลา ที่บริษัทและเจ้าหน้าที่ใช้',
-      en: 'Promoted in April 2026. I build EEC e-Customs — the customs, payment and scheduling services that companies and officers use.'
+      th: 'ได้เลื่อนตำแหน่งเมื่อ เม.ย. 2026 ดูแล EEC e-Customs ระบบศุลกากร การชำระเงิน และงานตั้งเวลาที่บริษัทและเจ้าหน้าที่ใช้ นอกจากเขียนโค้ดแล้วยังวางโครง service แบบแผนที่ทีมใช้ร่วมกัน และกติกาการใช้ AI ของทีม',
+      en: 'Promoted in April 2026. On EEC e-Customs — the customs, payment and scheduling system companies and officers use — I set up services, team patterns and the rules our AI agents follow, as well as writing code.'
     },
     highlights: [
       {
-        th: 'สร้างระบบงานตั้งเวลาของ e-Customs ตั้งแต่ศูนย์ และเขียนระบบชำระเงินส่วนใหญ่',
-        en: 'Built e-Customs’ scheduling service from scratch and most of its payment service.'
+        th: 'ตั้งต้น .NET microservice ให้ e-Customs 5 ตัว (ชำระเงิน ตั้งเวลา worker รายงาน และเชื่อมระบบภายนอก) ตั้งแต่ commit แรกจนถึง GitLab CI และ Kubernetes manifest',
+        en: 'Bootstrapped five .NET microservices for e-Customs (payment, scheduling, workers, reports, external integrations) — from the first commit to GitLab CI and Kubernetes manifests.'
       },
       {
-        th: 'กันไม่ให้ผู้ใช้โดนตัดเงินซ้ำเมื่อกดจ่ายอีกรอบ และไม่ให้เลขเอกสารซ้ำกันเมื่อมีคำขอพร้อมกัน',
-        en: 'Stopped double charges when a payment is retried, and duplicate document numbers under load.'
+        th: 'เป็นคนเขียนหลักของระบบชำระเงิน (79% ของ commit) กดจ่ายซ้ำหรือ webhook ส่งซ้ำก็ไม่ตัดเงินซ้ำ ตรวจ callback แบบ constant-time มีวันหมดอายุของรายการ และบันทึก audit ทุกครั้งแม้จะล้มเหลว มี unit test ราว 250 ชุด',
+        en: 'Main author of the payment service (79% of commits): idempotent payment initiation and webhooks, constant-time callback checks, payment expiry and an audit row for every attempt — about 250 unit tests.'
       },
       {
-        th: 'วางชุดทดสอบอัตโนมัติให้ 4 service (248 ไฟล์) และทดสอบหน้าเว็บแบบ end-to-end อีก 35 ชุด ใช้ทุกรอบ UAT',
-        en: 'Added automated tests to four services (248 files) and 35 end-to-end browser tests used in every UAT round.'
+        th: 'นำ PostgreSQL advisory lock มาใช้กันเลขเอกสารซ้ำ และเขียนเป็นข้อตกลงของทีม จากนั้นเพื่อนร่วมทีมอีก 5 คนนำแบบเดียวกันไปใช้ต่อ (ราว 25 จุด)',
+        en: 'Introduced PostgreSQL advisory locks for running document numbers and wrote it up as a team decision; five teammates have since applied the pattern (about 25 lock classes).'
+      },
+      {
+        th: 'สร้าง Sage กติกาให้ AI coding agent ต้องจัดประเภทงานและวางแผนก่อนแก้โค้ด มีคำสั่งรีวิว รีวิวความปลอดภัย และเขียนเทสต์ พร้อมบันทึกข้อตกลงของทีม ใช้อยู่ใน e-Customs มากกว่า 5 repo และเพื่อนในทีมช่วยเพิ่มต่อ',
+        en: 'Created Sage, an AI-agent protocol (classify and plan before code; review, security-review and test commands; binding decision records), rolled out across 5+ e-Customs repos and extended by teammates.'
+      },
+      {
+        th: 'merge MR ของเพื่อนร่วมทีมเข้า dev ราว 130 รายการ ในทีมประมาณ 10 คน และเป็นคนเขียนหลักของชุดทดสอบ Playwright 275 เคสที่ใช้ในรอบ UAT พร้อมเครื่องมือ clone ข้อมูลทดสอบสำหรับทดสอบซ้ำ',
+        en: 'Merged about 130 teammates’ merge requests into dev on a team of about 10; main contributor to the 275-case Playwright suite used in UAT, plus a tool that clones test data for retests.'
+      },
+      {
+        th: 'ดูแลระบบ SSO และ audit log ของการล็อกอิน (ไม่เก็บ token หรือข้อมูลส่วนบุคคลใน log) และตรวจยืนยันการแก้ไขตามผล pentest ของ e-Customs เฟส 1',
+        en: 'Owned SSO and sign-in audit logging (no tokens or personal data in logs) and verified the pentest fixes for e-Customs phase 1.'
       }
     ],
     projects: ['eec-e-customs'],
-    stack: ['.NET / C#', 'Next.js', 'PostgreSQL', 'RabbitMQ', 'Redis', 'Hangfire', 'Playwright']
+    stack: ['.NET / C#', 'Next.js', 'PostgreSQL', 'RabbitMQ', 'Hangfire', 'Kubernetes', 'GitLab CI', 'Playwright']
   },
   {
     id: 'chanwanich',
@@ -77,8 +89,8 @@ export const roles: Role[] = [
     },
     highlights: [
       {
-        th: 'เขียนแอปยืนยันตัวตน EEC ID แทบทั้งตัว ให้แรงงานยืนยันตัวตนผ่านมือถือได้โดยไม่ต้องไปสำนักงาน ทั้งอ่านชิปหนังสือเดินทาง เทียบใบหน้า และล็อกอินเข้าแอปพันธมิตร ลูกค้าทดสอบและรับรองแล้ว (SIT และ UAT)',
-        en: 'Wrote almost all of the EEC ID app, which lets workers verify their identity on a phone instead of at an office — passport-chip reading, face match and sign-in for partner apps; signed off in SIT and UAT.'
+        th: 'ทำแอป Flutter ของ EEC ID (97% ของ commit) และ backend .NET ของแอป (92%) ให้แรงงานยืนยันตัวตนผ่านมือถือได้โดยไม่ต้องไปสำนักงาน ทั้งอ่านชิปหนังสือเดินทาง เทียบใบหน้า และล็อกอินเข้าแอปพันธมิตร ลูกค้าทดสอบและรับรองแล้ว (SIT และ UAT)',
+        en: 'Built the EEC ID Flutter app (97% of commits) and its .NET backend (92%), letting workers verify their identity on a phone instead of at an office — ePassport chip reading, face match and sign-in for partner apps; signed off in SIT and UAT.'
       },
       {
         th: 'ทำให้ล็อกอินข้ามแอปด้วยการกดครั้งเดียวใช้ได้บน iPhone หลังลองมา 7 วิธี',
@@ -120,8 +132,8 @@ export const roles: Role[] = [
         en: 'Made the journal’s article list load in about 0.1 s instead of 41 s by loading only what’s on screen (measured on a production build).'
       },
       {
-        th: 'ทดสอบระบบสอบก่อนเปิดใช้ ให้คนเข้าพร้อมกัน 600 คนแล้วไม่มีใครเจอข้อผิดพลาด (แต่ช้าลง) และไปไม่ไหวที่ 800 คน ลูกค้ารู้ขีดจำกัดก่อนวันสอบจริง',
-        en: 'Load-tested an exam platform with k6 before launch: 600 concurrent users with 0% errors (slow at that load), failing at 800 — the client knew the limit before exam day.'
+        th: 'ทดสอบโหลดระบบสอบด้วย k6 ก่อนเปิดใช้ เข้าพร้อมกัน 600 คนไม่มีข้อผิดพลาดเลย และเจอจุดที่ระบบรับไม่ไหวที่ 800 คน แจ้งลูกค้าก่อนวันสอบจริง',
+        en: 'Load-tested an exam platform with k6 before launch: 0% errors at 600 concurrent users and a breaking point at 800, reported to the client before exam day.'
       },
       {
         th: 'จัดฐานข้อมูลงานวิจัยให้เรียบง่ายขึ้น จาก 90 ตารางเหลือ 72 และทำ index ครบทุกความเชื่อมโยง',
