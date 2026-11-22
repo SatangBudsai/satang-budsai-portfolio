@@ -3,23 +3,32 @@
 import { Provider as ReduxProvider } from 'react-redux'
 import store from '@/store'
 import ReactQueryProvider from '@/providers/react-query'
-import DayjsProvider from '@/providers/dayjs'
-import HeroUIProvider from '@/providers/next-ui'
+import { TolgeeNextProvider } from '@/tolgee/client'
+import type { TolgeeStaticData, CachePublicRecord } from '@tolgee/react'
+import { ThemeProvider } from '@/components/theme-provider'
+import { Toaster } from '@/components/ui/sonner'
 import NprogressProvider from '@/providers/nprogress'
 import RootLayoutComponent from '@/layouts/root-layout'
-import '@/iconify-bundle/icons-bundle-react'
-import '@/configs/i18n'
 
-export default function Providers({ children }: { children: React.ReactNode }) {
+export default function Providers({
+  children,
+  language,
+  staticData
+}: {
+  children: React.ReactNode
+  language: string
+  staticData: TolgeeStaticData | CachePublicRecord[]
+}) {
   return (
     <ReactQueryProvider>
       <ReduxProvider store={store}>
         <NprogressProvider>
-          <HeroUIProvider>
-            <DayjsProvider>
+          <ThemeProvider>
+            <Toaster />
+            <TolgeeNextProvider language={language} staticData={staticData}>
               <RootLayoutComponent>{children}</RootLayoutComponent>
-            </DayjsProvider>
-          </HeroUIProvider>
+            </TolgeeNextProvider>
+          </ThemeProvider>
         </NprogressProvider>
       </ReduxProvider>
     </ReactQueryProvider>

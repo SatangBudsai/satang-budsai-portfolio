@@ -39,3 +39,9 @@ next-env.d.ts
 build
 coverage
 /dist/
+
+/test-results/
+/playwright-report/
+/.runtime-qa/
+.env*
+!.env.example

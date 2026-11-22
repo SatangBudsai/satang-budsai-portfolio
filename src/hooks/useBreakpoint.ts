@@ -1,9 +1,9 @@
-import { useMediaQuery } from 'usehooks-ts'
-import { theme } from '../../tailwind.theme'
+import { useMediaQuery } from '@/hooks/use-media-query'
+import { breakpoints } from '@/config/breakpoints'
 
 const useBreakpoint = () => {
-  const sm = theme?.screens?.sm
-  const lg = theme?.screens?.lg
+  const sm = breakpoints.sm
+  const lg = breakpoints.lg
 
   const isMobile = useMediaQuery(`(max-width: ${sm})`)
   const isIpad = useMediaQuery(`(min-width: ${sm}) and (max-width: ${lg})`)

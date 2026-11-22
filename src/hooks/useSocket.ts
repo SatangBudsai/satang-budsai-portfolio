@@ -1,5 +1,3 @@
-import { useMediaQuery } from 'usehooks-ts'
-import { theme } from '../../tailwind.theme'
 import { useSelector } from 'react-redux'
 import { StateType } from '@/store'
 

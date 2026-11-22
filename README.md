@@ -1,38 +1,53 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Satang Budsai Portfolio
 
-## Getting Started
+The shared stack and package versions follow CMU Journal. Portfolio content, pixel artwork, existing routes, and development port 3031 are retained.
 
-First, run the development server:
+## Stack
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
+- Next.js 16.4.5 App Router, React 19.2.8, TypeScript 5.9.3
+- Tailwind CSS 4.3.3 with CSS theme tokens in src/styles/globals.css
+- shadcn/ui base-nova components built on Base UI 1.8.0; ReUI registry configured
+- Motion 13.2.0, next-themes, Sonner, and offline Iconify icons
+- Redux Toolkit, TanStack Query, Axios, React Hook Form, date-fns
+- next-intl for request locale and Tolgee for English/Thai translations
+- pnpm 10.13.1, ESLint 9, Prettier, Playwright
+
+HeroUI, Vite/Vinext, Tailwind 3, Framer Motion imports, i18next, Day.js, and unused template dependencies have been removed. The existing API, socket, and progress helpers remain available.
+
+## Development
+
+Use Node.js 22 or newer and pnpm 10.13.1.
+
+```sh
+pnpm install --frozen-lockfile
 pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3031. Environment variables are optional for the portfolio; see .env.example for API helpers and Tolgee development settings. Keep API credentials server-side.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+## Checks
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+```sh
+pnpm lint
+pnpm typecheck
+pnpm format:check
+pnpm ui:check-icons
+pnpm build
+pnpm test
+```
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+Playwright tests use the production build on port 3131. Run pnpm build before pnpm test. If Chromium is missing, run pnpm exec playwright install chromium.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Components and icons
 
-## Learn More
+Add components with pnpm ui:add <component>. The wrapper converts generated Lucide imports to the shared Iconify component. Add icon IDs to src/config/icons.ts and run pnpm icons:generate. Development regenerates icons; builds check that the generated data is current. Pixel buttons use the shared Button variant='pixel' to retain their artwork.
 
-To learn more about Next.js, take a look at the following resources:
+## Translations
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Translations live in langs/{namespace}/{en,th}.json with flat keys and ICU placeholders, for example {username}. Register new namespaces in src/tolgee/config.ts. Use useLang() on the client or getTranslate() from src/tolgee/server.tsx on the server, with namespace.key names.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+The NEXT_LOCALE cookie selects English or Thai without changing the existing URLs. SwitchLanguage updates it through a server action. Translations work locally without Tolgee credentials. Optional CLI commands: pnpm i18n:extract, pnpm i18n:pull, and pnpm i18n:push. Remote operations require your own Tolgee project credentials in .env.local.
 
-## Deploy on Vercel
+## API generation
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Run pnpm generate to preprocess the checked-in Swagger schema, regenerate its Axios client, and apply the existing postprocessor. The scripts use ESM and the current Swagger CLI syntax.

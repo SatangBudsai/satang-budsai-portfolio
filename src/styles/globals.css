@@ -3,13 +3,64 @@
 @import url(animation.css);
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Silkscreen&display=swap');
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@import 'shadcn/tailwind.css';
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--foreground);
+  --color-popover: var(--card);
+  --color-popover-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--muted);
+  --color-secondary-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--muted);
+  --color-accent-foreground: var(--foreground);
+  --color-destructive: #ef4444;
+  --color-border: var(--border);
+  --color-input: var(--border);
+  --color-ring: var(--primary);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+@theme {
+  --breakpoint-xl: 75rem;
+  --breakpoint-2xl: 96rem;
+}
 
 @layer base {
   :root {
     --radius: 0.5rem;
+    --background: #f9fafe;
+    --foreground: #333333;
+    --card: #ffffff;
+    --primary: #771adb;
+    --primary-foreground: #f2e8fc;
+    --muted: #f4f4f5;
+    --muted-foreground: #71717a;
+    --border: #e4e4e7;
+  }
+
+  .dark {
+    --background: #0d0c0d;
+    --foreground: #ecedee;
+    --card: #18181b;
+    --primary: #0675ff;
+    --primary-foreground: #edf8ff;
+    --muted: #27272a;
+    --muted-foreground: #a1a1aa;
+    --border: #3f3f46;
   }
 
   /* ===== THEME VARIABLES ===== */
@@ -53,7 +104,11 @@
   }
 
   * {
-    @apply min-w-0 border-divider;
+    @apply min-w-0 border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground;
   }
   .exponent {
     font-size: 0.9em;

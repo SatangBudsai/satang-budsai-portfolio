@@ -1,11 +1,9 @@
 import type { Metadata } from 'next'
 import { Prompt } from 'next/font/google'
 import Providers from './providers'
+import { getLocale } from 'next-intl/server'
+import { getTolgee } from '@/tolgee/server'
 import '@/styles/globals.css'
-import 'swiper/css'
-import 'swiper/css/pagination'
-import 'swiper/css/navigation'
-import 'lightbox.js-react/dist/index.css'
 
 const prompt = Prompt({
   subsets: ['latin', 'latin-ext', 'thai'],
@@ -20,11 +18,17 @@ export const metadata: Metadata = {
   icons: { icon: '/favicon.ico' }
 }
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const language = await getLocale()
+  const tolgee = await getTolgee()
+  const staticData = await tolgee.loadRequired()
+
   return (
-    <html lang='en' suppressHydrationWarning>
+    <html lang={language} suppressHydrationWarning>
       <body className={prompt.className}>
-        <Providers>{children}</Providers>
+        <Providers language={language} staticData={staticData}>
+          {children}
+        </Providers>
       </body>
     </html>
   )

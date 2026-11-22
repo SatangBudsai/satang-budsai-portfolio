@@ -1,0 +1,9 @@
+node_modules
+.next
+pnpm-lock.yaml
+src/api/generated/main-service/apiGenerated.ts
+src/api/generated/configs/*.json
+public
+test-results
+playwright-report
+.runtime-qa

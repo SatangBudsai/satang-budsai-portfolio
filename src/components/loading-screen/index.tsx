@@ -1,25 +1,18 @@
-import React from 'react'
-import { Modal, ModalContent } from "@heroui/react"
-import { Spinner } from "@heroui/react"
+'use client'
 
-type Props = {
-  isLoading: boolean
-}
+import { Dialog, DialogContent, DialogDescription, DialogTitle } from '@/components/ui/dialog'
+import { Spinner } from '@/components/ui/spinner'
 
-const LoadingScreen = (props: Props) => {
-  const { isLoading } = props
+export default function LoadingScreen({ isLoading }: { isLoading: boolean }) {
   return (
-    <Modal
-      isOpen={isLoading}
-      isDismissable={false}
-      hideCloseButton={true}
-      placement='center'
-      className='border-none bg-transparent text-primary shadow-none'>
-      <ModalContent>
-        <Spinner color='primary' size='lg' />
-      </ModalContent>
-    </Modal>
+    <Dialog open={isLoading} disablePointerDismissal onOpenChange={(_open, details) => details.cancel()}>
+      <DialogContent
+        showCloseButton={false}
+        className='flex w-auto items-center justify-center border-0 bg-transparent p-8 text-primary shadow-none ring-0'>
+        <DialogTitle className='sr-only'>Loading</DialogTitle>
+        <DialogDescription className='sr-only'>Please wait while your request is processed.</DialogDescription>
+        <Spinner className='size-10' />
+      </DialogContent>
+    </Dialog>
   )
 }
-
-export default LoadingScreen

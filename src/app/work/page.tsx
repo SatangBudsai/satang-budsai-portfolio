@@ -5,7 +5,7 @@ export default function Work() {
     <MainLayout>
       <div className='flex min-h-dvh flex-col items-center justify-center gap-4'>
         <h1 className='text-4xl font-bold'>Work</h1>
-        <p className='text-default-500'>หน้า Work / Portfolio</p>
+        <p className='text-muted-foreground'>หน้า Work / Portfolio</p>
       </div>
     </MainLayout>
   )

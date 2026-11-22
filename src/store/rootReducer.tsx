@@ -1,4 +1,4 @@
-import { combineReducers } from 'redux'
+import { combineReducers } from '@reduxjs/toolkit'
 import { loadingScreenReducer } from './reducers/loading-screen'
 import { appSettingReducer } from './reducers/app-setting'
 import { socketReducer } from './reducers/socket'

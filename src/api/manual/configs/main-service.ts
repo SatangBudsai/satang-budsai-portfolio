@@ -1,15 +1,14 @@
-import axios, { AxiosRequestConfig, AxiosResponse, AxiosInstance } from 'axios'
-import $ from 'jquery'
+import axios from 'axios'
+import { param } from '@/lib/params'
 import apiMethods from '@/api/manual/core/apiMethods'
 
-const param = $.param
 const urlService = process.env.NEXT_PUBLIC_SERVICE
 
 export class ServerError extends Error {
   status: number
-  response: any
+  response: unknown
 
-  constructor(status: number, response: any) {
+  constructor(status: number, response: unknown) {
     super('Error from server')
     this.status = status
     this.response = response

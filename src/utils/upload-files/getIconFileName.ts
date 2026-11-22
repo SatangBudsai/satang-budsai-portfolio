@@ -1,17 +1,17 @@
-import path from 'path'
+import { appIcons } from '@/config/icons'
 
 export const getIconFileName = (fileName: string) => {
-  const fileExtension = path.extname(fileName).toLowerCase()
+  const fileExtension = fileName.slice(fileName.lastIndexOf('.')).toLowerCase()
   switch (fileExtension) {
     case '.pdf':
-      return 'vscode-icons:file-type-pdf2'
+      return appIcons.fileText
     case '.doc':
     case '.docx':
-      return 'vscode-icons:file-type-word'
+      return appIcons.fileText
     case '.xlsx':
-      return 'vscode-icons:file-type-excel'
+      return appIcons.spreadsheet
 
     default:
-      return 'solar:document-bold'
+      return appIcons.file
   }
 }

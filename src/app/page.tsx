@@ -1,9 +1,15 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
-import { motion, useScroll, useTransform } from 'framer-motion'
+import { useEffect, useRef, useSyncExternalStore } from 'react'
+import { motion, useScroll, useTransform, type Variants } from 'motion/react'
 
-const fadeUp = {
+import { useTheme } from 'next-themes'
+import { Button } from '@/components/ui/button'
+import Image from 'next/image'
+
+const subscribe = () => () => {}
+
+const fadeUp: Variants = {
   hidden: { opacity: 0, y: 40 },
   visible: (delay: number) => ({
     opacity: 1,
@@ -12,7 +18,7 @@ const fadeUp = {
   })
 }
 
-const scaleIn = {
+const scaleIn: Variants = {
   hidden: { opacity: 0, scale: 0.8 },
   visible: (delay: number) => ({
     opacity: 1,
@@ -21,16 +27,14 @@ const scaleIn = {
   })
 }
 
-const fadeIn = {
-  hidden: { opacity: 0 },
-  visible: (delay: number) => ({
-    opacity: 1,
-    transition: { duration: 1.2, delay }
-  })
-}
-
 export default function Home() {
-  const [isDark, setIsDark] = useState(true)
+  const { resolvedTheme, setTheme } = useTheme()
+  const mounted = useSyncExternalStore(
+    subscribe,
+    () => true,
+    () => false
+  )
+  const isDark = mounted ? resolvedTheme === 'dark' : true
   const heroRef = useRef<HTMLElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const cursorRef = useRef<HTMLImageElement>(null)
@@ -169,9 +173,12 @@ export default function Home() {
     <div
       className={`${isDark ? 'theme-dark' : 'theme-light'} relative w-full overflow-x-hidden bg-[var(--bg-outer)] font-["Press_Start_2P"] text-[#2a2a3a]`}>
       {/* Custom Cursor */}
-      <img
+      <Image
         ref={cursorRef}
         src='/images/cursor.svg'
+        width={32}
+        height={28}
+        unoptimized
         alt=''
         className='pointer-events-none fixed z-[10000]'
         style={{ imageRendering: 'pixelated', width: 32, height: 28, transform: 'translate(-1px, -1px)' }}
@@ -186,11 +193,12 @@ export default function Home() {
       />
 
       {/* Theme Toggle Switch */}
-      <div
-        onClick={() => setIsDark(d => !d)}
-        className='fixed right-4 top-4 z-[9998] flex border-3 border-[#222635] shadow-[3px_3px_0_rgba(0,0,0,0.4)]'
+      <Button
+        variant='ghost'
+        onClick={() => setTheme(isDark ? 'light' : 'dark')}
+        className='fixed top-4 right-4 z-[9998] flex h-auto rounded-none border-3 border-[#222635] p-0 shadow-[3px_3px_0_rgba(0,0,0,0.4)]'
         style={{ imageRendering: 'pixelated' }}
-        role='button'
+        aria-pressed={isDark}
         aria-label='Toggle theme'>
         {/* Track background with both icons */}
         <div className='relative flex h-[32px] w-[75px] items-center justify-between bg-[#181a28] px-2'>
@@ -249,7 +257,7 @@ export default function Home() {
             }}
           />
         </div>
-      </div>
+      </Button>
 
       {/* HERO SECTION */}
       <section ref={heroRef} className='relative h-screen min-h-[700px] w-full overflow-hidden bg-[#78A7D0]'>
@@ -296,7 +304,7 @@ export default function Home() {
               initial='hidden'
               animate='visible'
               custom={0.2}
-              className='mb-2 whitespace-nowrap font-["Press_Start_2P"] text-[1.5rem] font-bold leading-none text-white drop-shadow-[4px_4px_0_#07233e] sm:text-[2rem] md:text-[2.5rem] lg:text-[3rem] lg:drop-shadow-[6px_6px_0_#07233e] xl:text-[3.5rem]'>
+              className='mb-2 font-["Press_Start_2P"] text-[1.5rem] leading-none font-bold whitespace-nowrap text-white drop-shadow-[4px_4px_0_#07233e] sm:text-[2rem] md:text-[2.5rem] lg:text-[3rem] lg:drop-shadow-[6px_6px_0_#07233e] xl:text-[3.5rem]'>
               SATANG
             </motion.h1>
             <motion.h2
@@ -304,7 +312,7 @@ export default function Home() {
               initial='hidden'
               animate='visible'
               custom={0.4}
-              className='mb-3 whitespace-nowrap font-["Press_Start_2P"] text-[8px] font-bold tracking-widest text-white drop-shadow-[3px_3px_0_#07233e] sm:text-xs md:text-sm lg:mb-5 lg:text-base lg:tracking-[0.2em] lg:drop-shadow-[4px_4px_0_#07233e] xl:text-lg'>
+              className='mb-3 font-["Press_Start_2P"] text-[8px] font-bold tracking-widest whitespace-nowrap text-white drop-shadow-[3px_3px_0_#07233e] sm:text-xs md:text-sm lg:mb-5 lg:text-base lg:tracking-[0.2em] lg:drop-shadow-[4px_4px_0_#07233e] xl:text-lg'>
               FULL STACK <br className='lg:hidden' />
               DEVELOPER
             </motion.h2>
@@ -325,16 +333,22 @@ export default function Home() {
               animate='visible'
               custom={0.8}
               className='flex flex-col justify-center gap-3 sm:flex-row lg:justify-start lg:gap-6'>
-              <button className='pixel-btn flex items-center gap-3 text-[12px] md:text-[14px]'>
-                <img
+              <Button
+                variant='pixel'
+                size='pixel'
+                className='pixel-btn flex items-center gap-3 text-[12px] md:text-[14px]'>
+                <Image
                   src='/images/cursor.svg'
                   alt='cursor'
+                  width={16}
+                  height={16}
+                  unoptimized
                   className='-ml-1 h-4 w-4 object-contain'
                   style={{ imageRendering: 'pixelated' }}
                 />
                 <span>VIEW PROJECTS</span>
-              </button>
-              <button className='pixel-btn text-[10px] md:text-[12px]'>
+              </Button>
+              <Button variant='pixel' size='pixel' className='pixel-btn text-[10px] md:text-[12px]'>
                 <svg
                   className='pixel-icon'
                   width='18'
@@ -357,7 +371,7 @@ export default function Home() {
                   <rect x='7' y='4' width='1' height='1' fill='#222635' />
                 </svg>
                 CONTACT ME
-              </button>
+              </Button>
             </motion.div>
           </div>
 
@@ -372,19 +386,19 @@ export default function Home() {
               className='relative h-full w-full max-w-[320px] bg-contain bg-center bg-no-repeat lg:max-w-[350px] lg:bg-right'
               style={{ backgroundImage: `url('/images/block.png')` }}>
               {/* Text Labels — desktop only */}
-              <div className='absolute left-[5%] top-[35%] hidden font-["Press_Start_2P"] text-[8px] text-white drop-shadow-[2px_2px_0_#222635] lg:block xl:text-[10px]'>
+              <div className='absolute top-[35%] left-[5%] hidden font-["Press_Start_2P"] text-[8px] text-white drop-shadow-[2px_2px_0_#222635] lg:block xl:text-[10px]'>
                 FRONTEND
               </div>
-              <div className='absolute right-[-2%] top-[28%] hidden font-["Press_Start_2P"] text-[8px] text-white drop-shadow-[2px_2px_0_#222635] lg:block xl:text-[10px]'>
+              <div className='absolute top-[28%] right-[-2%] hidden font-["Press_Start_2P"] text-[8px] text-white drop-shadow-[2px_2px_0_#222635] lg:block xl:text-[10px]'>
                 BACKEND
               </div>
-              <div className='absolute bottom-[15%] right-[18%] hidden font-["Press_Start_2P"] text-[8px] text-white drop-shadow-[2px_2px_0_#222635] lg:block xl:text-[10px]'>
+              <div className='absolute right-[18%] bottom-[15%] hidden font-["Press_Start_2P"] text-[8px] text-white drop-shadow-[2px_2px_0_#222635] lg:block xl:text-[10px]'>
                 DATABASE
               </div>
 
               {/* Floating Coin 1 (Top Center) */}
               <div
-                className='absolute right-[35%] top-[3%] z-30 animate-[bounce_2.5s_infinite_ease-in-out] text-[#f5a524] drop-shadow-[4px_4px_0_rgba(147,99,22,0.8)] md:right-[38%] md:top-[5%] lg:right-[40%] lg:top-[3%]'
+                className='absolute top-[3%] right-[35%] z-30 animate-[bounce_2.5s_infinite_ease-in-out] text-[#f5a524] drop-shadow-[4px_4px_0_rgba(147,99,22,0.8)] md:top-[5%] md:right-[38%] lg:top-[3%] lg:right-[40%]'
                 style={{ animationDelay: '0s' }}>
                 <svg width='26' height='26' viewBox='0 0 16 16' style={{ shapeRendering: 'crispEdges' }}>
                   {/* Outer border */}
@@ -421,7 +435,7 @@ export default function Home() {
 
               {/* Floating Coin 2 (Left Frontend) */}
               <div
-                className='absolute left-[18%] top-[40%] z-30 animate-[bounce_2s_infinite_ease-in-out] text-[#f5a524] drop-shadow-[4px_4px_0_rgba(147,99,22,0.8)] md:left-[22%] md:top-[40%] lg:left-[22%] lg:top-[35%]'
+                className='absolute top-[40%] left-[18%] z-30 animate-[bounce_2s_infinite_ease-in-out] text-[#f5a524] drop-shadow-[4px_4px_0_rgba(147,99,22,0.8)] md:top-[40%] md:left-[22%] lg:top-[35%] lg:left-[22%]'
                 style={{ animationDelay: '0.8s' }}>
                 <svg width='20' height='20' viewBox='0 0 16 16' style={{ shapeRendering: 'crispEdges' }}>
                   <rect x='4' y='0' width='8' height='1' fill='#b8860b' />
@@ -454,7 +468,7 @@ export default function Home() {
 
               {/* Floating Coin 3 (Right Backend) */}
               <div
-                className='absolute right-[10%] top-[32%] z-30 animate-[bounce_3s_infinite_ease-in-out] text-[#f5a524] drop-shadow-[4px_4px_0_rgba(147,99,22,0.8)] md:right-[12%] md:top-[35%] lg:right-[12%] lg:top-[30%]'
+                className='absolute top-[32%] right-[10%] z-30 animate-[bounce_3s_infinite_ease-in-out] text-[#f5a524] drop-shadow-[4px_4px_0_rgba(147,99,22,0.8)] md:top-[35%] md:right-[12%] lg:top-[30%] lg:right-[12%]'
                 style={{ animationDelay: '1.5s' }}>
                 <svg width='22' height='22' viewBox='0 0 16 16' style={{ shapeRendering: 'crispEdges' }}>
                   <rect x='4' y='0' width='8' height='1' fill='#b8860b' />
@@ -568,16 +582,20 @@ export default function Home() {
                   </p>
                 </div>
                 <div className='flex gap-3'>
-                  <button
+                  <Button
+                    variant='pixel'
+                    size='pixel'
                     onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
                     className='pixel-btn flex-1 py-3 text-center text-[9px] md:text-[11px]'>
                     VIEW WORK
-                  </button>
-                  <button
+                  </Button>
+                  <Button
+                    variant='pixel'
+                    size='pixel'
                     onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
                     className='pixel-btn flex-1 py-3 text-center text-[9px] text-[var(--text-body)] md:text-[11px]'>
                     RESUME
-                  </button>
+                  </Button>
                 </div>
               </motion.div>
             </div>
@@ -852,12 +870,15 @@ export default function Home() {
         {/* Footer / Contact */}
         <footer
           id='contact'
-          className='bg-[var(--bg-footer)] pb-8 pt-14 text-center text-[var(--text-heading)] transition-colors duration-300'>
+          className='bg-[var(--bg-footer)] pt-14 pb-8 text-center text-[var(--text-heading)] transition-colors duration-300'>
           <h2 className="mb-8 font-['Press_Start_2P'] text-lg drop-shadow-[3px_3px_0_var(--shadow-text)] md:text-2xl">
             CONTACT ME
           </h2>
           <div className='mb-10 flex justify-center gap-4'>
-            <button className='pixel-btn border-2 border-[var(--border-card-inner)] text-[12px] hover:-translate-y-1 hover:shadow-lg'>
+            <Button
+              variant='pixel'
+              size='pixel'
+              className='pixel-btn border-2 border-[var(--border-card-inner)] text-[12px] hover:-translate-y-1 hover:shadow-lg'>
               <svg
                 className='pixel-icon'
                 width='18'
@@ -880,7 +901,7 @@ export default function Home() {
                 <rect x='7' y='4' width='1' height='1' fill='#222635' />
               </svg>
               SEND EMAIL
-            </button>
+            </Button>
           </div>
           <p className="font-['Press_Start_2P'] text-[8px] text-[var(--text-footer)]">
             © {new Date().getFullYear()} SATANG. ALL RIGHTS RESERVED.

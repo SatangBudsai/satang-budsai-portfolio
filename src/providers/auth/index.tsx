@@ -1,7 +1,13 @@
 'use client'
 
 import { usePathname, useRouter } from 'next/navigation'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useSyncExternalStore } from 'react'
+
+const subscribe = (onChange: () => void) => {
+  window.addEventListener('storage', onChange)
+  return () => window.removeEventListener('storage', onChange)
+}
+const getToken = () => sessionStorage.getItem('token')
 
 type Props = {
   children: React.ReactNode
@@ -11,22 +17,13 @@ type Props = {
 const AuthGuard = (props: Props) => {
   const router = useRouter()
   const pathname = usePathname()
-  const [isLoading, setLoading] = useState(true)
-
-  const handleCheckAuth = () => {
-    const token = sessionStorage.getItem('token') // or Redux or Cookie or Other
-    if (!token && props.isAuth) {
-      router.push('/') // Path Login
-    } else {
-      setLoading(false)
-    }
-  }
+  const token = useSyncExternalStore(subscribe, getToken, () => null)
 
   useEffect(() => {
-    handleCheckAuth()
-  }, [pathname])
+    if (props.isAuth && !getToken()) router.replace('/')
+  }, [pathname, props.isAuth, router, token])
 
-  if (isLoading) {
+  if (props.isAuth && !token) {
     return null // Or you can return a loading
   } else {
     return <>{props.children}</>

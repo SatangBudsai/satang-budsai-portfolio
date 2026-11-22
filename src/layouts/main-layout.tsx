@@ -9,7 +9,7 @@ type Props = {
 
 export default function MainLayout(props: Props) {
   return (
-    <div className='relative min-h-dvh flex flex-col font-["Silkscreen"]'>
+    <div className='relative flex min-h-dvh flex-col font-["Silkscreen"]'>
       <Navbar />
       <main className='flex-1'>{props.children}</main>
     </div>

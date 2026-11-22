@@ -12,17 +12,17 @@ const apiMethods = (axiosInstance: AxiosInstance) => ({
     return res?.data
   },
 
-  async post(req: { data?: any } & ApiType) {
+  async post(req: { data?: unknown } & ApiType) {
     const res = await axiosInstance.post(encodeURI(req), req.data, req.config)
     return res?.data
   },
 
-  async put(req: { data?: any } & ApiType) {
+  async put(req: { data?: unknown } & ApiType) {
     const res = await axiosInstance.put(encodeURI(req), req.data, req.config)
     return res?.data
   },
 
-  async patch(req: { data?: any } & ApiType) {
+  async patch(req: { data?: unknown } & ApiType) {
     const res = await axiosInstance.patch(encodeURI(req), req.data, req.config)
     return res?.data
   },
