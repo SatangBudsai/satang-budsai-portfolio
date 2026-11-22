@@ -27,6 +27,15 @@ type Labels = {
   home: string
 }
 
+/** The pixel "S + cursor" mark (public/brand/logo-mark.svg), coloured by the theme accent. */
+function BrandMark({ className }: { className?: string }) {
+  return (
+    <svg viewBox='0 0 64 64' className={className} aria-hidden='true'>
+      <path fill='var(--primary)' d='M16 12H48V20H24V28H40V36H48V44H40V52H8V44H32V36H16V28H8V20H16ZM48 44H56V52H48Z' />
+    </svg>
+  )
+}
+
 const easeInOut = [0.76, 0, 0.24, 1] as const
 
 export default function SiteHeader({ labels }: { labels: Labels; lang: Lang }) {
@@ -87,7 +96,11 @@ export default function SiteHeader({ labels }: { labels: Labels; lang: Lang }) {
         animate={{ y: hidden && !open && !reduced ? '-100%' : '0%' }}
         transition={{ duration: 0.5, ease: easeInOut }}>
         <div className='container-page flex h-[4.5rem] items-center justify-between gap-4'>
-          <Link href='/' className='font-mono text-sm tracking-[0.04em]' aria-label={labels.home}>
+          <Link
+            href='/'
+            className='inline-flex items-center gap-2.5 font-mono text-sm tracking-[0.04em]'
+            aria-label={labels.home}>
+            <BrandMark className='size-7' />
             SATANG.B
           </Link>
 

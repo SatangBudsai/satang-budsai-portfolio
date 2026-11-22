@@ -5,6 +5,7 @@ import { CaseDetail, ProductDetail } from '@/components/site/project-detail'
 import { allProjects, getProject } from '@/content/projects'
 import { tr } from '@/content/types'
 import { getI18n } from '@/lib/lang'
+import { jsonLdHtml, projectJsonLd } from '@/lib/seo'
 
 export function generateStaticParams() {
   return allProjects.map(project => ({ slug: project.slug }))
@@ -20,7 +21,15 @@ export async function generateMetadata(props: PageProps<'/work/[slug]'>): Promis
   return {
     title: project.title,
     description,
-    openGraph: { title: project.title, description, images: image ? [image] : undefined }
+    alternates: { canonical: `/work/${slug}` },
+    openGraph: {
+      type: 'article',
+      url: `/work/${slug}`,
+      title: project.title,
+      description,
+      images: image ? [image] : undefined
+    },
+    twitter: { card: 'summary_large_image', title: project.title, description, images: image ? [image] : undefined }
   }
 }
 
@@ -30,9 +39,14 @@ export default async function WorkDetail(props: PageProps<'/work/[slug]'>) {
   if (!project) notFound()
   const { lang, t } = await getI18n()
 
-  return project.kind === 'product' ? (
-    <ProductDetail project={project} lang={lang} t={t} />
-  ) : (
-    <CaseDetail project={project} lang={lang} t={t} />
+  return (
+    <>
+      <script type='application/ld+json' dangerouslySetInnerHTML={{ __html: jsonLdHtml(projectJsonLd(slug)) }} />
+      {project.kind === 'product' ? (
+        <ProductDetail project={project} lang={lang} t={t} />
+      ) : (
+        <CaseDetail project={project} lang={lang} t={t} />
+      )}
+    </>
   )
 }

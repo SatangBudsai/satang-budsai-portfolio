@@ -8,7 +8,12 @@ import { getI18n } from '@/lib/lang'
 
 export async function generateMetadata(): Promise<Metadata> {
   const { t } = await getI18n()
-  return { title: t('common.nav.work', 'Work') }
+  return {
+    title: t('common.nav.work', 'Work'),
+    description:
+      'Every project by Satang Budsai: government identity and customs systems, university platforms, and open-source developer tools — with case studies, diagrams and results.',
+    alternates: { canonical: '/work' }
+  }
 }
 
 export default async function Work() {

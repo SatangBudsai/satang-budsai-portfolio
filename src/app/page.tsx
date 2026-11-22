@@ -19,6 +19,7 @@ import { experiments, featureReleases, principles, profile, services, shipped, s
 import { tr } from '@/content/types'
 import { briefHref } from '@/lib/brief'
 import { duration } from '@/lib/duration'
+import { homeJsonLd, jsonLdHtml } from '@/lib/seo'
 import { getI18n } from '@/lib/lang'
 import type { AppTranslate } from '@/tolgee/translate'
 
@@ -42,6 +43,7 @@ export default async function Home() {
 
   return (
     <>
+      <script type='application/ld+json' dangerouslySetInnerHTML={{ __html: jsonLdHtml(homeJsonLd()) }} />
       <div className='container-page lg:grid lg:grid-cols-[minmax(0,0.72fr)_minmax(0,1.28fr)] lg:gap-16 xl:gap-24'>
         {/* LEFT: who, what, where — stays in view on large screens */}
         <aside className='flex flex-col gap-7 pt-28 pb-12 sm:pt-32 lg:sticky lg:top-0 lg:h-svh lg:justify-between lg:gap-5 lg:pt-12 lg:pb-10'>

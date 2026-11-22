@@ -119,3 +119,27 @@ test('opens the screen gallery in a lightbox and closes it with Escape', async (
   await page.keyboard.press('Escape')
   await expect(page.locator('dialog[open]')).toHaveCount(0)
 })
+
+test('publishes SEO and AI discovery files', async ({ request }) => {
+  for (const path of [
+    '/robots.txt',
+    '/sitemap.xml',
+    '/llms.txt',
+    '/resume.txt',
+    '/manifest.webmanifest',
+    '/icon.svg',
+    '/opengraph-image'
+  ]) {
+    const response = await request.get(path)
+    expect(response.status(), path).toBe(200)
+  }
+  expect(await (await request.get('/robots.txt')).text()).toContain('ClaudeBot')
+  expect(await (await request.get('/llms.txt')).text()).toContain('# Satang Budsai')
+})
+
+test('describes the person with JSON-LD on the home page', async ({ page }) => {
+  await page.goto('/')
+  const data = JSON.parse((await page.locator('script[type="application/ld+json"]').first().textContent()) ?? '{}')
+  const types = data['@graph'].map((item: { '@type': string }) => item['@type'])
+  expect(types).toEqual(expect.arrayContaining(['WebSite', 'ProfilePage', 'Person']))
+})

@@ -17,6 +17,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const { t } = await getI18n()
   return {
     title: t('common.nav.learning', 'Learning'),
+    alternates: { canonical: '/learning' },
     description: t('common.exp.meta', 'Studies in building unfamiliar software by directing AI coding agents.')
   }
 }

@@ -10,7 +10,12 @@ import { getI18n } from '@/lib/lang'
 
 export async function generateMetadata(): Promise<Metadata> {
   const { t } = await getI18n()
-  return { title: t('common.nav.about', 'About') }
+  return {
+    title: t('common.nav.about', 'About'),
+    description:
+      'Who Satang Budsai is: a Senior Software Engineer in Chiang Mai who builds government systems and open-source developer tools — background, education and way of working.',
+    alternates: { canonical: '/about' }
+  }
 }
 
 const H2 = 'display mb-8 text-[clamp(30px,3.4vw,48px)]'

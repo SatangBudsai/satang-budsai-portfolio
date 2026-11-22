@@ -14,6 +14,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const { t } = await getI18n()
   return {
     title: t('common.nav.experience', 'Experience'),
+    alternates: { canonical: '/experience' },
     description: t(
       'common.exp2.meta',
       'Where Satang Budsai has worked: government systems at Chanwanich, freelance for Chiang Mai University, and own developer tools.'

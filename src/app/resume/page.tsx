@@ -27,6 +27,7 @@ const SITE = process.env.NEXT_PUBLIC_SITE_URL?.replace(/^https?:\/\//, '').repla
 export function generateMetadata(): Metadata {
   return {
     title: t('common.nav.resume', 'Resume'),
+    alternates: { canonical: '/resume' },
     description: t(
       'common.resume.meta',
       'Résumé of Satang Budsai, full-stack developer in Chiang Mai: experience, selected projects with results, skills and education.'

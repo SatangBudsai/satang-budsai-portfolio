@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next'
 import { Caveat, Inter_Tight, Instrument_Serif, JetBrains_Mono, Pixelify_Sans, Silkscreen } from 'next/font/google'
 import { getTolgee } from '@/tolgee/server'
 import { getI18n } from '@/lib/lang'
+import { KEYWORDS, SITE_DESCRIPTION, SITE_TITLE, SITE_URL } from '@/lib/seo'
 import { profile } from '@/content/site'
 import SiteHeader from '@/components/site/site-header'
 import SiteFooter from '@/components/site/site-footer'
@@ -31,22 +32,31 @@ const pixelify = Pixelify_Sans({
   preload: false
 })
 
-export async function generateMetadata(): Promise<Metadata> {
-  const { t } = await getI18n()
-  const description = t(
-    'common.meta.description',
-    'Full-stack developer in Chiang Mai building government systems, university platforms and my own developer tools.'
-  )
-  return {
-    metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3031'),
-    title: {
-      default: `${profile.name} — ${t('common.meta.role', 'Full-stack developer')}`,
-      template: `%s — ${profile.name}`
-    },
-    description,
-    icons: { icon: '/favicon.ico' },
-    openGraph: { type: 'website', title: profile.name, description }
-  }
+export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
+  title: { default: SITE_TITLE, template: `%s — ${profile.name}` },
+  description: SITE_DESCRIPTION,
+  applicationName: profile.name,
+  authors: [{ name: profile.name, url: SITE_URL }],
+  creator: profile.name,
+  keywords: KEYWORDS,
+  alternates: {
+    canonical: '/',
+    types: { 'text/plain': '/resume.txt', 'text/markdown': '/llms.txt' }
+  },
+  openGraph: {
+    type: 'profile',
+    siteName: profile.name,
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
+    url: '/',
+    locale: 'en_US',
+    firstName: 'Satang',
+    lastName: 'Budsai'
+  },
+  twitter: { card: 'summary_large_image', title: SITE_TITLE, description: SITE_DESCRIPTION },
+  robots: { index: true, follow: true, googleBot: { index: true, follow: true, 'max-image-preview': 'large' } },
+  formatDetection: { telephone: false }
 }
 
 export const viewport: Viewport = {
