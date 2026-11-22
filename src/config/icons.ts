@@ -3,9 +3,19 @@ export const appIcons = {
   refresh: 'lucide:loader-circle',
   sun: 'lucide:sun',
   moon: 'lucide:moon',
-  menu: 'pixelarticons:menu',
-  pixelClose: 'pixelarticons:close',
+  menu: 'lucide:menu',
   file: 'lucide:file',
   fileText: 'lucide:file-text',
-  spreadsheet: 'lucide:sheet'
+  spreadsheet: 'lucide:sheet',
+  arrowUpRight: 'lucide:arrow-up-right',
+  arrowRight: 'lucide:arrow-right',
+  arrowLeft: 'lucide:arrow-left',
+  arrowDown: 'lucide:arrow-down',
+  copy: 'lucide:copy',
+  check: 'lucide:check',
+  download: 'lucide:download',
+  mail: 'lucide:mail',
+  github: 'lucide:github',
+  linkedin: 'lucide:linkedin',
+  lock: 'lucide:lock'
 } as const

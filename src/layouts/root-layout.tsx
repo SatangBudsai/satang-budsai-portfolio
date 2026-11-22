@@ -7,7 +7,6 @@ import LoadingScreen from '@/components/loading-screen'
 
 type Props = {
   children: ReactNode
-  title?: string
 }
 
 const RootLayout = (props: Props) => {
@@ -15,10 +14,8 @@ const RootLayout = (props: Props) => {
 
   return (
     <Fragment>
-      <main>
-        <LoadingScreen isLoading={loadingScreenReducer.loadingList.length > 0} />
-        {props.children}
-      </main>
+      <LoadingScreen isLoading={loadingScreenReducer.loadingList.length > 0} />
+      {props.children}
     </Fragment>
   )
 }

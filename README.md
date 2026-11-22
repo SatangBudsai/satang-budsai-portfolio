@@ -1,6 +1,16 @@
 # Satang Budsai Portfolio
 
-The shared stack and package versions follow CMU Journal. Portfolio content, pixel artwork, existing routes, and development port 3031 are retained.
+A dark-only, editorial portfolio: big-type home page, product pages for my own tools, case studies for client work, and an AI-coding experiments log. The shared stack and package versions follow CMU Journal; the development port is 3031.
+
+## Content
+
+All portfolio content lives in typed files, in Thai and English side by side:
+
+- src/content/projects.ts: products (/work/[slug] product template) and case studies (case-study template).
+- src/content/site.ts: profile, contact links, services, timeline, experiments and lab cards.
+- public/work/{slug}/: project media as WebP. Animated WebP files are served as-is.
+
+Confidential client work (confidential: true) uses drawn diagrams from src/components/site/diagram.tsx, never screenshots. Search for TODO(satang) for facts that still need filling in. The resume buttons stay hidden until profile.resumeHref points at a public PDF.
 
 ## Stack
 
@@ -40,7 +50,7 @@ Playwright tests use the production build on port 3131. Run pnpm build before pn
 
 ## Components and icons
 
-Add components with pnpm ui:add <component>. The wrapper converts generated Lucide imports to the shared Iconify component. Add icon IDs to src/config/icons.ts and run pnpm icons:generate. Development regenerates icons; builds check that the generated data is current. Pixel buttons use the shared Button variant='pixel' to retain their artwork.
+Add components with pnpm ui:add <component>. The wrapper converts generated Lucide imports to the shared Iconify component. Add icon IDs to src/config/icons.ts and run pnpm icons:generate. Development regenerates icons; builds check that the generated data is current.
 
 ## Translations
 

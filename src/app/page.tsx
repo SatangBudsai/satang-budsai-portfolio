@@ -1,913 +1,210 @@
-'use client'
+import Link from 'next/link'
 
-import { useEffect, useRef, useSyncExternalStore } from 'react'
-import { motion, useScroll, useTransform, type Variants } from 'motion/react'
+import ActivityCard from '@/components/site/activity-card'
+import ProfilePhoto from '@/components/site/profile-photo'
+import { LocalTime, Reveal } from '@/components/site/motion'
+import { Doodle, Marked, PlayfulName } from '@/components/site/playful'
+import WorkGrid from '@/components/site/work-grid'
+import { buildWorkItems } from '@/components/site/work-items'
+import { Icon } from '@/components/ui/icon'
+import { appIcons } from '@/config/icons'
+import activity from '@/content/activity.json'
+import { featureReleases, profile, services, shipped } from '@/content/site'
+import { tr } from '@/content/types'
+import { getI18n } from '@/lib/lang'
 
-import { useTheme } from 'next-themes'
-import { Button } from '@/components/ui/button'
-import Image from 'next/image'
-
-const subscribe = () => () => {}
-
-const fadeUp: Variants = {
-  hidden: { opacity: 0, y: 40 },
-  visible: (delay: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.8, delay, ease: [0.25, 0.46, 0.45, 0.94] }
-  })
-}
-
-const scaleIn: Variants = {
-  hidden: { opacity: 0, scale: 0.8 },
-  visible: (delay: number) => ({
-    opacity: 1,
-    scale: 1,
-    transition: { duration: 0.8, delay, ease: [0.25, 0.46, 0.45, 0.94] }
-  })
-}
-
-export default function Home() {
-  const { resolvedTheme, setTheme } = useTheme()
-  const mounted = useSyncExternalStore(
-    subscribe,
-    () => true,
-    () => false
-  )
-  const isDark = mounted ? resolvedTheme === 'dark' : true
-  const heroRef = useRef<HTMLElement>(null)
-  const canvasRef = useRef<HTMLCanvasElement>(null)
-  const cursorRef = useRef<HTMLImageElement>(null)
-  const particlesRef = useRef<
-    Array<{ x: number; y: number; vx: number; vy: number; life: number; maxLife: number; size: number; color: string }>
-  >([])
-
-  // Custom cursor (DOM-based for crisp rendering)
-  useEffect(() => {
-    const cursor = cursorRef.current
-    if (!cursor) return
-
-    const onMove = (e: MouseEvent) => {
-      cursor.style.left = `${e.clientX}px`
-      cursor.style.top = `${e.clientY}px`
-
-      const target = e.target as HTMLElement
-      const isPointer = target.closest('a, button, [role="button"], input[type="submit"], .pixel-btn, .cursor-pointer')
-      cursor.src = isPointer ? '/images/cursor-pointer.svg' : '/images/cursor.svg'
-      cursor.style.transform = isPointer ? 'translate(-5px, -1px)' : 'translate(-1px, -1px)'
-    }
-
-    const onLeave = () => {
-      cursor.style.opacity = '0'
-    }
-    const onEnter = () => {
-      cursor.style.opacity = '1'
-    }
-
-    window.addEventListener('mousemove', onMove)
-    document.addEventListener('mouseleave', onLeave)
-    document.addEventListener('mouseenter', onEnter)
-    return () => {
-      window.removeEventListener('mousemove', onMove)
-      document.removeEventListener('mouseleave', onLeave)
-      document.removeEventListener('mouseenter', onEnter)
-    }
-  }, [])
-
-  // Sparkle trail effect
-  useEffect(() => {
-    const canvas = canvasRef.current
-    if (!canvas) return
-    const ctx = canvas.getContext('2d')
-    if (!ctx) return
-
-    const resize = () => {
-      canvas.width = window.innerWidth
-      canvas.height = window.innerHeight
-    }
-    resize()
-    window.addEventListener('resize', resize)
-
-    const colors = ['#ffd700', '#ffec80', '#fff4b8', '#ffa500', '#ffffff']
-    const mousePos = { x: -100, y: -100 }
-
-    const spawnParticles = (x: number, y: number, count: number) => {
-      for (let i = 0; i < count; i++) {
-        particlesRef.current.push({
-          x: x + (Math.random() - 0.5) * 6,
-          y: y + (Math.random() - 0.5) * 6,
-          vx: (Math.random() - 0.5) * 1.5,
-          vy: (Math.random() - 0.5) * 1.5 - 0.5,
-          life: 1,
-          maxLife: 0.6 + Math.random() * 0.4,
-          size: 1.5 + Math.random() * 2.5,
-          color: colors[Math.floor(Math.random() * colors.length)]
-        })
-      }
-      if (particlesRef.current.length > 200) {
-        particlesRef.current = particlesRef.current.slice(-200)
-      }
-    }
-
-    const handleMouseMove = (e: MouseEvent) => {
-      mousePos.x = e.clientX
-      mousePos.y = e.clientY
-      const target = e.target as HTMLElement
-      const isPointer = target.closest('a, button, [role="button"], input[type="submit"], .pixel-btn, .cursor-pointer')
-      spawnParticles(mousePos.x, mousePos.y, isPointer ? 5 : 3)
-    }
-    window.addEventListener('mousemove', handleMouseMove)
-
-    // Continuously emit sparkles even when mouse is still (more when hovering interactive elements)
-    const idleInterval = setInterval(() => {
-      if (mousePos.x > 0) {
-        const el = document.elementFromPoint(mousePos.x, mousePos.y)
-        const isPointer = el?.closest('a, button, [role="button"], input[type="submit"], .pixel-btn, .cursor-pointer')
-        spawnParticles(mousePos.x, mousePos.y, isPointer ? 4 : 1)
-      }
-    }, 60)
-
-    let animId: number
-    const animate = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height)
-      const particles = particlesRef.current
-      for (let i = particles.length - 1; i >= 0; i--) {
-        const p = particles[i]
-        p.x += p.vx
-        p.y += p.vy
-        p.life -= 0.02
-        if (p.life <= 0) {
-          particles.splice(i, 1)
-          continue
-        }
-        const alpha = p.life / p.maxLife
-        ctx.globalAlpha = Math.min(alpha, 1)
-        ctx.fillStyle = p.color
-        // Draw a pixel-style sparkle (small square)
-        const s = p.size * alpha
-        ctx.fillRect(Math.round(p.x - s / 2), Math.round(p.y - s / 2), Math.round(s), Math.round(s))
-      }
-      ctx.globalAlpha = 1
-      animId = requestAnimationFrame(animate)
-    }
-    animate()
-
-    return () => {
-      cancelAnimationFrame(animId)
-      clearInterval(idleInterval)
-      window.removeEventListener('mousemove', handleMouseMove)
-      window.removeEventListener('resize', resize)
-    }
-  }, [])
-
-  const { scrollY } = useScroll()
-
-  // Cloud parallax + fade out as user scrolls
-  const yCloudLeft = useTransform(scrollY, [0, 800], [0, 500])
-  const xCloudLeft = useTransform(scrollY, [0, 800], [0, -100])
-  const yCloudRight = useTransform(scrollY, [0, 800], [0, 600])
-  const xCloudRight = useTransform(scrollY, [0, 800], [0, 100])
-  const cloudOpacity = useTransform(scrollY, [0, 300, 600], [0.9, 0.4, 0])
+export default async function Home() {
+  const { lang, t } = await getI18n()
+  const activeDays = Object.keys(activity.days).length
+  const allWork = buildWorkItems(lang, t).length
+  const featuredKeys = new Set(buildWorkItems(lang, t, { featured: true }).map(item => item.key))
 
   return (
-    <div
-      className={`${isDark ? 'theme-dark' : 'theme-light'} relative w-full overflow-x-hidden bg-[var(--bg-outer)] font-["Press_Start_2P"] text-[#2a2a3a]`}>
-      {/* Custom Cursor */}
-      <Image
-        ref={cursorRef}
-        src='/images/cursor.svg'
-        width={32}
-        height={28}
-        unoptimized
-        alt=''
-        className='pointer-events-none fixed z-[10000]'
-        style={{ imageRendering: 'pixelated', width: 32, height: 28, transform: 'translate(-1px, -1px)' }}
-        draggable={false}
-      />
+    <>
+      {/* HERO: a person, honest numbers, and the proof next to them */}
+      <section className='container-page grid items-center gap-x-14 gap-y-12 pt-32 pb-20 sm:pt-40 lg:grid-cols-[0.95fr_1.05fr]'>
+        <div className='flex flex-col gap-7'>
+          <div className='flex items-end gap-6 sm:gap-8'>
+            <ProfilePhoto
+              src={profile.photo}
+              alt={profile.name}
+              caption={t('common.hero.photo-caption', 'hi, that’s me!')}
+              priority
+            />
+            <div className='flex min-w-0 flex-col gap-4 pb-2'>
+              <div className='flex flex-col gap-2 font-mono text-xs tracking-[0.06em] text-muted-foreground uppercase'>
+                <span>
+                  {tr(profile.location, lang)} · <LocalTime timeZone={profile.timeZone} />
+                </span>
+                {profile.availability ? (
+                  <a href='#contact' className='inline-flex items-center gap-2 text-primary hover:underline'>
+                    <span className='animate-pulse-dot size-2 rounded-full bg-primary' aria-hidden='true' />
+                    {tr(profile.availability, lang)}
+                  </a>
+                ) : null}
+              </div>
+              <h1 className='display text-[clamp(44px,5.6vw,92px)] leading-[0.92]'>
+                <PlayfulName lines={['Satang', 'Budsai']} />
+              </h1>
+            </div>
+          </div>
 
-      {/* Sparkle Trail Canvas */}
-      <canvas
-        ref={canvasRef}
-        className='pointer-events-none fixed inset-0 z-[9999]'
-        style={{ width: '100%', height: '100%' }}
-      />
+          <Reveal delay={0.4} y={14}>
+            <p className='max-w-[34rem] text-[clamp(18px,1.6vw,22px)] leading-[1.6] text-soft'>
+              {t('common.hero.day', 'By day I build government systems at Chanwanich.')}{' '}
+              {t(
+                'common.hero.side',
+                'On the side I freelance for universities and businesses, and after hours I ship my own tools.'
+              )}{' '}
+              {t('common.hero.year', 'The last 12 months:')}{' '}
+              <Marked>{t('common.hero.num-days', '{count} days of commits', { count: activeDays })}</Marked>{' '}
+              {t('common.hero.across', 'across')}{' '}
+              <Marked>{t('common.hero.num-repos', '{count} repos', { count: activity.repos })}</Marked>.
+            </p>
+          </Reveal>
 
-      {/* Theme Toggle Switch */}
-      <Button
-        variant='ghost'
-        onClick={() => setTheme(isDark ? 'light' : 'dark')}
-        className='fixed top-4 right-4 z-[9998] flex h-auto rounded-none border-3 border-[#222635] p-0 shadow-[3px_3px_0_rgba(0,0,0,0.4)]'
-        style={{ imageRendering: 'pixelated' }}
-        aria-pressed={isDark}
-        aria-label='Toggle theme'>
-        {/* Track background with both icons */}
-        <div className='relative flex h-[32px] w-[75px] items-center justify-between bg-[#181a28] px-2'>
-          {/* Sun icon (left, always visible) */}
-          <svg
-            width='14'
-            height='14'
-            viewBox='0 0 8 8'
-            className='relative z-10'
-            style={{ shapeRendering: 'crispEdges' }}>
-            <rect x='3' y='0' width='2' height='1' fill={!isDark ? '#f5a524' : '#555'} />
-            <rect x='3' y='7' width='2' height='1' fill={!isDark ? '#f5a524' : '#555'} />
-            <rect x='0' y='3' width='1' height='2' fill={!isDark ? '#f5a524' : '#555'} />
-            <rect x='7' y='3' width='1' height='2' fill={!isDark ? '#f5a524' : '#555'} />
-            <rect x='1' y='1' width='1' height='1' fill={!isDark ? '#f5a524' : '#555'} />
-            <rect x='6' y='1' width='1' height='1' fill={!isDark ? '#f5a524' : '#555'} />
-            <rect x='1' y='6' width='1' height='1' fill={!isDark ? '#f5a524' : '#555'} />
-            <rect x='6' y='6' width='1' height='1' fill={!isDark ? '#f5a524' : '#555'} />
-            <rect x='2' y='2' width='4' height='4' fill={!isDark ? '#ffec80' : '#666'} />
-          </svg>
-          {/* Moon icon (right, always visible) — crescent facing right */}
-          <svg
-            width='14'
-            height='14'
-            viewBox='0 0 10 10'
-            className='relative z-10'
-            style={{ shapeRendering: 'crispEdges' }}>
-            {/* Outer crescent shape */}
-            <rect x='3' y='0' width='3' height='1' fill={isDark ? '#e8e0ff' : '#555'} />
-            <rect x='5' y='1' width='3' height='1' fill={isDark ? '#e8e0ff' : '#555'} />
-            <rect x='7' y='2' width='2' height='1' fill={isDark ? '#e8e0ff' : '#555'} />
-            <rect x='8' y='3' width='1' height='4' fill={isDark ? '#e8e0ff' : '#555'} />
-            <rect x='7' y='7' width='2' height='1' fill={isDark ? '#e8e0ff' : '#555'} />
-            <rect x='5' y='8' width='3' height='1' fill={isDark ? '#e8e0ff' : '#555'} />
-            <rect x='3' y='9' width='3' height='1' fill={isDark ? '#e8e0ff' : '#555'} />
-            {/* Inner fill for crescent thickness */}
-            <rect x='6' y='2' width='1' height='1' fill={isDark ? '#d0c8f0' : '#444'} />
-            <rect x='7' y='3' width='1' height='4' fill={isDark ? '#d0c8f0' : '#444'} />
-            <rect x='6' y='7' width='1' height='1' fill={isDark ? '#d0c8f0' : '#444'} />
-            {/* Stars */}
-            <rect x='2' y='2' width='1' height='1' fill={isDark ? '#fffbe6' : '#666'} />
-            <rect x='1' y='6' width='1' height='1' fill={isDark ? '#fffbe6' : '#666'} />
-            <rect x='4' y='5' width='1' height='1' fill={isDark ? '#fffbe6' : '#666'} />
-          </svg>
-          {/* Sliding highlight knob */}
-          <div
-            className='absolute top-0 h-full w-[38px] border-r-3 border-[#222635] transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)]'
-            style={{
-              left: isDark ? '37px' : '0px',
-              background: isDark ? '#252850' : '#fffbe6',
-              boxShadow: isDark
-                ? 'inset 2px 2px 0 #353870, inset -2px -2px 0 #151838'
-                : 'inset 2px 2px 0 #fff, inset -2px -2px 0 #e0d8b0',
-              borderLeft: isDark ? '3px solid #222635' : 'none',
-              borderRight: !isDark ? '3px solid #222635' : 'none'
+          <Reveal delay={0.5} y={12} className='flex flex-wrap items-center gap-3'>
+            <a
+              href='#contact'
+              className='inline-flex min-h-12 items-center rounded-full bg-primary px-6 font-semibold text-primary-foreground transition-transform active:scale-95'>
+              {t('common.hero.cta-client', 'Start a project')}
+            </a>
+            <Link
+              href='/about'
+              className='inline-flex min-h-12 items-center rounded-full border border-line-strong px-6 transition-colors hover:border-foreground'>
+              {t('common.hero.cta-hire', 'Hiring? See my experience')}
+            </Link>
+            <a
+              href={profile.github}
+              target='_blank'
+              rel='noreferrer'
+              aria-label='GitHub'
+              className='inline-flex size-12 items-center justify-center rounded-full border border-line-strong transition-colors hover:border-foreground'>
+              <Icon icon={appIcons.github} className='size-5' aria-hidden='true' />
+            </a>
+            <a
+              href={profile.linkedin}
+              target='_blank'
+              rel='noreferrer'
+              aria-label='LinkedIn'
+              className='inline-flex size-12 items-center justify-center rounded-full border border-line-strong transition-colors hover:border-foreground'>
+              <Icon icon={appIcons.linkedin} className='size-5' aria-hidden='true' />
+            </a>
+          </Reveal>
+        </div>
+
+        <Reveal delay={0.2} y={24} className='relative'>
+          <Doodle flip className='absolute -top-12 right-2 hidden sm:inline-flex'>
+            {t('common.hero.chart-note', 'every square is a real day of commits')}
+          </Doodle>
+          <ActivityCard
+            lang={lang}
+            days={activity.days}
+            until={activity.until}
+            repos={activity.repos}
+            featureReleases={featureReleases}
+            products={shipped}
+            labels={{
+              period: t('common.activity.period', 'Last 12 months · all my repos'),
+              commits: t('common.activity.commits', 'commits'),
+              activeDays: t('common.activity.active-days', 'days with commits'),
+              repos: t('common.activity.repos', 'repositories'),
+              releases: t('common.activity.releases', 'feature releases'),
+              categories: {
+                work: t('common.activity.work', 'Day job'),
+                freelance: t('common.activity.freelance', 'Freelance'),
+                own: t('common.activity.own', 'My products')
+              },
+              commitsUnit: t('common.activity.unit', 'commits'),
+              hint: t('common.activity.hint', 'Hover a square to see that day'),
+              hintTouch: t('common.activity.hint-touch', 'Tap a square to see that day'),
+              month: t('common.activity.month', 'Month'),
+              shipping: t('common.activity.shipping', 'Shipping'),
+              footnote: t(
+                'common.activity.footnote',
+                '* Includes commits made by the AI coding agents I direct. Releases count each minor version once.'
+              ),
+              chart: t(
+                'common.activity.label',
+                'Commit activity over the last 12 months: day job, freelance and my own products'
+              )
             }}
           />
-        </div>
-      </Button>
-
-      {/* HERO SECTION */}
-      <section ref={heroRef} className='relative h-screen min-h-[700px] w-full overflow-hidden bg-[#78A7D0]'>
-        {/* Sky Background (Animated GIF) — สลับตาม theme */}
-        <div
-          className='absolute inset-0 z-0 bg-cover bg-bottom bg-no-repeat transition-opacity duration-500'
-          style={{ backgroundImage: `url('/images/${isDark ? 'background-dark' : 'background'}.gif')` }}
-        />
-
-        {/* Clouds: single cloud on mobile, split left/right on desktop — สลับตาม theme */}
-        {/* Mobile cloud */}
-        <motion.div
-          className='pointer-events-none absolute inset-0 z-10 lg:hidden'
-          style={{ y: yCloudLeft, opacity: cloudOpacity }}>
-          <div
-            className='absolute inset-0 bg-cover bg-bottom bg-no-repeat mix-blend-screen'
-            style={{ backgroundImage: `url('/images/${isDark ? 'cloud-dark' : 'cloud'}.png')` }}
-          />
-        </motion.div>
-        {/* Desktop clouds */}
-        <motion.div
-          className='pointer-events-none absolute inset-0 z-10 hidden lg:block'
-          style={{ y: yCloudLeft, x: xCloudLeft, opacity: cloudOpacity }}>
-          <div
-            className='absolute inset-0 bg-cover bg-bottom bg-no-repeat mix-blend-screen'
-            style={{ backgroundImage: `url('/images/${isDark ? 'cloud-left-dark' : 'cloud-left'}.png')` }}
-          />
-        </motion.div>
-        <motion.div
-          className='pointer-events-none absolute inset-0 z-10 hidden lg:block'
-          style={{ y: yCloudRight, x: xCloudRight, opacity: cloudOpacity }}>
-          <div
-            className='absolute inset-0 bg-cover bg-bottom bg-no-repeat mix-blend-screen'
-            style={{ backgroundImage: `url('/images/${isDark ? 'cloud-right-dark' : 'cloud-right'}.png')` }}
-          />
-        </motion.div>
-
-        {/* Content Layer */}
-        <div className='pointer-events-none relative z-20 mx-auto flex h-full w-full max-w-4xl flex-col items-center justify-center px-4 lg:flex-row lg:justify-between lg:px-8'>
-          {/* Text Section */}
-          <div className='pointer-events-auto z-30 flex w-full flex-1 flex-col items-center justify-center text-center lg:items-start lg:text-left'>
-            <motion.h1
-              variants={fadeUp}
-              initial='hidden'
-              animate='visible'
-              custom={0.2}
-              className='mb-2 font-["Press_Start_2P"] text-[1.5rem] leading-none font-bold whitespace-nowrap text-white drop-shadow-[4px_4px_0_#07233e] sm:text-[2rem] md:text-[2.5rem] lg:text-[3rem] lg:drop-shadow-[6px_6px_0_#07233e] xl:text-[3.5rem]'>
-              SATANG
-            </motion.h1>
-            <motion.h2
-              variants={fadeUp}
-              initial='hidden'
-              animate='visible'
-              custom={0.4}
-              className='mb-3 font-["Press_Start_2P"] text-[8px] font-bold tracking-widest whitespace-nowrap text-white drop-shadow-[3px_3px_0_#07233e] sm:text-xs md:text-sm lg:mb-5 lg:text-base lg:tracking-[0.2em] lg:drop-shadow-[4px_4px_0_#07233e] xl:text-lg'>
-              FULL STACK <br className='lg:hidden' />
-              DEVELOPER
-            </motion.h2>
-            <motion.p
-              variants={fadeUp}
-              initial='hidden'
-              animate='visible'
-              custom={0.6}
-              className='mb-6 max-w-md font-["Press_Start_2P"] text-[6px] leading-[2] text-white drop-shadow-[2px_2px_0_#222635] sm:text-[8px] md:text-[10px] lg:text-[12px] lg:leading-[2]'>
-              PASSIONATELY CRAFTING DIGITAL EXPERIENCES.
-              <br />
-              AVAILABLE FOR NEW VENTURES.
-            </motion.p>
-
-            <motion.div
-              variants={fadeUp}
-              initial='hidden'
-              animate='visible'
-              custom={0.8}
-              className='flex flex-col justify-center gap-3 sm:flex-row lg:justify-start lg:gap-6'>
-              <Button
-                variant='pixel'
-                size='pixel'
-                className='pixel-btn flex items-center gap-3 text-[12px] md:text-[14px]'>
-                <Image
-                  src='/images/cursor.svg'
-                  alt='cursor'
-                  width={16}
-                  height={16}
-                  unoptimized
-                  className='-ml-1 h-4 w-4 object-contain'
-                  style={{ imageRendering: 'pixelated' }}
-                />
-                <span>VIEW PROJECTS</span>
-              </Button>
-              <Button variant='pixel' size='pixel' className='pixel-btn text-[10px] md:text-[12px]'>
-                <svg
-                  className='pixel-icon'
-                  width='18'
-                  height='13'
-                  viewBox='0 0 10 7'
-                  style={{ shapeRendering: 'crispEdges', fillRule: 'evenodd' }}>
-                  <rect x='1' y='0' width='8' height='7' fill='#222635' />
-                  <rect x='0' y='1' width='10' height='5' fill='#222635' />
-                  <rect x='1' y='1' width='8' height='5' fill='#ffffff' />
-                  <rect x='1' y='1' width='1' height='1' fill='#222635' />
-                  <rect x='2' y='2' width='1' height='1' fill='#222635' />
-                  <rect x='3' y='3' width='1' height='1' fill='#222635' />
-                  <rect x='4' y='4' width='2' height='1' fill='#222635' />
-                  <rect x='6' y='3' width='1' height='1' fill='#222635' />
-                  <rect x='7' y='2' width='1' height='1' fill='#222635' />
-                  <rect x='8' y='1' width='1' height='1' fill='#222635' />
-                  <rect x='1' y='5' width='1' height='1' fill='#222635' />
-                  <rect x='2' y='4' width='1' height='1' fill='#222635' />
-                  <rect x='8' y='5' width='1' height='1' fill='#222635' />
-                  <rect x='7' y='4' width='1' height='1' fill='#222635' />
-                </svg>
-                CONTACT ME
-              </Button>
-            </motion.div>
-          </div>
-
-          {/* 3D Block Section */}
-          <motion.div
-            variants={scaleIn}
-            initial='hidden'
-            animate='visible'
-            custom={0.5}
-            className='pointer-events-none relative mt-2 flex h-[30vh] w-full flex-1 items-center justify-center lg:mt-0 lg:h-[60%] lg:justify-end'>
-            <div
-              className='relative h-full w-full max-w-[320px] bg-contain bg-center bg-no-repeat lg:max-w-[350px] lg:bg-right'
-              style={{ backgroundImage: `url('/images/block.png')` }}>
-              {/* Text Labels — desktop only */}
-              <div className='absolute top-[35%] left-[5%] hidden font-["Press_Start_2P"] text-[8px] text-white drop-shadow-[2px_2px_0_#222635] lg:block xl:text-[10px]'>
-                FRONTEND
-              </div>
-              <div className='absolute top-[28%] right-[-2%] hidden font-["Press_Start_2P"] text-[8px] text-white drop-shadow-[2px_2px_0_#222635] lg:block xl:text-[10px]'>
-                BACKEND
-              </div>
-              <div className='absolute right-[18%] bottom-[15%] hidden font-["Press_Start_2P"] text-[8px] text-white drop-shadow-[2px_2px_0_#222635] lg:block xl:text-[10px]'>
-                DATABASE
-              </div>
-
-              {/* Floating Coin 1 (Top Center) */}
-              <div
-                className='absolute top-[3%] right-[35%] z-30 animate-[bounce_2.5s_infinite_ease-in-out] text-[#f5a524] drop-shadow-[4px_4px_0_rgba(147,99,22,0.8)] md:top-[5%] md:right-[38%] lg:top-[3%] lg:right-[40%]'
-                style={{ animationDelay: '0s' }}>
-                <svg width='26' height='26' viewBox='0 0 16 16' style={{ shapeRendering: 'crispEdges' }}>
-                  {/* Outer border */}
-                  <rect x='4' y='0' width='8' height='1' fill='#b8860b' />
-                  <rect x='2' y='1' width='12' height='1' fill='#b8860b' />
-                  <rect x='1' y='2' width='14' height='1' fill='#b8860b' />
-                  <rect x='0' y='3' width='16' height='1' fill='#b8860b' />
-                  <rect x='0' y='12' width='16' height='1' fill='#b8860b' />
-                  <rect x='1' y='13' width='14' height='1' fill='#b8860b' />
-                  <rect x='2' y='14' width='12' height='1' fill='#b8860b' />
-                  <rect x='4' y='15' width='8' height='1' fill='#b8860b' />
-                  <rect x='0' y='3' width='1' height='10' fill='#b8860b' />
-                  <rect x='15' y='3' width='1' height='10' fill='#b8860b' />
-                  {/* Gold fill */}
-                  <rect x='4' y='1' width='8' height='1' fill='#ffd044' />
-                  <rect x='2' y='2' width='12' height='1' fill='#ffd044' />
-                  <rect x='1' y='3' width='14' height='10' fill='#ffd044' />
-                  <rect x='2' y='13' width='12' height='1' fill='#ffd044' />
-                  <rect x='4' y='14' width='8' height='1' fill='#ffd044' />
-                  {/* Highlight */}
-                  <rect x='5' y='2' width='6' height='1' fill='#ffe680' />
-                  <rect x='2' y='3' width='1' height='6' fill='#ffe680' />
-                  <rect x='3' y='3' width='10' height='1' fill='#ffe680' />
-                  {/* $ symbol */}
-                  <rect x='7' y='4' width='2' height='1' fill='#b8860b' />
-                  <rect x='6' y='5' width='5' height='1' fill='#b8860b' />
-                  <rect x='5' y='6' width='2' height='1' fill='#b8860b' />
-                  <rect x='6' y='7' width='4' height='1' fill='#b8860b' />
-                  <rect x='9' y='8' width='2' height='1' fill='#b8860b' />
-                  <rect x='5' y='9' width='6' height='1' fill='#b8860b' />
-                  <rect x='7' y='10' width='2' height='1' fill='#b8860b' />
-                </svg>
-              </div>
-
-              {/* Floating Coin 2 (Left Frontend) */}
-              <div
-                className='absolute top-[40%] left-[18%] z-30 animate-[bounce_2s_infinite_ease-in-out] text-[#f5a524] drop-shadow-[4px_4px_0_rgba(147,99,22,0.8)] md:top-[40%] md:left-[22%] lg:top-[35%] lg:left-[22%]'
-                style={{ animationDelay: '0.8s' }}>
-                <svg width='20' height='20' viewBox='0 0 16 16' style={{ shapeRendering: 'crispEdges' }}>
-                  <rect x='4' y='0' width='8' height='1' fill='#b8860b' />
-                  <rect x='2' y='1' width='12' height='1' fill='#b8860b' />
-                  <rect x='1' y='2' width='14' height='1' fill='#b8860b' />
-                  <rect x='0' y='3' width='16' height='1' fill='#b8860b' />
-                  <rect x='0' y='12' width='16' height='1' fill='#b8860b' />
-                  <rect x='1' y='13' width='14' height='1' fill='#b8860b' />
-                  <rect x='2' y='14' width='12' height='1' fill='#b8860b' />
-                  <rect x='4' y='15' width='8' height='1' fill='#b8860b' />
-                  <rect x='0' y='3' width='1' height='10' fill='#b8860b' />
-                  <rect x='15' y='3' width='1' height='10' fill='#b8860b' />
-                  <rect x='4' y='1' width='8' height='1' fill='#ffd044' />
-                  <rect x='2' y='2' width='12' height='1' fill='#ffd044' />
-                  <rect x='1' y='3' width='14' height='10' fill='#ffd044' />
-                  <rect x='2' y='13' width='12' height='1' fill='#ffd044' />
-                  <rect x='4' y='14' width='8' height='1' fill='#ffd044' />
-                  <rect x='5' y='2' width='6' height='1' fill='#ffe680' />
-                  <rect x='2' y='3' width='1' height='6' fill='#ffe680' />
-                  <rect x='3' y='3' width='10' height='1' fill='#ffe680' />
-                  <rect x='7' y='4' width='2' height='1' fill='#b8860b' />
-                  <rect x='6' y='5' width='5' height='1' fill='#b8860b' />
-                  <rect x='5' y='6' width='2' height='1' fill='#b8860b' />
-                  <rect x='6' y='7' width='4' height='1' fill='#b8860b' />
-                  <rect x='9' y='8' width='2' height='1' fill='#b8860b' />
-                  <rect x='5' y='9' width='6' height='1' fill='#b8860b' />
-                  <rect x='7' y='10' width='2' height='1' fill='#b8860b' />
-                </svg>
-              </div>
-
-              {/* Floating Coin 3 (Right Backend) */}
-              <div
-                className='absolute top-[32%] right-[10%] z-30 animate-[bounce_3s_infinite_ease-in-out] text-[#f5a524] drop-shadow-[4px_4px_0_rgba(147,99,22,0.8)] md:top-[35%] md:right-[12%] lg:top-[30%] lg:right-[12%]'
-                style={{ animationDelay: '1.5s' }}>
-                <svg width='22' height='22' viewBox='0 0 16 16' style={{ shapeRendering: 'crispEdges' }}>
-                  <rect x='4' y='0' width='8' height='1' fill='#b8860b' />
-                  <rect x='2' y='1' width='12' height='1' fill='#b8860b' />
-                  <rect x='1' y='2' width='14' height='1' fill='#b8860b' />
-                  <rect x='0' y='3' width='16' height='1' fill='#b8860b' />
-                  <rect x='0' y='12' width='16' height='1' fill='#b8860b' />
-                  <rect x='1' y='13' width='14' height='1' fill='#b8860b' />
-                  <rect x='2' y='14' width='12' height='1' fill='#b8860b' />
-                  <rect x='4' y='15' width='8' height='1' fill='#b8860b' />
-                  <rect x='0' y='3' width='1' height='10' fill='#b8860b' />
-                  <rect x='15' y='3' width='1' height='10' fill='#b8860b' />
-                  <rect x='4' y='1' width='8' height='1' fill='#ffd044' />
-                  <rect x='2' y='2' width='12' height='1' fill='#ffd044' />
-                  <rect x='1' y='3' width='14' height='10' fill='#ffd044' />
-                  <rect x='2' y='13' width='12' height='1' fill='#ffd044' />
-                  <rect x='4' y='14' width='8' height='1' fill='#ffd044' />
-                  <rect x='5' y='2' width='6' height='1' fill='#ffe680' />
-                  <rect x='2' y='3' width='1' height='6' fill='#ffe680' />
-                  <rect x='3' y='3' width='10' height='1' fill='#ffe680' />
-                  <rect x='7' y='4' width='2' height='1' fill='#b8860b' />
-                  <rect x='6' y='5' width='5' height='1' fill='#b8860b' />
-                  <rect x='5' y='6' width='2' height='1' fill='#b8860b' />
-                  <rect x='6' y='7' width='4' height='1' fill='#b8860b' />
-                  <rect x='9' y='8' width='2' height='1' fill='#b8860b' />
-                  <rect x='5' y='9' width='6' height='1' fill='#b8860b' />
-                  <rect x='7' y='10' width='2' height='1' fill='#b8860b' />
-                </svg>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-
-        {/* Scroll Down Indicator */}
-        <motion.div
-          variants={fadeUp}
-          initial='hidden'
-          animate='visible'
-          custom={1.2}
-          className='absolute bottom-8 left-1/2 z-40 flex -translate-x-1/2 scale-100 animate-bounce flex-col items-center gap-4 md:scale-125'>
-          <span className='font-["Press_Start_2P"] text-[8px] text-white drop-shadow-[2px_2px_0_#222635] md:text-[10px]'>
-            SCROLL
-          </span>
-          <svg
-            className='pixel-icon'
-            width='36'
-            height='36'
-            viewBox='0 0 16 16'
-            style={{ shapeRendering: 'crispEdges', fillRule: 'evenodd' }}>
-            <rect x='6' y='0' width='4' height='12' fill='#fff' />
-            <rect x='4' y='8' width='8' height='4' fill='#fff' />
-            <rect x='2' y='6' width='12' height='4' fill='#fff' />
-            <rect x='0' y='4' width='16' height='4' fill='#fff' />
-
-            <rect x='6' y='2' width='4' height='10' fill='#222635' />
-            <rect x='4' y='6' width='8' height='4' fill='#222635' />
-            <rect x='2' y='4' width='12' height='4' fill='#222635' />
-          </svg>
-        </motion.div>
+        </Reveal>
       </section>
 
-      {/* CONTENT AREA */}
-      <div className='relative z-30 w-full overflow-hidden bg-[var(--bg-content)] transition-colors duration-300'>
-        <div className='h-1.5 bg-gradient-to-r from-[#e06c75] via-[#f5a524] to-[#61afef]' />
-
-        {/* CONTENT SECTIONS */}
-        <div className='relative z-10 mx-auto w-full max-w-5xl px-4 py-16'>
-          {/* About Section */}
-          <motion.section
-            id='about'
-            className='mb-20'
-            initial={{ opacity: 0, y: 60 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
-            viewport={{ once: true, margin: '-80px' }}>
-            <div className='mb-8 flex items-center justify-center gap-3'>
-              <div className='h-1 w-10 bg-[#f5a524]'></div>
-              <h2 className='text-xl font-bold tracking-widest text-[var(--text-heading)] drop-shadow-[2px_2px_0_var(--shadow-text)] md:text-2xl'>
-                ABOUT ME
-              </h2>
-              <div className='h-1 w-10 bg-[#f5a524]'></div>
-            </div>
-
-            <div className='grid gap-6 md:grid-cols-2 lg:gap-10'>
-              {/* Portrait Box */}
-              <motion.div
-                className='relative flex aspect-square items-center justify-center border-3 border-[var(--border-card)] bg-[var(--bg-card)] p-3 shadow-[6px_6px_0_var(--shadow-card)] transition-colors duration-300'
-                initial={{ opacity: 0, x: -40 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6, delay: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }}
-                viewport={{ once: true }}>
-                <div className='flex h-full w-full items-center justify-center overflow-hidden border-3 border-dashed border-[var(--border-card-inner)] bg-[var(--bg-card-inner)] transition-colors duration-300'>
-                  <div className='h-3/4 w-3/4 bg-[#555] opacity-10'></div>
-                </div>
-              </motion.div>
-
-              <motion.div
-                className='flex flex-col justify-center space-y-4'
-                initial={{ opacity: 0, x: 40 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6, delay: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
-                viewport={{ once: true }}>
-                <div className='border-3 border-[var(--border-card)] bg-[var(--bg-card)] p-5 shadow-[4px_4px_0_var(--shadow-card)] transition-colors duration-300'>
-                  <p className='text-[9px] leading-relaxed text-[var(--text-body)] md:text-[11px] md:leading-loose'>
-                    Hello! I am <span className='font-bold text-[#f5a524]'>Satang</span>, a passionate Full Stack
-                    Developer with a deep love for creating digital experiences.
-                    <br />
-                    <br />I specialize in bridging the gap between elegant frontend interfaces and robust backend
-                    architectures. When I&#39;m not coding, you can find me exploring new technologies or enjoying
-                    vintage pixel art games.
-                  </p>
-                </div>
-                <div className='flex gap-3'>
-                  <Button
-                    variant='pixel'
-                    size='pixel'
-                    onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
-                    className='pixel-btn flex-1 py-3 text-center text-[9px] md:text-[11px]'>
-                    VIEW WORK
-                  </Button>
-                  <Button
-                    variant='pixel'
-                    size='pixel'
-                    onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-                    className='pixel-btn flex-1 py-3 text-center text-[9px] text-[var(--text-body)] md:text-[11px]'>
-                    RESUME
-                  </Button>
-                </div>
-              </motion.div>
-            </div>
-          </motion.section>
-
-          {/* Skills Section — Tag based */}
-          <motion.section
-            id='skills'
-            className='mb-20'
-            initial={{ opacity: 0, y: 60 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
-            viewport={{ once: true, margin: '-80px' }}>
-            <div className='mb-8 flex items-center justify-center gap-3'>
-              <div className='h-1 w-10 bg-[#98c379]'></div>
-              <h2 className='text-xl font-bold tracking-widest text-[var(--text-heading)] drop-shadow-[2px_2px_0_var(--shadow-text)] md:text-2xl'>
-                SKILLS
-              </h2>
-              <div className='h-1 w-10 bg-[#98c379]'></div>
-            </div>
-
-            <div className='space-y-5'>
-              {/* Front-End */}
-              <motion.div
-                className='border-3 border-[var(--border-card)] bg-[var(--bg-card)] p-4 shadow-[4px_4px_0_var(--shadow-card)] transition-colors duration-300'
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.1 }}
-                viewport={{ once: true }}>
-                <h3 className='mb-3 text-[11px] font-bold text-[#98c379] drop-shadow-[1px_1px_0_var(--shadow-text)] md:text-[13px]'>
-                  FRONT-END
-                </h3>
-                <div className='flex flex-wrap gap-2'>
-                  {['HTML', 'CSS', 'JavaScript', 'React.js', 'Next.js', 'Bootstrap', 'Tailwind', 'SASS', 'Redux'].map(
-                    s => (
-                      <span
-                        key={s}
-                        className='border-2 border-[#98c379]/40 bg-[#98c379]/10 px-2.5 py-1 text-[8px] text-[#98c379] transition-colors hover:bg-[#98c379]/20 md:text-[9px]'>
-                        {s}
-                      </span>
-                    )
-                  )}
-                </div>
-              </motion.div>
-
-              {/* Back-End */}
-              <motion.div
-                className='border-3 border-[var(--border-card)] bg-[var(--bg-card)] p-4 shadow-[4px_4px_0_var(--shadow-card)] transition-colors duration-300'
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.15 }}
-                viewport={{ once: true }}>
-                <h3 className='mb-3 text-[11px] font-bold text-[#e06c75] drop-shadow-[1px_1px_0_var(--shadow-text)] md:text-[13px]'>
-                  BACK-END
-                </h3>
-                <div className='flex flex-wrap gap-2'>
-                  {['Node.js', 'Express.js', '.Net', 'C#', 'MVC', 'Rest-API'].map(s => (
-                    <span
-                      key={s}
-                      className='border-2 border-[#e06c75]/40 bg-[#e06c75]/10 px-2.5 py-1 text-[8px] text-[#e06c75] transition-colors hover:bg-[#e06c75]/20 md:text-[9px]'>
-                      {s}
-                    </span>
-                  ))}
-                </div>
-              </motion.div>
-
-              {/* Database */}
-              <motion.div
-                className='border-3 border-[var(--border-card)] bg-[var(--bg-card)] p-4 shadow-[4px_4px_0_var(--shadow-card)] transition-colors duration-300'
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.2 }}
-                viewport={{ once: true }}>
-                <h3 className='mb-3 text-[11px] font-bold text-[#61afef] drop-shadow-[1px_1px_0_var(--shadow-text)] md:text-[13px]'>
-                  DATABASE
-                </h3>
-                <div className='flex flex-wrap gap-2'>
-                  {['MongoDB', 'MySQL', 'PostgreSQL', 'Firebase', 'Redis'].map(s => (
-                    <span
-                      key={s}
-                      className='border-2 border-[#61afef]/40 bg-[#61afef]/10 px-2.5 py-1 text-[8px] text-[#61afef] transition-colors hover:bg-[#61afef]/20 md:text-[9px]'>
-                      {s}
-                    </span>
-                  ))}
-                </div>
-              </motion.div>
-
-              {/* Version Control */}
-              <motion.div
-                className='border-3 border-[var(--border-card)] bg-[var(--bg-card)] p-4 shadow-[4px_4px_0_var(--shadow-card)] transition-colors duration-300'
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.25 }}
-                viewport={{ once: true }}>
-                <h3 className='mb-3 text-[11px] font-bold text-[#c678dd] drop-shadow-[1px_1px_0_var(--shadow-text)] md:text-[13px]'>
-                  VERSION CONTROL
-                </h3>
-                <div className='flex flex-wrap gap-2'>
-                  {['Git', 'GitHub', 'GitLab'].map(s => (
-                    <span
-                      key={s}
-                      className='border-2 border-[#c678dd]/40 bg-[#c678dd]/10 px-2.5 py-1 text-[8px] text-[#c678dd] transition-colors hover:bg-[#c678dd]/20 md:text-[9px]'>
-                      {s}
-                    </span>
-                  ))}
-                </div>
-              </motion.div>
-
-              {/* DevOps & Security */}
-              <motion.div
-                className='grid gap-5 sm:grid-cols-2'
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.3 }}
-                viewport={{ once: true }}>
-                <div className='border-3 border-[var(--border-card)] bg-[var(--bg-card)] p-4 shadow-[4px_4px_0_var(--shadow-card)] transition-colors duration-300'>
-                  <h3 className='mb-3 text-[11px] font-bold text-[#f5a524] drop-shadow-[1px_1px_0_var(--shadow-text)] md:text-[13px]'>
-                    DEVOPS
-                  </h3>
-                  <div className='flex flex-wrap gap-2'>
-                    {['CI/CD', 'Docker'].map(s => (
-                      <span
-                        key={s}
-                        className='border-2 border-[#f5a524]/40 bg-[#f5a524]/10 px-2.5 py-1 text-[8px] text-[#f5a524] transition-colors hover:bg-[#f5a524]/20 md:text-[9px]'>
-                        {s}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-                <div className='border-3 border-[var(--border-card)] bg-[var(--bg-card)] p-4 shadow-[4px_4px_0_var(--shadow-card)] transition-colors duration-300'>
-                  <h3 className='mb-3 text-[11px] font-bold text-[#e5c07b] drop-shadow-[1px_1px_0_var(--shadow-text)] md:text-[13px]'>
-                    SECURITY
-                  </h3>
-                  <div className='flex flex-wrap gap-2'>
-                    {['OWASP Standards'].map(s => (
-                      <span
-                        key={s}
-                        className='border-2 border-[#e5c07b]/40 bg-[#e5c07b]/10 px-2.5 py-1 text-[8px] text-[#e5c07b] transition-colors hover:bg-[#e5c07b]/20 md:text-[9px]'>
-                        {s}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </motion.div>
-
-              {/* Other Tools */}
-              <motion.div
-                className='border-3 border-[var(--border-card)] bg-[var(--bg-card)] p-4 shadow-[4px_4px_0_var(--shadow-card)] transition-colors duration-300'
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.35 }}
-                viewport={{ once: true }}>
-                <h3 className='mb-3 text-[11px] font-bold text-[#56b6c2] drop-shadow-[1px_1px_0_var(--shadow-text)] md:text-[13px]'>
-                  OTHER TOOLS & TECHNOLOGIES
-                </h3>
-                <div className='flex flex-wrap gap-2'>
-                  {[
-                    'Swagger',
-                    'Socket.io',
-                    'Unit Testing (Playwright)',
-                    'Responsive Design',
-                    'Fusion Auth',
-                    'Minio',
-                    'Fast Report',
-                    'GraphQL'
-                  ].map(s => (
-                    <span
-                      key={s}
-                      className='border-2 border-[#56b6c2]/40 bg-[#56b6c2]/10 px-2.5 py-1 text-[8px] text-[#56b6c2] transition-colors hover:bg-[#56b6c2]/20 md:text-[9px]'>
-                      {s}
-                    </span>
-                  ))}
-                </div>
-              </motion.div>
-            </div>
-          </motion.section>
-
-          {/* Projects Section */}
-          <motion.section
-            id='projects'
-            className='mb-20'
-            initial={{ opacity: 0, y: 60 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
-            viewport={{ once: true, margin: '-80px' }}>
-            <div className='mb-8 flex items-center justify-center gap-3'>
-              <div className='h-1 w-10 bg-[#e06c75]'></div>
-              <h2 className='text-xl font-bold tracking-widest text-[var(--text-heading)] drop-shadow-[2px_2px_0_var(--shadow-text)] md:text-2xl'>
-                PROJECTS
-              </h2>
-              <div className='h-1 w-10 bg-[#e06c75]'></div>
-            </div>
-
-            <div className='grid gap-6 md:grid-cols-2'>
-              {/* Project 1 */}
-              <motion.div
-                className='group border-3 border-[var(--border-card)] bg-[var(--bg-card)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[8px_8px_0_var(--shadow-card)]'
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.1 }}
-                viewport={{ once: true }}>
-                <div className='relative aspect-video w-full overflow-hidden border-b-3 border-[var(--border-card)] bg-[var(--bg-preview)]'>
-                  <div className='absolute inset-0 flex items-center justify-center'>
-                    <span className='font-["Silkscreen"] text-3xl text-[var(--text-muted)] opacity-40'>E-COMMERCE</span>
-                  </div>
-                </div>
-                <div className='p-4'>
-                  <h3 className='mb-1.5 text-base font-bold text-[#e06c75]'>PIXEL STORE</h3>
-                  <p className='mb-4 text-[9px] leading-relaxed text-[var(--text-muted)] md:text-[10px]'>
-                    A full-stack e-commerce platform built with Next.js, Stripe, and PostgreSQL.
-                  </p>
-                  <div className='mb-4 flex flex-wrap gap-1.5'>
-                    <span className='border border-[#98c379]/40 bg-[#98c379]/10 px-2 py-0.5 text-[7px] text-[#98c379]'>
-                      NEXT.JS
-                    </span>
-                    <span className='border border-[#e06c75]/40 bg-[#e06c75]/10 px-2 py-0.5 text-[7px] text-[#e06c75]'>
-                      STRIPE
-                    </span>
-                    <span className='border border-[#61afef]/40 bg-[#61afef]/10 px-2 py-0.5 text-[7px] text-[#61afef]'>
-                      POSTGRES
-                    </span>
-                  </div>
-                  <a
-                    href='#'
-                    className='inline-block border-b border-[var(--border-card)] pb-0.5 text-[9px] text-[var(--text-muted)] hover:border-[#e06c75] hover:text-[#e06c75]'>
-                    VIEW SOURCE -{`>`}
-                  </a>
-                </div>
-              </motion.div>
-
-              {/* Project 2 */}
-              <motion.div
-                className='group border-3 border-[var(--border-card)] bg-[var(--bg-card)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[8px_8px_0_var(--shadow-card)]'
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.2 }}
-                viewport={{ once: true }}>
-                <div className='relative aspect-video w-full overflow-hidden border-b-3 border-[var(--border-card)] bg-[var(--bg-preview)]'>
-                  <div className='absolute inset-0 flex items-center justify-center'>
-                    <span className='font-["Silkscreen"] text-3xl text-[var(--text-muted)] opacity-40'>DASHBOARD</span>
-                  </div>
-                </div>
-                <div className='p-4'>
-                  <h3 className='mb-1.5 text-base font-bold text-[#61afef]'>ANALYTICS HUB</h3>
-                  <p className='mb-4 text-[9px] leading-relaxed text-[var(--text-muted)] md:text-[10px]'>
-                    Real-time analytics dashboard utilizing WebSockets and Redis caching.
-                  </p>
-                  <div className='mb-4 flex flex-wrap gap-1.5'>
-                    <span className='border border-[#98c379]/40 bg-[#98c379]/10 px-2 py-0.5 text-[7px] text-[#98c379]'>
-                      REACT
-                    </span>
-                    <span className='border border-[#f5a524]/40 bg-[#f5a524]/10 px-2 py-0.5 text-[7px] text-[#f5a524]'>
-                      WEBSOCKETS
-                    </span>
-                    <span className='border border-[#61afef]/40 bg-[#61afef]/10 px-2 py-0.5 text-[7px] text-[#61afef]'>
-                      REDIS
-                    </span>
-                  </div>
-                  <a
-                    href='#'
-                    className='inline-block border-b border-[var(--border-card)] pb-0.5 text-[9px] text-[var(--text-muted)] hover:border-[#61afef] hover:text-[#61afef]'>
-                    VIEW SOURCE -{`>`}
-                  </a>
-                </div>
-              </motion.div>
-            </div>
-          </motion.section>
-        </div>
-
-        <div className='h-1.5 bg-gradient-to-r from-[#61afef] via-[#c678dd] to-[#e06c75]' />
-
-        {/* Footer / Contact */}
-        <footer
-          id='contact'
-          className='bg-[var(--bg-footer)] pt-14 pb-8 text-center text-[var(--text-heading)] transition-colors duration-300'>
-          <h2 className="mb-8 font-['Press_Start_2P'] text-lg drop-shadow-[3px_3px_0_var(--shadow-text)] md:text-2xl">
-            CONTACT ME
+      {/* SELECTED WORK: six pieces, the rest one click away */}
+      <section id='work' className='container-page scroll-mt-24 pb-24'>
+        <div className='mb-8 flex flex-wrap items-end justify-between gap-4'>
+          <h2 className='display text-[clamp(32px,4vw,56px)]'>
+            {t('common.home.work-before', 'Selected')}{' '}
+            <span className='accent-serif'>{t('common.home.work-accent', 'work')}</span>
           </h2>
-          <div className='mb-10 flex justify-center gap-4'>
-            <Button
-              variant='pixel'
-              size='pixel'
-              className='pixel-btn border-2 border-[var(--border-card-inner)] text-[12px] hover:-translate-y-1 hover:shadow-lg'>
-              <svg
-                className='pixel-icon'
-                width='18'
-                height='13'
-                viewBox='0 0 10 7'
-                style={{ shapeRendering: 'crispEdges', fillRule: 'evenodd' }}>
-                <rect x='1' y='0' width='8' height='7' fill='#222635' />
-                <rect x='0' y='1' width='10' height='5' fill='#222635' />
-                <rect x='1' y='1' width='8' height='5' fill='#ffffff' />
-                <rect x='1' y='1' width='1' height='1' fill='#222635' />
-                <rect x='2' y='2' width='1' height='1' fill='#222635' />
-                <rect x='3' y='3' width='1' height='1' fill='#222635' />
-                <rect x='4' y='4' width='2' height='1' fill='#222635' />
-                <rect x='6' y='3' width='1' height='1' fill='#222635' />
-                <rect x='7' y='2' width='1' height='1' fill='#222635' />
-                <rect x='8' y='1' width='1' height='1' fill='#222635' />
-                <rect x='1' y='5' width='1' height='1' fill='#222635' />
-                <rect x='2' y='4' width='1' height='1' fill='#222635' />
-                <rect x='8' y='5' width='1' height='1' fill='#222635' />
-                <rect x='7' y='4' width='1' height='1' fill='#222635' />
-              </svg>
-              SEND EMAIL
-            </Button>
-          </div>
-          <p className="font-['Press_Start_2P'] text-[8px] text-[var(--text-footer)]">
-            © {new Date().getFullYear()} SATANG. ALL RIGHTS RESERVED.
-          </p>
-        </footer>
-      </div>
-    </div>
+          <Link href='/work' className='link-draw inline-flex items-center gap-2 pb-0.5 text-sm text-soft'>
+            {t('common.home.all-work', 'All {count} projects', { count: allWork })}
+            <Icon icon={appIcons.arrowRight} className='size-4' aria-hidden='true' />
+          </Link>
+        </div>
+        <WorkGrid
+          lang={lang}
+          items={buildWorkItems(lang, t, { featured: true })}
+          more={{
+            href: '/work',
+            count: allWork,
+            previews: buildWorkItems(lang, t)
+              .filter(item => !featuredKeys.has(item.key) && item.visual.kind === 'image')
+              .slice(0, 4)
+              .map(item => (item.visual.kind === 'image' ? { src: item.visual.src, alt: item.title } : null))
+              .filter((preview): preview is { src: string; alt: string } => preview !== null),
+            title: t('common.home.more-title', 'See all projects'),
+            line: t(
+              'common.home.more-line',
+              'Products, client systems for government and universities, and AI experiments — filterable.'
+            )
+          }}
+        />
+      </section>
+
+      {/* HOW I CAN HELP: for clients and teams hiring */}
+      <section id='services' className='container-page scroll-mt-24 pb-28'>
+        <div className='grid gap-4 rounded-[2rem] border border-line bg-card/50 p-6 sm:p-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-10'>
+          <Reveal className='flex flex-col justify-between gap-6'>
+            <div className='flex flex-col gap-3'>
+              <span className='eyebrow text-primary'>{t('common.home.help-eyebrow', 'How I can help')}</span>
+              <h2 className='text-[clamp(26px,2.6vw,38px)] leading-[1.15] font-semibold tracking-[-0.02em]'>
+                {t('common.home.help-title', 'Hiring, or have a project? Here’s what I’m good at.')}
+              </h2>
+            </div>
+            <div className='flex flex-wrap gap-3'>
+              <a
+                href='#contact'
+                className='inline-flex min-h-12 items-center rounded-full bg-primary px-6 font-semibold text-primary-foreground transition-transform active:scale-95'>
+                {t('common.nav.talk', 'Let’s talk')}
+              </a>
+              <Link
+                href='/about'
+                className='inline-flex min-h-12 items-center rounded-full border border-line-strong px-6 transition-colors hover:border-foreground'>
+                {t('common.home.more-about', 'More about me')}
+              </Link>
+            </div>
+          </Reveal>
+          <ul className='grid gap-3 sm:grid-cols-3 lg:grid-cols-1'>
+            {services.map((service, index) => (
+              <Reveal
+                as='li'
+                key={index}
+                delay={index * 0.05}
+                className='flex gap-4 rounded-2xl border border-line p-5 transition-[transform,border-color] duration-500 ease-out-expo hover:-translate-y-0.5 hover:border-line-strong'>
+                <span className='font-mono text-sm text-primary'>{String(index + 1).padStart(2, '0')}</span>
+                <span className='flex flex-col gap-1'>
+                  <span className='font-semibold'>{tr(service.title, lang)}</span>
+                  <span className='text-sm leading-relaxed text-muted-foreground'>{tr(service.body, lang)}</span>
+                </span>
+              </Reveal>
+            ))}
+          </ul>
+        </div>
+      </section>
+    </>
   )
 }
