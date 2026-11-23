@@ -360,14 +360,6 @@ export const galleries: Record<string, ImageMedia[]> = {
       height: 846,
       alt: { en: 'Home page on a phone' },
       frame: 'phone'
-    },
-    {
-      kind: 'image',
-      src: '/work/cmu-journal/g/mobile-figure.webp',
-      width: 390,
-      height: 844,
-      alt: { en: 'Figure viewer on a phone' },
-      frame: 'phone'
     }
   ],
   'cmu-research-gallery': [
