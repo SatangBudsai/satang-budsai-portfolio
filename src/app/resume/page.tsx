@@ -126,7 +126,7 @@ export default function Resume() {
               <p className='text-[15px] leading-relaxed text-soft print:text-[11px] print:leading-snug'>
                 {t(
                   'common.resume.summary-body',
-                  'Senior Software Engineer at Chanwanich Company Limited, a Thai software house building government systems for the Eastern Economic Corridor. Full-stack in .NET, Next.js and Flutter: I bootstrapped five e-Customs microservices, wrote most of its payment service and set the locking and AI-agent patterns my team of about ten now follows; before that I built the EEC ID identity app (97% of commits). Outside working hours: freelance systems and open-source developer tools.'
+                  'Senior Software Engineer at Chanwanich Company Limited, a Thai software house building government systems for the Eastern Economic Corridor. Full-stack in .NET, Next.js and Flutter: I set up five e-Customs services and the team’s locking and AI-agent standards, and built most of EEC ID — app, document signing, identity and scheduling. Outside work: solo university systems and open-source developer tools.'
                 )}
               </p>
             </Section>

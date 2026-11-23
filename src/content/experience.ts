@@ -74,21 +74,24 @@ export const roles: Role[] = [
     kind: { en: 'Full-time · web and mobile' },
     icon: 'compass',
     summary: {
-      en: 'Built web and mobile systems in React/Next.js, Flutter and .NET — from an airport website to a government identity app.'
+      en: 'Built web and mobile systems in React/Next.js, Flutter and .NET — across the EEC ID microservices (mobile app, document signing, identity, scheduling) and an airport website.'
     },
     highlights: [
       {
         en: 'Built the EEC ID Flutter app (97% of commits) and its .NET backend (92%), letting workers verify their identity on a phone instead of at an office — ePassport chip reading, face match and sign-in for partner apps; signed off in SIT and UAT, ahead of launch.'
       },
       {
-        en: 'Got one-tap sign-in from partner apps working on iPhone, where cookies don’t carry across apps — tested 7 approaches before choosing one.'
+        en: 'Built EEC ID’s document-signing service (.NET 8): visa, work-permit, immigration and NIA documents from Word templates to signed PDFs, one generator for all types.'
+      },
+      {
+        en: 'Extended the ZITADEL sign-in with custom OIDC endpoints and TOTP 2FA, made one-tap partner sign-in work on iPhone, and started the Hangfire service for visa-review SLA alerts.'
       },
       {
         en: 'Built the Suvarnabhumi Airport Gate website (Next.js, .NET) and set up its FastReport export reports as a pattern the team followed.'
       }
     ],
     projects: ['eec-id', 'suvarnabhumi-airport-gate'],
-    stack: ['Flutter', 'React', 'Next.js', '.NET / C#', 'PostgreSQL', 'FastReport']
+    stack: ['Flutter', '.NET / C#', 'Next.js', 'ZITADEL / OIDC', 'Hangfire', 'PostgreSQL', 'FastReport']
   },
   {
     id: 'freelance',
@@ -101,23 +104,20 @@ export const roles: Role[] = [
     current: true,
     side: true,
     summary: {
-      en: 'Web platforms, legacy data migrations, exam and training systems and a mobile reading app — delivered end to end, from database design to production.'
+      en: 'Solo builds for universities and companies — research portals, a journal platform, exam and training systems, a reading app — from database design to production.'
     },
     highlights: [
       {
-        en: 'Moved a university research journal to a new platform with nothing lost — 1,014 articles, checked by 25 integrity tests — live since Nov 2026.'
+        en: 'Sole developer of a university research-office portal and researcher directory (NestJS, Prisma/PostgreSQL, two Next.js 16 sites): 68 schema migrations, full legacy import, PDPA consent and ORCID onboarding, ~780 automated tests.'
       },
       {
-        en: 'Made the journal’s article list load in about 0.1 s instead of 41 s by loading only what’s on screen (measured on a local production build).'
+        en: 'Rebuilt a university research journal alone: 1,014 articles moved with nothing lost (25 integrity checks), SSO with rotating refresh tokens and RBAC, ~210 tests including security E2E; article list 41 s → ~0.1 s.'
       },
       {
         en: 'Load-tested an exam platform with k6 before launch: 0% errors at 600 concurrent users and a breaking point at 800, reported to the client before exam day.'
       },
       {
-        en: 'Simplified a research database from 90 to 72 tables, with every foreign key indexed.'
-      },
-      {
-        en: 'Built most of the ReadItGo e-book app: word-by-word read-aloud and offline reading.'
+        en: 'Built most of an English e-book reader (word-by-word read-aloud, offline reading) and a course marketplace front end; moved pronunciation scoring to on-device Whisper.'
       }
     ],
     projects: ['cmu-journal', 'cmu-research-gallery', 'ora-cmu', 'junior-bootcamp', 'readitgo'],
@@ -134,14 +134,17 @@ export const roles: Role[] = [
     current: true,
     side: true,
     summary: {
-      en: 'Build and maintain open-source developer tools I use every day.'
+      en: 'Build and maintain open-source developer tools I use every day, directing AI coding agents under written rules and reviewing what they write.'
     },
     highlights: [
       {
-        en: 'Qorstack Report: a Word/Excel-to-PDF document API with SDKs on NuGet and npm; renders certificates in a government e-service (43 GitHub stars).'
+        en: 'Qorstack Report: self-hostable Word/Excel-to-PDF API (.NET, Next.js, PostgreSQL, S3), v2.0–2.4, SDKs on NuGet and npm and an MCP server; renders certificates in a government e-service.'
       },
       {
-        en: 'Git Control for Orca: PRs/MRs and pipelines for GitHub, GitLab and Bitbucket; checking changes about a third faster (162 → ~106 ms); outside pull requests merged.'
+        en: 'Git Control for Orca: a Git client on Orca’s plugin marketplace — PRs/MRs and pipelines for GitHub, GitLab and Bitbucket, 22 integration suites; merged outside pull requests, including an XSS fix.'
+      },
+      {
+        en: 'ScanHub: one container that runs seven security scanners, diffs each scan against the last and gates CI.'
       },
       {
         en: 'Clipath: a Rust/Tauri capture tool for Windows; cut my own first build’s idle memory from 506 MB to 28 MB.'
