@@ -472,8 +472,8 @@ export default function CoverArt({
     <div className={cn('overflow-hidden rounded-2xl border border-line', className)}>
       <svg
         viewBox='0 0 1600 1000'
-        role='img'
-        aria-label={label}
+        // Decorative when there's no label (e.g. a thumbnail next to the project title): hide it instead of an unnamed image.
+        {...(label ? { role: 'img', 'aria-label': label } : { 'aria-hidden': true })}
         preserveAspectRatio={fill ? 'xMidYMid slice' : undefined}
         className={fill ? 'block h-full w-full' : 'block h-auto w-full'}>
         <Art />
