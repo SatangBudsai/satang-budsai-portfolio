@@ -53,8 +53,24 @@ export default function HeroSprite({
   const [paused, setPaused] = useState(false)
   const [visible, setVisible] = useState(true)
   const [idle, setIdle] = useState(false)
-  const running = !paused && visible && !idle
+  // Start moving only once the page has loaded and gone idle, so the animation never competes with first paint.
+  const [ready, setReady] = useState(false)
+  const running = ready && !paused && visible && !idle
   const text = useTypewriter(lines, sectionLines, running)
+
+  useEffect(() => {
+    let cancelled = false
+    const start = () => {
+      const idleCallback = window.requestIdleCallback ?? ((fn: () => void) => window.setTimeout(fn, 300))
+      idleCallback(() => !cancelled && setReady(true))
+    }
+    if (document.readyState === 'complete') start()
+    else window.addEventListener('load', start, { once: true })
+    return () => {
+      cancelled = true
+      window.removeEventListener('load', start)
+    }
+  }, [])
 
   // Rest after 30 seconds without the pointer moving; wake on the next movement.
   useEffect(() => {
@@ -178,7 +194,7 @@ export default function HeroSprite({
 
 /** Types each line, holds it, then moves on; jumps to a section's line when one is announced. */
 function useTypewriter(lines: string[], sectionLines: Record<string, string> | undefined, running: boolean) {
-  const [state, setState] = useState({ text: lines[0] ?? '', next: 1, chars: 0 })
+  const [state, setState] = useState({ text: lines[0] ?? '', next: 1, chars: Array.from(lines[0] ?? '').length })
 
   useEffect(() => {
     if (!sectionLines) return

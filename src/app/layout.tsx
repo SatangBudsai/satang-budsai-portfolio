@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from 'next'
 import { Caveat, Inter_Tight, Instrument_Serif, JetBrains_Mono, Pixelify_Sans, Silkscreen } from 'next/font/google'
-import { getTolgee } from '@/tolgee/server'
 import { getI18n } from '@/lib/lang'
 import { KEYWORDS, SITE_DESCRIPTION, SITE_TITLE, SITE_URL } from '@/lib/seo'
 import { profile } from '@/content/site'
@@ -10,17 +9,29 @@ import { EasterEggs } from '@/components/site/playful'
 import Providers from './providers'
 import '@/styles/globals.css'
 
-const interTight = Inter_Tight({ subsets: ['latin', 'latin-ext'], variable: '--font-inter-tight', display: 'swap' })
+const interTight = Inter_Tight({ subsets: ['latin'], variable: '--font-inter-tight', display: 'swap' })
 const instrumentSerif = Instrument_Serif({
   subsets: ['latin'],
   weight: '400',
   style: ['normal', 'italic'],
   variable: '--font-instrument-serif',
-  display: 'swap'
+  display: 'swap',
+  preload: false
 })
-const jetbrainsMono = JetBrains_Mono({ subsets: ['latin'], variable: '--font-jetbrains-mono', display: 'swap' })
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ['latin'],
+  variable: '--font-jetbrains-mono',
+  display: 'swap',
+  preload: false
+})
 // Handwritten notes.
-const caveat = Caveat({ subsets: ['latin'], weight: ['500', '700'], variable: '--font-caveat', display: 'swap' })
+const caveat = Caveat({
+  subsets: ['latin'],
+  weight: ['500', '700'],
+  variable: '--font-caveat',
+  display: 'swap',
+  preload: false
+})
 // Pixel UI text (speech bubbles, item labels).
 const silkscreen = Silkscreen({ subsets: ['latin'], weight: '400', variable: '--font-silkscreen', display: 'swap' })
 // Headings in the "Pixel" style.
@@ -69,8 +80,6 @@ export const viewport: Viewport = {
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const { lang, t } = await getI18n()
-  const tolgee = await getTolgee()
-  const staticData = await tolgee.loadRequired()
 
   const nav = {
     work: t('common.nav.work', 'Work'),
@@ -100,7 +109,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           className='sr-only z-[100] rounded-full bg-primary px-5 py-3 font-medium text-primary-foreground focus:not-sr-only focus:fixed focus:top-4 focus:left-4'>
           {t('common.nav.skip', 'Skip to content')}
         </a>
-        <Providers language={lang} staticData={staticData}>
+        <Providers>
           <SiteHeader labels={nav} lang={lang} />
           <main id='main'>{children}</main>
           <SiteFooter />

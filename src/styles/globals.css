@@ -603,17 +603,18 @@
   text-transform: none;
 }
 
-/* Heatmap cells fade in once, column by column; no per-cell JS animation. */
+/* Page fade (see src/app/template.tsx). Starts from 0.01, not 0, so the hero still counts as painted for LCP. */
 @media (prefers-reduced-motion: no-preference) {
-  .heat-cell {
-    animation: heat-in 0.35s ease-out both;
-    animation-delay: calc(0.3s + var(--w, 0) * 12ms);
+  .page-fade {
+    animation: page-fade 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
   }
 }
 
-@keyframes heat-in {
+@keyframes page-fade {
   from {
-    opacity: 0;
-    scale: 0.4;
+    opacity: 0.01;
+  }
+  to {
+    opacity: 1;
   }
 }

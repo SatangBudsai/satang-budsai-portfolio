@@ -150,7 +150,7 @@ export default function ActivityCard({
   ]
 
   return (
-    <div className='rounded-[1.75rem] border border-line bg-card/80 p-5 shadow-[0_30px_80px_rgba(0,0,0,0.45)] backdrop-blur-sm sm:p-6'>
+    <div className='rounded-[1.75rem] border border-line bg-card p-5 shadow-[0_30px_80px_rgba(0,0,0,0.45)] sm:p-6'>
       <div className='flex flex-wrap items-center justify-between gap-3'>
         <span className='font-mono text-xs tracking-[0.08em] text-muted-foreground uppercase'>{labels.period}</span>
       </div>

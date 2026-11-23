@@ -1,16 +1,10 @@
-'use client'
-
-import { motion } from 'motion/react'
 import type { ReactNode } from 'react'
 
-/** A soft fade between pages. Opacity only: a transform here would trap fixed-position elements. */
+/**
+ * A soft fade between pages, done in CSS (`.page-fade` in globals.css) so it starts with the
+ * server HTML. A JS-driven fade kept every page invisible until hydration and pushed LCP to ~5 s
+ * on mobile. Opacity only: a transform here would trap fixed-position elements.
+ */
 export default function Template({ children }: { children: ReactNode }) {
-  return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}>
-      {children}
-    </motion.div>
-  )
+  return <div className='page-fade'>{children}</div>
 }

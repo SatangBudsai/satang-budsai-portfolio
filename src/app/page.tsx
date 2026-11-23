@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import { preload } from 'react-dom'
 import Link from 'next/link'
 
 import ActivityCard from '@/components/site/activity-card'
@@ -30,6 +31,8 @@ import type { AppTranslate } from '@/tolgee/translate'
  */
 export default async function Home() {
   const { lang, t } = await getI18n()
+  // The sprite sheet is the largest thing on first paint; fetch it with the HTML.
+  preload('/pixel/hero-typing.webp', { as: 'image', fetchPriority: 'high' })
   const projects = selectedProjects()
   const sections = [
     { id: 'about', label: t('common.cv.about', 'About') },
@@ -73,7 +76,7 @@ export default async function Home() {
             <div className='hero-card overflow-hidden rounded-3xl border border-line'>
               <div className='hero-stage px-5 pt-5 pb-7 sm:px-6'>
                 <HeroSprite
-                  sheet='/pixel/hero-typing.png'
+                  sheet='/pixel/hero-typing.webp'
                   frames={6}
                   cellWidth={64}
                   cellHeight={72}
