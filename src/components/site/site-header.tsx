@@ -1,6 +1,5 @@
 'use client'
 
-import { AnimatePresence, motion, useMotionValueEvent, useReducedMotion, useScroll } from 'motion/react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
@@ -36,12 +35,8 @@ function BrandMark({ className }: { className?: string }) {
   )
 }
 
-const easeInOut = [0.76, 0, 0.24, 1] as const
-
 export default function SiteHeader({ labels }: { labels: Labels; lang: Lang }) {
   const pathname = usePathname()
-  const reduced = useReducedMotion()
-  const { scrollY } = useScroll()
   const [hidden, setHidden] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   // The menu remembers the path it was opened on, so navigating closes it.
@@ -52,11 +47,27 @@ export default function SiteHeader({ labels }: { labels: Labels; lang: Lang }) {
   const menuButton = useRef<HTMLButtonElement>(null)
   const firstLink = useRef<HTMLAnchorElement>(null)
 
-  useMotionValueEvent(scrollY, 'change', current => {
-    const previous = scrollY.getPrevious() ?? 0
-    setScrolled(current > 24)
-    setHidden(current > 320 && current > previous)
-  })
+  // Hide on the way down, show on the way up; a plain scroll listener keeps this off the animation library.
+  useEffect(() => {
+    let previous = window.scrollY
+    let frame = 0
+    const update = () => {
+      frame = 0
+      const current = window.scrollY
+      setScrolled(current > 24)
+      setHidden(current > 320 && current > previous)
+      previous = current
+    }
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(update)
+    }
+    update()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => {
+      cancelAnimationFrame(frame)
+      window.removeEventListener('scroll', onScroll)
+    }
+  }, [])
 
   useEffect(() => {
     if (!open) return
@@ -86,15 +97,14 @@ export default function SiteHeader({ labels }: { labels: Labels; lang: Lang }) {
 
   return (
     <>
-      <motion.header
+      <header
         className={cn(
-          'fixed inset-x-0 top-0 z-50 border-b transition-[background-color,border-color,backdrop-filter] duration-500 print:hidden',
+          'fixed inset-x-0 top-0 z-50 border-b transition-[background-color,border-color,backdrop-filter,translate] duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] motion-reduce:translate-y-0 print:hidden',
           // On the home page the sidebar is the navigation on large screens.
           pathname === '/' && 'lg:hidden',
-          scrolled || open ? 'border-line bg-background/80 backdrop-blur-xl' : 'border-transparent'
-        )}
-        animate={{ y: hidden && !open && !reduced ? '-100%' : '0%' }}
-        transition={{ duration: 0.5, ease: easeInOut }}>
+          scrolled || open ? 'border-line bg-background/80 backdrop-blur-xl' : 'border-transparent',
+          hidden && !open ? '-translate-y-full' : 'translate-y-0'
+        )}>
         <div className='container-page flex h-[4.5rem] items-center justify-between gap-4'>
           <Link
             href='/'
@@ -138,45 +148,35 @@ export default function SiteHeader({ labels }: { labels: Labels; lang: Lang }) {
             </button>
           </div>
         </div>
-      </motion.header>
+      </header>
 
-      <AnimatePresence>
-        {open ? (
-          <motion.div
-            id='mobile-menu'
-            className='fixed inset-0 z-40 flex flex-col bg-background pt-[4.5rem] lg:hidden'
-            initial={{ clipPath: 'inset(0 0 100% 0)' }}
-            animate={{ clipPath: 'inset(0 0 0% 0)' }}
-            exit={reduced ? undefined : { clipPath: 'inset(0 0 100% 0)' }}
-            transition={{ duration: 0.7, ease: easeInOut }}>
-            <nav aria-label='Mobile' className='container-page flex flex-1 flex-col justify-center gap-2'>
-              {[{ href: '/', label: labels.home }, ...links].map((link, index) => (
-                <motion.div
-                  key={link.href}
-                  initial={{ y: 40, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ duration: 0.7, ease: easeInOut, delay: 0.15 + index * 0.05 }}>
-                  <Link
-                    ref={index === 0 ? firstLink : undefined}
-                    href={link.href}
-                    onClick={() => setOpen(false)}
-                    className='display block py-2 text-[clamp(44px,13vw,88px)]'>
-                    {link.label}
-                  </Link>
-                </motion.div>
-              ))}
-            </nav>
-            <div className='container-page flex flex-wrap items-center justify-between gap-4 border-t border-line py-6'>
-              <Link
-                href='/#contact'
-                onClick={() => setOpen(false)}
-                className='inline-flex min-h-12 items-center rounded-full bg-primary px-6 font-semibold text-primary-foreground'>
-                {labels.talk}
-              </Link>
-            </div>
-          </motion.div>
-        ) : null}
-      </AnimatePresence>
+      {open ? (
+        <div
+          id='mobile-menu'
+          className='menu-open fixed inset-0 z-40 flex flex-col bg-background pt-[4.5rem] lg:hidden'>
+          <nav aria-label='Mobile' className='container-page flex flex-1 flex-col justify-center gap-2'>
+            {[{ href: '/', label: labels.home }, ...links].map((link, index) => (
+              <div key={link.href} className='menu-link' style={{ '--i': index } as React.CSSProperties}>
+                <Link
+                  ref={index === 0 ? firstLink : undefined}
+                  href={link.href}
+                  onClick={() => setOpen(false)}
+                  className='display block py-2 text-[clamp(44px,13vw,88px)]'>
+                  {link.label}
+                </Link>
+              </div>
+            ))}
+          </nav>
+          <div className='container-page flex flex-wrap items-center justify-between gap-4 border-t border-line py-6'>
+            <Link
+              href='/#contact'
+              onClick={() => setOpen(false)}
+              className='inline-flex min-h-12 items-center rounded-full bg-primary px-6 font-semibold text-primary-foreground'>
+              {labels.talk}
+            </Link>
+          </div>
+        </div>
+      ) : null}
     </>
   )
 }

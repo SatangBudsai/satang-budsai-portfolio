@@ -1,13 +1,16 @@
 'use client'
 
-import { motion, useMotionValue, useReducedMotion, useSpring } from 'motion/react'
-import { useEffect, useState, type ReactNode } from 'react'
+import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from 'react'
 
 import { cn } from '@/lib/utils'
 
-const easeOutExpo = [0.16, 1, 0.3, 1] as const
+/*
+ * Small motion helpers without an animation library: they run on every page, so they
+ * stay out of the first-load JavaScript. (motion/react is still used by a few
+ * page-specific components.)
+ */
 
-/** Fades and lifts its children the first time they scroll into view. */
+/** Fades and lifts its children the first time they scroll into view (`.reveal` in globals.css). */
 export function Reveal({
   children,
   className,
@@ -21,15 +24,30 @@ export function Reveal({
   y?: number
   as?: 'div' | 'li' | 'section'
 }) {
-  // Same element on server and client; MotionConfig (reducedMotion='user') skips the lift.
-  const Component = motion[as]
+  const ref = useRef<HTMLDivElement>(null)
+  const [shown, setShown] = useState(false)
+  useEffect(() => {
+    const element = ref.current
+    if (!element) return
+    const observer = new IntersectionObserver(
+      entries => {
+        if (entries.some(entry => entry.isIntersecting)) {
+          setShown(true)
+          observer.disconnect()
+        }
+      },
+      { threshold: 0.15 }
+    )
+    observer.observe(element)
+    return () => observer.disconnect()
+  }, [])
+  const Component = as as 'div'
   return (
     <Component
-      className={className}
-      initial={{ opacity: 0, y }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.15 }}
-      transition={{ duration: 1, ease: easeOutExpo, delay }}>
+      ref={ref}
+      data-shown={shown || undefined}
+      className={cn('reveal', className)}
+      style={{ '--reveal-y': `${y}px`, '--reveal-delay': `${delay}s` } as CSSProperties}>
       {children}
     </Component>
   )
@@ -45,28 +63,28 @@ export function Magnetic({
   strength?: number
   className?: string
 }) {
-  const reduced = useReducedMotion()
-  const x = useMotionValue(0)
-  const y = useMotionValue(0)
-  const springX = useSpring(x, { stiffness: 180, damping: 15, mass: 0.4 })
-  const springY = useSpring(y, { stiffness: 180, damping: 15, mass: 0.4 })
-
+  const ref = useRef<HTMLSpanElement>(null)
+  const move = (x: number, y: number) => {
+    if (ref.current) ref.current.style.translate = `${x}px ${y}px`
+  }
   return (
-    <motion.span
-      className={cn('inline-flex', className)}
-      style={{ x: springX, y: springY }}
+    <span
+      ref={ref}
+      className={cn(
+        'inline-flex transition-[translate] duration-300 ease-out motion-reduce:transition-none',
+        className
+      )}
       onPointerMove={event => {
-        if (reduced || event.pointerType !== 'mouse') return
+        if (event.pointerType !== 'mouse' || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
         const rect = event.currentTarget.getBoundingClientRect()
-        x.set((event.clientX - rect.left - rect.width / 2) * strength)
-        y.set((event.clientY - rect.top - rect.height / 2) * strength)
+        move(
+          (event.clientX - rect.left - rect.width / 2) * strength,
+          (event.clientY - rect.top - rect.height / 2) * strength
+        )
       }}
-      onPointerLeave={() => {
-        x.set(0)
-        y.set(0)
-      }}>
+      onPointerLeave={() => move(0, 0)}>
       {children}
-    </motion.span>
+    </span>
   )
 }
 

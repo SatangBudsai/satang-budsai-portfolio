@@ -9,7 +9,7 @@ import { PixelItem } from './pixel'
 
 import CopyEmail from './copy-email'
 import { Magnetic, Reveal } from './motion'
-import { RotatingWord } from './playful'
+import { RotatingWord } from './rotating-word'
 
 export default async function SiteFooter() {
   const { t } = await getI18n()

@@ -5,7 +5,7 @@ import { KEYWORDS, SITE_DESCRIPTION, SITE_TITLE, SITE_URL } from '@/lib/seo'
 import { profile } from '@/content/site'
 import SiteHeader from '@/components/site/site-header'
 import SiteFooter from '@/components/site/site-footer'
-import { EasterEggs } from '@/components/site/playful'
+import { LazyEasterEggs } from '@/components/site/easter-eggs-lazy'
 import Providers from './providers'
 import '@/styles/globals.css'
 
@@ -113,7 +113,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <SiteHeader labels={nav} lang={lang} />
           <main id='main'>{children}</main>
           <SiteFooter />
-          <EasterEggs
+          <LazyEasterEggs
             consoleLines={[
               'Hello, fellow developer 👋',
               'This site: Next.js 16, Tailwind 4, Motion — source at https://github.com/SatangBudsai',

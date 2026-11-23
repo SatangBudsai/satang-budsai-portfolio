@@ -1,7 +1,5 @@
 'use client'
 
-import { MotionConfig } from 'motion/react'
-
 import { ThemeProvider } from '@/components/theme-provider'
 import NprogressProvider from '@/providers/nprogress'
 
@@ -12,9 +10,7 @@ import NprogressProvider from '@/providers/nprogress'
 export default function Providers({ children }: { children: React.ReactNode }) {
   return (
     <NprogressProvider>
-      <MotionConfig reducedMotion='user'>
-        <ThemeProvider>{children}</ThemeProvider>
-      </MotionConfig>
+      <ThemeProvider>{children}</ThemeProvider>
     </NprogressProvider>
   )
 }

@@ -49,6 +49,9 @@ export default function HeroSprite({
   className
 }: Props) {
   const ref = useRef<HTMLDivElement>(null)
+  const canvasRef = useRef<HTMLCanvasElement>(null)
+  const sheetRef = useRef<HTMLImageElement | null>(null)
+  const frameRef = useRef(0)
   const [direction, setDirection] = useState(SOUTH)
   const [paused, setPaused] = useState(false)
   const [visible, setVisible] = useState(true)
@@ -71,6 +74,44 @@ export default function HeroSprite({
       window.removeEventListener('load', start)
     }
   }, [])
+
+  // Load the sheet after first paint and draw the current frame; advance frames while running.
+  useEffect(() => {
+    const canvas = canvasRef.current
+    const context = canvas?.getContext('2d')
+    if (!canvas || !context) return
+    const draw = () => {
+      const image = sheetRef.current
+      if (!image) return
+      context.clearRect(0, 0, cellWidth, cellHeight)
+      context.drawImage(
+        image,
+        frameRef.current * cellWidth,
+        direction * cellHeight,
+        cellWidth,
+        cellHeight,
+        0,
+        0,
+        cellWidth,
+        cellHeight
+      )
+    }
+    if (!sheetRef.current) {
+      const image = new Image()
+      image.decoding = 'async'
+      image.src = sheet
+      image.onload = () => {
+        sheetRef.current = image
+        draw()
+      }
+    } else draw()
+    if (!running || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    const timer = window.setInterval(() => {
+      frameRef.current = (frameRef.current + 1) % frames
+      draw()
+    }, 700 / frames)
+    return () => window.clearInterval(timer)
+  }, [sheet, frames, cellWidth, cellHeight, direction, running])
 
   // Rest after 30 seconds without the pointer moving; wake on the next movement.
   useEffect(() => {
@@ -168,18 +209,17 @@ export default function HeroSprite({
             role='img'
             aria-label={alt}
             data-direction={DIRECTIONS[direction]}
-            className='pixel-sprite relative z-[1] w-full'
-            style={
-              {
-                aspectRatio: `${cellWidth} / ${cellHeight}`,
-                backgroundImage: `url(${sheet})`,
-                backgroundSize: `${frames * 100}% ${DIRECTIONS.length * 100}%`,
-                backgroundPositionY: `${(direction / (DIRECTIONS.length - 1)) * 100}%`,
-                animationPlayState: running ? 'running' : 'paused',
-                '--sprite-steps': frames
-              } as React.CSSProperties
-            }
-          />
+            className='relative z-[1] w-full'
+            style={{ aspectRatio: `${cellWidth} / ${cellHeight}` }}>
+            {/* Drawn on a canvas: a decorative sprite shouldn't be the page's LCP image. */}
+            <canvas
+              ref={canvasRef}
+              width={cellWidth}
+              height={cellHeight}
+              className='pixel-canvas block size-full'
+              aria-hidden='true'
+            />
+          </div>
           {/* The desk the laptop rests on. */}
           <span
             className='pixel-desk absolute -bottom-3 left-1/2 z-[2] h-4 w-[calc(100%+1rem)] -translate-x-1/2'

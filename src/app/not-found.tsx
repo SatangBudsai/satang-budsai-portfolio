@@ -1,6 +1,6 @@
 import Link from 'next/link'
 
-import { Doodle } from '@/components/site/playful'
+import { Doodle } from '@/components/site/doodle'
 import { PixelItem } from '@/components/site/pixel'
 import { getI18n } from '@/lib/lang'
 

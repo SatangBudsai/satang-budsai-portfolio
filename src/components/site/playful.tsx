@@ -1,6 +1,6 @@
 'use client'
 
-import { AnimatePresence, motion, useAnimationControls, useReducedMotion } from 'motion/react'
+import { motion, useAnimationControls, useReducedMotion } from 'motion/react'
 import { useEffect, useRef, useState, type ReactNode } from 'react'
 
 import { cn } from '@/lib/utils'
@@ -60,64 +60,6 @@ export function PlayfulName({ lines, className }: { lines: string[]; className?:
           ))}
         </span>
       ))}
-    </span>
-  )
-}
-
-/** A handwritten note with a doodled arrow, pointing at whatever sits below-left of it. */
-export function Doodle({
-  children,
-  className,
-  flip = false
-}: {
-  children: ReactNode
-  className?: string
-  flip?: boolean
-}) {
-  return (
-    <span
-      className={cn('inline-flex items-start gap-1 font-hand text-2xl leading-none text-primary', className)}
-      aria-hidden='true'>
-      <svg
-        viewBox='0 0 80 60'
-        className={cn('mt-3 h-10 w-14 shrink-0', flip && '-scale-x-100')}
-        fill='none'
-        stroke='currentColor'
-        strokeWidth='2.5'
-        strokeLinecap='round'>
-        <path className='doodle-draw' d='M74 6 C50 4 26 14 18 40' />
-        <path className='doodle-draw' d='M10 30 L18 42 L28 32' />
-      </svg>
-      <span className='rotate-[-3deg]'>{children}</span>
-    </span>
-  )
-}
-
-/** Cycles through words in place, e.g. "Let’s build [a back office]". */
-export function RotatingWord({ words, className }: { words: string[]; className?: string }) {
-  const reduced = useReducedMotion()
-  const [index, setIndex] = useState(0)
-  useEffect(() => {
-    if (reduced) return
-    const timer = window.setInterval(() => setIndex(value => (value + 1) % words.length), 2200)
-    return () => window.clearInterval(timer)
-  }, [reduced, words.length])
-
-  return (
-    <span className={cn('relative inline-grid', className)}>
-      <span className='sr-only'>{words[words.length - 1]}</span>
-      <AnimatePresence mode='popLayout' initial={false}>
-        <motion.span
-          key={words[index]}
-          aria-hidden='true'
-          className='col-start-1 row-start-1 inline-block'
-          initial={{ y: '60%', opacity: 0, rotate: -4 }}
-          animate={{ y: '0%', opacity: 1, rotate: 0 }}
-          exit={{ y: '-60%', opacity: 0, rotate: 4 }}
-          transition={{ duration: 0.6, ease: easeOutExpo }}>
-          {words[index]}
-        </motion.span>
-      </AnimatePresence>
     </span>
   )
 }

@@ -1,5 +1,4 @@
 import Image from 'next/image'
-import { preload } from 'react-dom'
 import Link from 'next/link'
 
 import ActivityCard from '@/components/site/activity-card'
@@ -31,8 +30,6 @@ import type { AppTranslate } from '@/tolgee/translate'
  */
 export default async function Home() {
   const { lang, t } = await getI18n()
-  // The sprite sheet is the largest thing on first paint; fetch it with the HTML.
-  preload('/pixel/hero-typing.webp', { as: 'image', fetchPriority: 'high' })
   const projects = selectedProjects()
   const sections = [
     { id: 'about', label: t('common.cv.about', 'About') },

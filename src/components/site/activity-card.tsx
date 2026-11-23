@@ -1,6 +1,5 @@
 'use client'
 
-import { motion, useReducedMotion } from 'motion/react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useMemo, useState, useSyncExternalStore } from 'react'
@@ -65,7 +64,6 @@ export default function ActivityCard({
     chart: string
   }
 }) {
-  const reduced = useReducedMotion()
   const [hover, setHover] = useState<string | null>(null)
   const touch = useSyncExternalStore(
     onChange => {
@@ -239,14 +237,11 @@ export default function ActivityCard({
       <div className='mt-3 flex h-20 items-end gap-1.5 sm:gap-2' aria-hidden='true'>
         {months.map((month, index) => (
           <div key={month.month} className='flex h-full flex-1 flex-col justify-end'>
-            <motion.div
-              className='flex w-full flex-col-reverse overflow-hidden rounded-t-[5px]'
-              style={{ height: `${(sum(month.counts) / maxMonth) * 100}%`, transformOrigin: 'bottom' }}
-              initial={{ scaleY: 0 }}
-              animate={{ scaleY: 1 }}
-              transition={{ type: 'spring', stiffness: 140, damping: 18, delay: reduced ? 0 : 0.6 + index * 0.04 }}>
+            <div
+              className='bar-grow flex w-full flex-col-reverse overflow-hidden rounded-t-[5px]'
+              style={{ height: `${(sum(month.counts) / maxMonth) * 100}%`, '--i': index } as React.CSSProperties}>
               <span className='block flex-1 bg-primary/80' />
-            </motion.div>
+            </div>
           </div>
         ))}
       </div>
