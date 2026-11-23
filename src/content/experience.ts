@@ -58,7 +58,10 @@ export const roles: Role[] = [
         en: 'Review and approve merge requests for a team of ~10 (about 130 approved since May 2026); main contributor to the 275-case Playwright suite run in every UAT round.'
       },
       {
-        en: 'Owned SSO and sign-in audit logging (no tokens or personal data in logs) and verified the pentest fixes for e-Customs phase 1.'
+        en: 'Brought in my open-source Qorstack Report for e-Customs documents: a Word file is the template, no hand-coded layouts; approved with full enterprise source, no lock-in; used in 42 backend files.'
+      },
+      {
+        en: 'Owned SSO and sign-in audit logging (no tokens or personal data in logs); verified the phase 1 pentest fixes.'
       }
     ],
     projects: ['eec-e-customs'],
@@ -74,7 +77,7 @@ export const roles: Role[] = [
     kind: { en: 'Full-time · web and mobile' },
     icon: 'compass',
     summary: {
-      en: 'Built web and mobile systems in React/Next.js, Flutter and .NET — across the EEC ID microservices (mobile app, document signing, identity, scheduling) and an airport website.'
+      en: 'Built web and mobile systems in React/Next.js, Flutter and .NET — across the EEC ID microservices (mobile app, document signing, identity, scheduling) and an airport website; set up Tolgee so e-Customs’ Thai/English text is managed outside the code.'
     },
     highlights: [
       {

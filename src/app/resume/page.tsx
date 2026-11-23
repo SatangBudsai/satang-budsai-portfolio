@@ -225,7 +225,7 @@ function RoleEntry({ role }: { role: Role }) {
           {tr(role.when, lang).replace(' — now', ' – Present').replace(' — ', ' – ')} · {duration(role.start, role.end)}
         </span>
       </div>
-      <p className='text-sm text-muted-foreground print:text-[10.5px]'>{tr(role.kind, lang)}</p>
+      <p className='text-sm text-muted-foreground print:hidden'>{tr(role.kind, lang)}</p>
       <p className='resume-summary text-sm leading-relaxed text-soft print:text-[10.5px] print:leading-snug'>
         {tr(role.summary, lang)}
       </p>
