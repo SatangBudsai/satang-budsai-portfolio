@@ -85,7 +85,7 @@ export const stories: Record<string, Story> = {
         en: 'An MCP server with 5 tools so AI agents can render documents'
       },
       {
-        en: 'Renders real certificates inside a government e-service'
+        en: 'Used for certificates in a government e-service (signed off in UAT, pre-launch)'
       },
       {
         en: 'Customer-driven fixes, e.g. sign-in over plain HTTP on an intranet'
@@ -327,7 +327,7 @@ export const stories: Record<string, Story> = {
   },
   'eec-id': {
     timeline: {
-      en: 'Jun 2025 → May 2026 (continued into the Senior role) · wrote 486 of the mobile app’s 502 commits'
+      en: 'Jun 2025 → May 2026 (continued into the Senior role) · built most of the mobile app'
     },
     results: [
       {
@@ -385,7 +385,7 @@ export const stories: Record<string, Story> = {
   },
   'eec-e-customs': {
     timeline: {
-      en: 'Apr → Nov 2026 · Phase 2 signed off in SIT/UAT, awaiting launch · bootstrapped 5 services · 79% of payment-service commits'
+      en: 'Apr → Nov 2026 · Phase 2 signed off in SIT/UAT, awaiting launch · bootstrapped 5 services · designed and wrote most of the payment service'
     },
     results: [
       {

@@ -152,7 +152,7 @@ export const products: Product[] = [
       },
       {
         value: 'Gov',
-        label: { en: 'renders certificates in a government e-service' }
+        label: { en: 'used for certificates in a government e-service (pre-launch)' }
       }
     ],
     why: {

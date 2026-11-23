@@ -7,12 +7,12 @@ import type { L, Project } from './types'
 
 /** Projects on the résumé: client and day-job work first, then the strongest own products. */
 export const resumeProjects = [
+  'eec-e-customs',
   'eec-id',
-  'cmu-journal',
-  'junior-bootcamp',
   'qorstack-report',
+  'cmu-journal',
   'git-control-orca',
-  'eec-e-customs'
+  'junior-bootcamp'
 ]
 
 /**
@@ -33,7 +33,7 @@ const OUTCOME: Record<string, L> = {
     en: '600 people at once with no errors; the breaking point at 800 was found before exam day.'
   },
   'qorstack-report': {
-    en: 'Renders certificates in a government e-service; SDKs on NuGet and npm.'
+    en: 'Used for certificates in a government e-service (signed off in UAT, pre-launch); SDKs on NuGet and npm.'
   },
   'git-control-orca': {
     en: 'Used daily; git status 162 → ~106 ms; outside pull requests merged.'

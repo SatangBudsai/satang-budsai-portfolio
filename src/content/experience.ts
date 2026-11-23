@@ -46,10 +46,10 @@ export const roles: Role[] = [
     },
     highlights: [
       {
-        en: 'Bootstrapped five .NET microservices (payment, scheduling, workers, reports, integrations), from first commit to GitLab CI and Kubernetes manifests.'
+        en: 'Bootstrapped five .NET microservices (payment, scheduling, workers, reports, integrations), from first commit to GitLab CI and Kubernetes manifests in the team’s Kustomize + Fleet GitOps repo.'
       },
       {
-        en: 'Main author of the payment service (79% of commits): idempotent payments and webhooks, constant-time callback checks, expiry and a full audit trail; ~250 unit tests.'
+        en: 'Designed and wrote most of the payment service: idempotent payments and webhooks, constant-time callback checks, expiry and a full audit trail; ~250 unit tests.'
       },
       {
         en: 'Set team standards: PostgreSQL advisory locks for document numbers (now used by five teammates) and Sage, our AI-agent rules and decision records, across 5+ repos.'
@@ -61,7 +61,7 @@ export const roles: Role[] = [
         en: 'Brought in my open-source Qorstack Report for e-Customs documents: a Word file is the template, no hand-coded layouts; approved with full enterprise source, no lock-in; used in 42 backend files.'
       },
       {
-        en: 'Owned SSO and sign-in audit logging (no tokens or personal data in logs); verified the phase 1 pentest fixes.'
+        en: 'Owned sign-in for the e-Customs Next.js 16 web app — SSO, auth flow and audit logging (no tokens or personal data in logs); verified the phase 1 pentest fixes.'
       }
     ],
     projects: ['eec-e-customs'],
@@ -81,7 +81,7 @@ export const roles: Role[] = [
     },
     highlights: [
       {
-        en: 'Built the EEC ID Flutter app (97% of commits) and its .NET backend (92%), letting workers verify their identity on a phone instead of at an office — ePassport chip reading, face match and sign-in for partner apps; signed off in SIT and UAT, ahead of launch.'
+        en: 'Built most of the EEC ID Flutter app and its .NET backend (to May 2026), letting workers verify their identity on a phone instead of at an office — ePassport chip reading, face match and partner sign-in; signed off in SIT and UAT, ahead of launch.'
       },
       {
         en: 'Built EEC ID’s document-signing service (.NET 8): visa, work-permit, immigration and NIA documents from Word templates to signed PDFs, one generator for all types.'
@@ -101,7 +101,7 @@ export const roles: Role[] = [
     start: '2025-08',
     when: { en: 'Aug 2025 — now' },
     role: { en: 'Freelance Full-Stack Developer' },
-    org: { en: 'Independent' },
+    org: { en: 'Self-employed' },
     kind: { en: 'Freelance · outside working hours' },
     icon: 'compass',
     current: true,
@@ -114,7 +114,7 @@ export const roles: Role[] = [
         en: 'Sole developer of a university research-office portal and researcher directory (NestJS, Prisma/PostgreSQL, two Next.js 16 sites): 68 schema migrations, full legacy import, PDPA consent and ORCID onboarding, ~780 automated tests.'
       },
       {
-        en: 'Rebuilt a university research journal alone: 1,014 articles moved with nothing lost (25 integrity checks), SSO with rotating refresh tokens and RBAC, ~210 tests including security E2E; article list 41 s → ~0.1 s.'
+        en: 'Rebuilt a university research journal alone: 1,014 articles moved with nothing lost (25 integrity checks), SSO with rotating refresh tokens and RBAC, ~210 tests including security E2E; article list 41 s → ~0.1 s (local production build).'
       },
       {
         en: 'Load-tested an exam platform with k6 before launch: 0% errors at 600 concurrent users and a breaking point at 800, reported to the client before exam day.'
@@ -141,7 +141,7 @@ export const roles: Role[] = [
     },
     highlights: [
       {
-        en: 'Qorstack Report: self-hostable Word/Excel-to-PDF API (.NET, Next.js, PostgreSQL, S3), v2.0–2.4, SDKs on NuGet and npm and an MCP server; renders certificates in a government e-service.'
+        en: 'Qorstack Report: self-hostable Word/Excel-to-PDF API (.NET, Next.js, PostgreSQL, S3), v2.0–2.4, SDKs on NuGet and npm and an MCP server; used for certificates in a government e-service (signed off in UAT, pre-launch).'
       },
       {
         en: 'Git Control for Orca: a Git client on Orca’s plugin marketplace — PRs/MRs and pipelines for GitHub, GitLab and Bitbucket, 22 integration suites; merged outside pull requests, including an XSS fix.'
