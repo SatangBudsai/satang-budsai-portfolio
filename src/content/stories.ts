@@ -385,7 +385,7 @@ export const stories: Record<string, Story> = {
   },
   'eec-e-customs': {
     timeline: {
-      en: 'Apr → Nov 2026 · Phase 2 signed off in SIT/UAT, awaiting launch · bootstrapped 5 services · designed and wrote most of the payment service'
+      en: 'Apr → Nov 2026 · Phase 2 signed off in SIT/UAT, awaiting launch · set up 5 services from scratch · designed and wrote most of the payment service'
     },
     results: [
       {

@@ -794,14 +794,14 @@ export const cases: CaseStudy[] = [
       en: 'The customs-privilege e-service for Thailand’s Eastern Economic Corridor: companies submit machinery and raw-material imports, BOQs, fast-track releases and e-payments; officers review and approve.'
     },
     role: {
-      en: 'Senior engineer · bootstrapped 5 Phase 2 services · main author of the payment service · MR reviewer for a ~10-person team'
+      en: 'Senior engineer · set up 5 Phase 2 services from scratch · main author of the payment service · MR reviewer for a ~10-person team'
     },
     confidential: true,
     problem: {
       en: 'Phase 2 re-architected Phase 1 into microservices, and had to talk to outside systems — DGA digital signatures and the asynchronous NSW customs gateway.'
     },
     did: {
-      en: 'Bootstrapped five Phase 2 services from the first commit, wrote most of the payment service, review and approve the team’s MRs, and built across the web app and core service.'
+      en: 'Set up five Phase 2 services from the first commit, wrote most of the payment service, review and approve the team’s MRs, and built across the web app and core service.'
     },
     challenges: [
       {
@@ -838,7 +838,7 @@ export const cases: CaseStudy[] = [
       }
     ],
     owned: [
-      { en: 'Five Phase 2 services bootstrapped (payment, scheduling, workers, reports, integrations)' },
+      { en: 'Five Phase 2 services set up from scratch (payment, scheduling, workers, reports, integrations)' },
       { en: 'Most of the payment service: idempotency, callback checks, expiry, audit trail' },
       { en: 'Advisory-lock standard for document numbers, adopted by five teammates' },
       { en: 'Sage AI-agent rules and decision records across the repos' },

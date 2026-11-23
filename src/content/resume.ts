@@ -24,7 +24,7 @@ const OUTCOME: Record<string, L> = {
     en: 'Signed off in SIT and UAT ahead of launch; one-tap sign-in from partner apps works on iPhone.'
   },
   'eec-e-customs': {
-    en: 'Bootstrapped five services; idempotent payments, advisory-locked document numbers the team adopted, and a 275-case Playwright suite run in UAT.'
+    en: 'Set up five services from scratch; idempotent payments, advisory-locked document numbers the team adopted, and a 275-case Playwright suite run in UAT.'
   },
   'cmu-journal': {
     en: 'Live since Nov 2026; SonarQube quality gate and 25 integrity checks passed.'

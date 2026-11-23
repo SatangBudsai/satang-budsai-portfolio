@@ -46,7 +46,7 @@ export const roles: Role[] = [
     },
     highlights: [
       {
-        en: 'Bootstrapped five .NET microservices (payment, scheduling, workers, reports, integrations), from first commit to GitLab CI and Kubernetes manifests in the team’s Kustomize + Fleet GitOps repo.'
+        en: 'Set up five .NET microservices from scratch (payment, scheduling, workers, reports, integrations), from first commit to GitLab CI and Kubernetes manifests in the team’s Kustomize + Fleet GitOps repo.'
       },
       {
         en: 'Designed and wrote most of the payment service: idempotent payments and webhooks, constant-time callback checks, expiry and a full audit trail; ~250 unit tests.'
