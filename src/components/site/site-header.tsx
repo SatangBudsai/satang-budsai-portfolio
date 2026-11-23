@@ -37,7 +37,6 @@ function BrandMark({ className }: { className?: string }) {
 
 export default function SiteHeader({ labels }: { labels: Labels; lang: Lang }) {
   const pathname = usePathname()
-  const [hidden, setHidden] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   // The menu remembers the path it was opened on, so navigating closes it.
   const [openOn, setOpenOn] = useState<string | null>(null)
@@ -47,16 +46,12 @@ export default function SiteHeader({ labels }: { labels: Labels; lang: Lang }) {
   const menuButton = useRef<HTMLButtonElement>(null)
   const firstLink = useRef<HTMLAnchorElement>(null)
 
-  // Hide on the way down, show on the way up; a plain scroll listener keeps this off the animation library.
+  // The bar stays put (section headings stick right under it on phones); only its background changes once scrolled.
   useEffect(() => {
-    let previous = window.scrollY
     let frame = 0
     const update = () => {
       frame = 0
-      const current = window.scrollY
-      setScrolled(current > 24)
-      setHidden(current > 320 && current > previous)
-      previous = current
+      setScrolled(window.scrollY > 24)
     }
     const onScroll = () => {
       if (!frame) frame = requestAnimationFrame(update)
@@ -99,11 +94,10 @@ export default function SiteHeader({ labels }: { labels: Labels; lang: Lang }) {
     <>
       <header
         className={cn(
-          'fixed inset-x-0 top-0 z-50 border-b transition-[background-color,border-color,backdrop-filter,translate] duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] motion-reduce:translate-y-0 print:hidden',
+          'fixed inset-x-0 top-0 z-50 border-b transition-[background-color,border-color,backdrop-filter] duration-500 print:hidden',
           // On the home page the sidebar is the navigation on large screens.
           pathname === '/' && 'lg:hidden',
-          scrolled || open ? 'border-line bg-background/80 backdrop-blur-xl' : 'border-transparent',
-          hidden && !open ? '-translate-y-full' : 'translate-y-0'
+          scrolled || open ? 'border-line bg-background' : 'border-transparent'
         )}>
         <div className='container-page flex h-[4.5rem] items-center justify-between gap-4'>
           <Link

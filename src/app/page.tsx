@@ -470,7 +470,7 @@ function Section({
     <section id={id} aria-labelledby={`${id}-title`} className='scroll-mt-20 lg:scroll-mt-28'>
       <h2
         id={`${id}-title`}
-        className='sticky top-[4.5rem] z-10 -mx-4 mb-6 flex items-center gap-4 bg-background/85 px-4 py-4 backdrop-blur sm:-mx-6 sm:px-6 lg:static lg:mx-0 lg:mb-8 lg:bg-transparent lg:px-0 lg:py-0 lg:backdrop-blur-none'>
+        className='sticky top-[4.5rem] z-10 -mx-4 mb-6 flex items-center gap-4 border-b border-line bg-background px-4 py-4 sm:-mx-6 sm:px-6 lg:static lg:mx-0 lg:mb-8 lg:border-b-0 lg:bg-transparent lg:px-0 lg:py-0'>
         {index ? <span className='font-mono text-xs text-primary'>{index}</span> : null}
         <span className='text-[clamp(20px,1.8vw,26px)] font-semibold tracking-[-0.02em]'>{title}</span>
         <span className='section-rule h-px flex-1 bg-line-strong' aria-hidden='true' />
