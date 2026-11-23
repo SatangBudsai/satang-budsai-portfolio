@@ -2,8 +2,8 @@ import { education, roles } from '@/content/experience'
 import { allProjects } from '@/content/projects'
 import { profile, stackGroups } from '@/content/site'
 
-/** Public origin of the site. Set NEXT_PUBLIC_SITE_URL in production (e.g. https://example.dev). */
-export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3031').replace(/\/$/, '')
+/** Public origin of the site. NEXT_PUBLIC_SITE_URL overrides it (e.g. for a preview deployment). */
+export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://satang.dev').replace(/\/$/, '')
 
 export const absolute = (path = '/') => `${SITE_URL}${path.startsWith('/') ? path : `/${path}`}`
 

@@ -9,6 +9,7 @@ import { resumePdf } from '@/content/resume'
 import { profile, stackGroups } from '@/content/site'
 import { tr } from '@/content/types'
 import { duration } from '@/lib/duration'
+import { SITE_URL } from '@/lib/seo'
 
 import en from '../../../langs/common/en.json'
 
@@ -21,8 +22,8 @@ function t(key: string, fallback: string) {
   return (en as Record<string, string>)[key.replace(/^common\./, '')] ?? fallback
 }
 
-/** The public address, when one is configured. */
-const SITE = process.env.NEXT_PUBLIC_SITE_URL?.replace(/^https?:\/\//, '').replace(/\/$/, '')
+/** The public address, shown as a contact line and used for project links. */
+const SITE = SITE_URL.replace(/^https?:\/\//, '')
 
 export function generateMetadata(): Metadata {
   return {

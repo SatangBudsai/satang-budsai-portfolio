@@ -34,14 +34,14 @@ pnpm build && pnpm start            # or pnpm dev
 pnpm resume:pdf http://localhost:3031
 ```
 
-Writes `public/Satang-Budsai-Resume.pdf` and `public/Satang-Budsai-Resume-no-photo.pdf` (A4, one page). Re-run after changing résumé content and commit both files. Project titles become links only when `NEXT_PUBLIC_SITE_URL` is set, so the PDF never links to a local server.
+Writes `public/Satang-Budsai-Resume.pdf` and `public/Satang-Budsai-Resume-no-photo.pdf` (A4, one page). Re-run after changing résumé content and commit both files. Project titles and the website line link to https://satang.dev, never to a local server.
 
 ## SEO and AI discovery
 
 - Metadata, canonical URLs, Open Graph (`profile`) and Twitter cards: `src/app/layout.tsx` and each page's `generateMetadata`.
 - JSON-LD (`WebSite` + `ProfilePage` + `Person` on the home page; `SoftwareApplication`/`CreativeWork` + breadcrumbs on project pages): `src/lib/seo.ts`.
 - `robots.txt` allows search engines and AI crawlers (GPTBot, ClaudeBot, PerplexityBot, Google-Extended…); `llms.txt` and `resume.txt` give assistants a clean text version.
-- **Set `NEXT_PUBLIC_SITE_URL` (e.g. `https://your-domain.dev`) at build time in production.** Without it, canonical URLs, the sitemap and JSON-LD point at localhost.
+- The public origin is `https://satang.dev` (`src/lib/seo.ts`); set `NEXT_PUBLIC_SITE_URL` at build time only to override it, e.g. for a preview deployment.
 
 ## Brand
 
