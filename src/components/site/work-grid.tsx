@@ -52,8 +52,8 @@ function Visual({ visual, lang, size }: { visual: WorkVisual; lang: Lang; size: 
   }
   if (visual.kind === 'art') {
     return (
-      <div className='absolute inset-0 flex items-center justify-center p-4 sm:p-6'>
-        <CoverArt id={visual.id} label={visual.alt} className='h-full w-auto max-w-full rounded-[1rem] border-0' />
+      <div className='absolute inset-0'>
+        <CoverArt id={visual.id} label={visual.alt} fill className='h-full w-full rounded-none border-0' />
       </div>
     )
   }

@@ -679,3 +679,66 @@
     rotate: -4deg;
   }
 }
+
+/* Signature: the commit grid spells SATANG with real days (activity-card.tsx).
+   Days inside the letters keep their true level; the rest step back until you
+   hover the grid or press "raw data". Pure CSS, no extra JS per cell. */
+.heat-word .heat-cell {
+  transition:
+    opacity 0.35s ease,
+    box-shadow 0.35s ease;
+}
+
+.heat-word:not(.is-raw):not(:hover) .heat-cell:not([data-g]) {
+  opacity: 0.07;
+}
+
+/* Quiet days inside a letter get an outline only, so the word reads without inventing commits. */
+.heat-word:not(.is-raw):not(:hover) .heat-cell[data-g] {
+  box-shadow: inset 0 0 0 1.5px color-mix(in oklab, var(--primary) 85%, transparent);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .heat-word .heat-cell[data-g] {
+    animation: glyph-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-delay: calc(var(--w) * 12ms + 200ms);
+  }
+}
+
+@keyframes glyph-in {
+  from {
+    opacity: 0;
+    scale: 0.4;
+  }
+}
+
+/* Timeline nodes: a pixel square on the rail for each role (page.tsx Entry). */
+.rail-node {
+  position: relative;
+}
+
+@media (min-width: 640px) {
+  .rail-node::before {
+    content: '';
+    position: absolute;
+    top: 1.55rem;
+    left: calc(-1.5rem - 4.5px);
+    width: 10px;
+    height: 10px;
+    background: var(--background);
+    border: 2px solid var(--line-strong);
+    transition:
+      background-color 0.3s ease,
+      border-color 0.3s ease;
+  }
+
+  .rail-node[data-current]::before {
+    background: var(--primary);
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px color-mix(in oklab, var(--primary) 18%, transparent);
+  }
+
+  .rail-node:hover::before {
+    border-color: var(--primary);
+  }
+}

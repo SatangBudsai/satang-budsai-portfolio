@@ -19,11 +19,33 @@ export const categoryTone: Record<Category, string> = {
 const order: Category[] = ['work', 'freelance', 'own']
 const heat = [
   'color-mix(in oklab, var(--foreground) 7%, var(--card))',
-  'color-mix(in oklab, var(--primary) 28%, var(--card))',
+  'color-mix(in oklab, var(--primary) 36%, var(--card))',
   'color-mix(in oklab, var(--primary) 52%, var(--card))',
   'color-mix(in oklab, var(--primary) 80%, var(--card))',
   'color-mix(in oklab, var(--primary) 70%, white)'
 ]
+
+// A 5×7 pixel font for the word the grid spells. Rows run Monday → Sunday.
+const GLYPHS: Record<string, string[]> = {
+  S: ['.###.', '#...#', '#....', '.###.', '....#', '#...#', '.###.'],
+  A: ['.###.', '#...#', '#...#', '#####', '#...#', '#...#', '#...#'],
+  T: ['#####', '..#..', '..#..', '..#..', '..#..', '..#..', '..#..'],
+  N: ['#...#', '##..#', '#.#.#', '#..##', '#...#', '#...#', '#...#'],
+  G: ['.###.', '#...#', '#....', '#.###', '#...#', '#...#', '.####']
+}
+/** Which (week, weekday) cells fall inside the letters of `word`, centred in 53 weeks. */
+function wordMask(word: string) {
+  const width = word.length * 6 - 1
+  const left = Math.floor((53 - width) / 2)
+  const cells = new Set<string>()
+  ;[...word].forEach((letter, index) =>
+    GLYPHS[letter]?.forEach((row, d) =>
+      [...row].forEach((pixel, x) => pixel === '#' && cells.add(`${left + index * 6 + x}:${d}`))
+    )
+  )
+  return cells
+}
+const MASK = wordMask('SATANG')
 
 const sum = (day: Day | undefined) => (day ? order.reduce((total, key) => total + (day[key] ?? 0), 0) : 0)
 const iso = (date: Date) => date.toISOString().slice(0, 10)
@@ -62,9 +84,12 @@ export default function ActivityCard({
     hint: string
     shipping: string
     chart: string
+    word: string
+    raw: string
   }
 }) {
   const [hover, setHover] = useState<string | null>(null)
+  const [raw, setRaw] = useState(false)
   const touch = useSyncExternalStore(
     onChange => {
       const query = window.matchMedia('(hover: none)')
@@ -176,14 +201,18 @@ export default function ActivityCard({
           ))}
         </div>
         <div
-          className='grid grid-flow-col grid-cols-[repeat(53,minmax(0,1fr))] grid-rows-7 gap-[2px] sm:gap-[3px]'
+          className={cn(
+            'heat-word grid grid-flow-col grid-cols-[repeat(53,minmax(0,1fr))] grid-rows-7 gap-[2px] sm:gap-[3px]',
+            raw && 'is-raw'
+          )}
           aria-hidden='true'>
           {weeks.flatMap((week, w) =>
-            week.map(day => {
+            week.map((day, d) => {
               const count = sum(days[day.date])
               return (
                 <span
                   key={day.date}
+                  data-g={MASK.has(`${w}:${d}`) ? '' : undefined}
                   onPointerEnter={() => day.inRange && setHover(day.date)}
                   onPointerLeave={() => setHover(null)}
                   onClick={() => day.inRange && setHover(day.date)}
@@ -199,9 +228,18 @@ export default function ActivityCard({
           )}
         </div>
       </div>
-      <p className='mt-2 min-h-4 truncate font-mono text-[12px] text-muted-foreground' aria-hidden='true'>
-        {status}
-      </p>
+      <div className='mt-2 flex items-center justify-between gap-3'>
+        <p className='min-h-4 min-w-0 truncate font-mono text-[12px] text-muted-foreground' aria-hidden='true'>
+          {status}
+        </p>
+        <button
+          type='button'
+          onClick={() => setRaw(value => !value)}
+          aria-pressed={raw}
+          className='font-pixel-ui shrink-0 rounded-full border border-line px-2.5 py-0.5 text-[10px] tracking-[0.06em] text-muted-foreground uppercase transition-colors hover:border-primary hover:text-primary'>
+          {raw ? labels.word : labels.raw}
+        </button>
+      </div>
 
       <div className='sr-only'>
         <table>

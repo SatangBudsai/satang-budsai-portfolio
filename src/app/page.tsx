@@ -2,6 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 import ActivityCard from '@/components/site/activity-card'
+import BrandMark from '@/components/site/brand-mark'
 import CoverArt from '@/components/site/art'
 import HeroSprite from '@/components/site/hero-sprite'
 import { Reveal } from '@/components/site/motion'
@@ -36,7 +37,8 @@ export default async function Home() {
     { id: 'experience', label: t('common.cv.experience', 'Experience') },
     { id: 'projects', label: t('common.cv.projects', 'Projects') },
     { id: 'learning', label: t('common.cv.learning', 'Learning') },
-    { id: 'skills', label: t('common.cv.skills', 'Skills') }
+    { id: 'skills', label: t('common.cv.skills', 'Skills') },
+    { id: 'services', label: t('common.cv.services', 'Work with me') }
   ]
   const workCount = allProjects.length + experiments.length
   const brief = briefHref(profile.email, t)
@@ -49,7 +51,8 @@ export default async function Home() {
         <aside className='flex flex-col gap-7 pt-28 pb-12 sm:pt-32 lg:sticky lg:top-0 lg:h-svh lg:justify-between lg:gap-5 lg:pt-12 lg:pb-10'>
           <div className='flex flex-col gap-6 lg:gap-5'>
             <div className='flex items-center justify-between gap-3'>
-              <div className='flex flex-wrap items-center gap-2'>
+              <div className='flex flex-wrap items-center gap-3'>
+                <BrandMark className='size-8 shrink-0' />
                 {profile.availability ? (
                   <a
                     href='#contact'
@@ -112,10 +115,11 @@ export default async function Home() {
                 </HeroSprite>
               </div>
 
-              <dl className='grid grid-cols-[3.5rem_1fr] gap-x-3 gap-y-1 border-t border-line px-5 py-4 text-[13px] sm:px-6 [@media(min-width:1024px)_and_(max-height:820px)]:hidden'>
+              <dl className='grid grid-cols-[3.5rem_1fr] gap-x-3 gap-y-1 border-t border-line px-5 py-4 text-[13px] sm:px-6 [@media(min-width:1024px)_and_(max-height:880px)]:hidden'>
                 {[
                   ['at', t('common.cv.fact-at', 'Chanwanich · Senior Software Engineer')],
                   ['path', t('common.cv.fact-path', 'Intern → Full-stack developer → Senior')],
+                  ['stack', '.NET · Next.js · Flutter · PostgreSQL'],
                   ['focus', t('common.cv.fact-focus', 'Government & enterprise systems')],
                   ['edu', t('common.cv.fact-edu', 'Chiang Mai University · first-class honours')],
                   ['loc', t('common.cv.fact-loc', 'Chiang Mai, Thailand · UTC+7')]
@@ -161,7 +165,7 @@ export default async function Home() {
 
         {/* RIGHT: the résumé itself */}
         <div className='flex flex-col gap-16 pb-24 lg:gap-24 lg:pt-12'>
-          <Section id='about' index='01' title={sections[0].label}>
+          <Section id='about' index='01' title={t('common.cv.about', 'About')} accent='me'>
             <div className='flex flex-col gap-5 text-[17px] leading-[1.75] text-soft'>
               {['about-1', 'about-2', 'about-3'].map(key => (
                 <p key={key}>
@@ -182,11 +186,11 @@ export default async function Home() {
             </div>
           </Section>
 
-          <Section id='experience' index='02' title={sections[1].label}>
+          <Section id='experience' index='02' title='Where I’ve' accent='worked'>
             <ScrollRail>
-              <ol className='group/list flex flex-col gap-2'>
+              <ol className='group/list flex flex-col gap-6'>
                 {roles.map(role => (
-                  <li key={role.id}>
+                  <li key={role.id} className='rail-node' data-current={role.end ? undefined : ''}>
                     <Entry
                       when={`${tr(role.when, lang)}
 ${duration(role.start, role.end)}`}>
@@ -222,11 +226,13 @@ ${duration(role.start, role.end)}`}>
                           })}
                         </p>
                       ) : null}
-                      <Chips items={role.stack} />
+                      <p className='font-mono text-[12px] leading-relaxed text-muted-foreground'>
+                        {role.stack.join(' · ')}
+                      </p>
                     </Entry>
                   </li>
                 ))}
-                <li>
+                <li className='rail-node'>
                   <Entry when={tr(education.when, lang)}>
                     <div className='flex items-start gap-3'>
                       <PixelItem name='trophy' size={32} className='mt-0.5' />
@@ -249,7 +255,7 @@ ${duration(role.start, role.end)}`}>
             </Link>
           </Section>
 
-          <Section id='projects' index='03' title={sections[2].label}>
+          <Section id='projects' index='03' title='Selected' accent='projects'>
             <ul className='group/list flex flex-col gap-2'>
               {projects.map(project => {
                 const thumb = projectThumb(project)
@@ -258,14 +264,14 @@ ${duration(role.start, role.end)}`}>
                   <li key={project.slug}>
                     <Link
                       href={`/work/${project.slug}`}
-                      className='group grid gap-4 rounded-2xl border border-transparent p-4 transition-all duration-300 hover:border-line hover:bg-card/60 hover:shadow-[0_20px_50px_-20px_rgba(0,0,0,0.6)] sm:grid-cols-[9.5rem_1fr] sm:gap-6 sm:p-5'>
+                      className='group grid gap-4 rounded-2xl border border-transparent p-4 transition-all duration-300 hover:border-line hover:bg-card/60 hover:shadow-[0_20px_50px_-20px_rgba(0,0,0,0.6)] sm:grid-cols-[14rem_1fr] sm:gap-6 sm:p-5'>
                       <span className='relative block aspect-[16/10] overflow-hidden rounded-lg border border-line bg-[#0d0b13] sm:mt-1'>
                         {thumb?.kind === 'image' ? (
                           <Image
                             src={thumb.src}
                             alt=''
                             fill
-                            sizes='(min-width: 640px) 160px, 90vw'
+                            sizes='(min-width: 640px) 240px, 90vw'
                             className='object-cover object-top transition-transform duration-500 group-hover:scale-[1.04]'
                           />
                         ) : thumb?.kind === 'art' ? (
@@ -315,7 +321,7 @@ ${duration(role.start, role.end)}`}>
             </Link>
           </Section>
 
-          <Section id='learning' index='04' title={sections[3].label}>
+          <Section id='learning' index='04' title='Learning by' accent='building'>
             <p className='mb-6 text-[17px] leading-relaxed text-soft'>
               {t(
                 'common.cv.learning-intro',
@@ -358,7 +364,7 @@ ${duration(role.start, role.end)}`}>
             </ul>
           </Section>
 
-          <Section id='skills' index='05' title={sections[4].label}>
+          <Section id='skills' index='05' title='Everyday' accent='toolbox'>
             <dl className='grid gap-x-8 gap-y-5 sm:grid-cols-2'>
               {stackGroups.map(group => (
                 <div key={tr(group.label, lang)} className='flex flex-col gap-2'>
@@ -388,7 +394,7 @@ ${duration(role.start, role.end)}`}>
             </ul>
           </Section>
 
-          <Section id='services' title={t('common.cv.services', 'Work with me')}>
+          <Section id='services' index='06' title='Work with' accent='me'>
             <p className='mb-6 text-[17px] leading-relaxed text-soft'>
               {t(
                 'common.cv.services-intro',
@@ -411,7 +417,7 @@ ${duration(role.start, role.end)}`}>
                 t('common.cv.step-3', 'Fixed scope and quote'),
                 t('common.cv.step-4', 'Progress demos as we go')
               ].map((step, index) => (
-                <li key={step} className='flex items-center gap-3 text-[15px]'>
+                <li key={step} className='flex items-center gap-3 text-[15px] text-balance'>
                   <span className='flex size-7 shrink-0 items-center justify-center rounded-full bg-primary/15 font-mono text-xs text-primary'>
                     {index + 1}
                   </span>
@@ -459,11 +465,14 @@ function Section({
   id,
   index,
   title,
+  accent,
   children
 }: {
   id: string
   index?: string
   title: string
+  /** One word set in the serif italic, the same voice as the inner pages' headlines. */
+  accent?: string
   children: React.ReactNode
 }) {
   return (
@@ -472,7 +481,15 @@ function Section({
         id={`${id}-title`}
         className='sticky top-[4.5rem] z-10 -mx-4 mb-6 flex items-center gap-4 border-b border-line bg-background px-4 py-4 sm:-mx-6 sm:px-6 lg:static lg:mx-0 lg:mb-8 lg:border-b-0 lg:bg-transparent lg:px-0 lg:py-0'>
         {index ? <span className='font-mono text-xs text-primary'>{index}</span> : null}
-        <span className='text-[clamp(20px,1.8vw,26px)] font-semibold tracking-[-0.02em]'>{title}</span>
+        <span className='text-[clamp(22px,2vw,30px)] font-semibold tracking-[-0.025em]'>
+          {title}
+          {accent ? (
+            <>
+              {' '}
+              <span className='accent-serif text-primary'>{accent}</span>
+            </>
+          ) : null}
+        </span>
         <span className='section-rule h-px flex-1 bg-line-strong' aria-hidden='true' />
       </h2>
       <Reveal y={24}>{children}</Reveal>
@@ -543,8 +560,10 @@ function activityLabels(t: AppTranslate) {
       own: t('common.activity.own', 'My products')
     },
     commitsUnit: t('common.activity.unit', 'commits'),
-    hint: t('common.activity.hint', 'Hover a square to see that day'),
-    hintTouch: t('common.activity.hint-touch', 'Tap a square to see that day'),
+    hint: t('common.activity.hint-word', 'My year in commits spells my name — hover for the raw data'),
+    hintTouch: t('common.activity.hint-touch-word', 'My commits spell my name — tap a day'),
+    word: t('common.activity.word', 'Name'),
+    raw: t('common.activity.raw', 'Raw data'),
     month: t('common.activity.month', 'Month'),
     shipping: t('common.activity.shipping', 'Shipping'),
     footnote: t(
