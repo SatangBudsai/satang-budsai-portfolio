@@ -6,6 +6,7 @@ import BrandMark from '@/components/site/brand-mark'
 import CoverArt from '@/components/site/art'
 import HeroSprite from '@/components/site/hero-sprite'
 import { Reveal } from '@/components/site/motion'
+import PixelPal from '@/components/site/pixel-pal'
 import { itemIcon, PixelItem } from '@/components/site/pixel'
 import ScrollRail from '@/components/site/scroll-rail'
 import SectionNav from '@/components/site/section-nav'
@@ -20,6 +21,7 @@ import { experiments, featureReleases, principles, profile, services, shipped, s
 import { tr } from '@/content/types'
 import { briefHref } from '@/lib/brief'
 import { duration } from '@/lib/duration'
+import { cn } from '@/lib/utils'
 import { homeJsonLd, jsonLdHtml } from '@/lib/seo'
 import { getI18n } from '@/lib/lang'
 import type { AppTranslate } from '@/tolgee/translate'
@@ -255,45 +257,58 @@ ${duration(role.start, role.end)}`}>
             </Link>
           </Section>
 
+          <ProofBand />
+
           <Section id='projects' index='03' title='Selected' accent='projects'>
-            <ul className='group/list flex flex-col gap-2'>
-              {projects.map(project => {
+            <div className='relative'>
+              <PixelPal pose='cheer' className='absolute -top-[86px] right-6 z-[1] hidden sm:inline-block' />
+            </div>
+            <ul className='grid gap-4 sm:grid-cols-2'>
+              {projects.map((project, index) => {
                 const thumb = projectThumb(project)
                 const result = keyResult(project)
                 return (
-                  <li key={project.slug}>
+                  <li key={project.slug} className={cn(index === 0 && 'sm:col-span-2')}>
                     <Link
                       href={`/work/${project.slug}`}
-                      className='group grid gap-4 rounded-2xl border border-transparent p-4 transition-all duration-300 hover:border-line hover:bg-card/60 hover:shadow-[0_20px_50px_-20px_rgba(0,0,0,0.6)] sm:grid-cols-[14rem_1fr] sm:gap-6 sm:p-5'>
-                      <span className='relative block aspect-[16/10] overflow-hidden rounded-lg border border-line bg-[#0d0b13] sm:mt-1'>
+                      className='project-card group flex h-full flex-col overflow-hidden rounded-[1.5rem] border border-line bg-card/40 transition-[border-color,background-color,translate] duration-300 hover:-translate-y-1 hover:border-line-strong hover:bg-card'>
+                      <span
+                        className={cn(
+                          'relative block overflow-hidden border-b border-line bg-[#0d0b13]',
+                          index === 0 ? 'aspect-[16/9] sm:aspect-[21/9]' : 'aspect-[16/10]'
+                        )}>
                         {thumb?.kind === 'image' ? (
                           <Image
                             src={thumb.src}
                             alt=''
                             fill
-                            sizes='(min-width: 640px) 240px, 90vw'
-                            className='object-cover object-top transition-transform duration-500 group-hover:scale-[1.04]'
+                            sizes={
+                              index === 0
+                                ? '(min-width: 1024px) 60vw, 100vw'
+                                : '(min-width: 1024px) 30vw, (min-width: 640px) 50vw, 100vw'
+                            }
+                            className='object-cover object-top transition-transform duration-700 ease-out-expo group-hover:scale-[1.04]'
                           />
                         ) : thumb?.kind === 'art' ? (
                           <CoverArt id={thumb.id} label='' fill className='pointer-events-none' />
                         ) : null}
+                        <span className='absolute top-3 left-3 max-w-[calc(100%-1.5rem)] truncate rounded-full bg-background/80 px-2.5 py-1 font-mono text-[11px] tracking-[0.06em] text-soft uppercase backdrop-blur'>
+                          {project.kind === 'product'
+                            ? `${tr(project.category, lang)} · ${project.version}`
+                            : tr(project.client, lang)}
+                        </span>
                       </span>
-                      <span className='flex flex-col gap-2'>
+                      <span className='flex flex-1 flex-col gap-2.5 p-5 sm:p-6'>
                         <span className='flex items-center gap-2'>
                           {itemIcon[project.slug] ? <PixelItem src={itemIcon[project.slug]} size={24} /> : null}
-                          <span className='text-lg leading-snug font-semibold transition-colors group-hover:text-primary'>
+                          <span className='text-xl leading-snug font-semibold tracking-[-0.01em] transition-colors group-hover:text-primary'>
                             {project.title}
                           </span>
                           <Icon
                             icon={appIcons.arrowUpRight}
-                            className='size-4 text-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-primary'
+                            className='ml-auto size-5 text-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-primary'
                             aria-hidden='true'
                           />
-                        </span>
-                        <span className='text-[13px] text-muted-foreground'>
-                          {project.kind === 'product'
-                            ? `${tr(project.category, lang)} · ${project.version}`
-                            : tr(project.client, lang)}
                         </span>
                         <span className='leading-relaxed text-soft'>{tr(project.tagline, lang)}</span>
                         {result ? (
@@ -302,7 +317,9 @@ ${duration(role.start, role.end)}`}>
                             {tr(result, lang)}
                           </span>
                         ) : null}
-                        <Chips items={project.stack.slice(0, 5)} />
+                        <span className='mt-auto pt-2 font-mono text-[12px] leading-relaxed text-muted-foreground'>
+                          {project.stack.slice(0, 5).join(' · ')}
+                        </span>
                       </span>
                     </Link>
                   </li>
@@ -395,12 +412,15 @@ ${duration(role.start, role.end)}`}>
           </Section>
 
           <Section id='services' index='06' title='Work with' accent='me'>
-            <p className='mb-6 text-[17px] leading-relaxed text-soft'>
-              {t(
-                'common.cv.services-intro',
-                'Outside my day job I take on a few projects at a time — small tools to complete systems, for businesses, universities and teams.'
-              )}
-            </p>
+            <div className='mb-6 flex items-end gap-5'>
+              <PixelPal pose='waving' scale={1} className='hidden sm:inline-block' />
+              <p className='text-[17px] leading-relaxed text-soft'>
+                {t(
+                  'common.cv.services-intro',
+                  'Outside my day job I take on a few projects at a time — small tools to complete systems, for businesses, universities and teams.'
+                )}
+              </p>
+            </div>
             <ul className='grid gap-3 sm:grid-cols-3'>
               {services.map((service, index) => (
                 <li key={index} className='flex flex-col gap-3 rounded-2xl border border-line p-5'>
@@ -435,6 +455,35 @@ ${duration(role.start, role.end)}`}>
         </div>
       </div>
     </>
+  )
+}
+
+/** Big numbers from the case studies, on the pixel-dot field, with the pal walking across. */
+function ProofBand() {
+  const items = [
+    ['1,014', 'journal articles moved', 'nothing lost · 25 integrity checks'],
+    ['275', 'Playwright cases', 'run in every e-Customs UAT round'],
+    ['600', 'concurrent users', '0% errors in a k6 test before exam day'],
+    ['130', 'merge requests approved', 'about 130 for a team of ~10, since May 2026']
+  ]
+  return (
+    <aside
+      aria-label='Results in numbers'
+      className='proof-band relative -mx-4 overflow-hidden border-y border-line px-4 pt-8 pb-[92px] sm:mx-0 sm:rounded-[1.75rem] sm:border sm:px-8 sm:pt-9'>
+      <dl className='grid grid-cols-2 gap-x-6 gap-y-7 lg:grid-cols-4'>
+        {items.map(([value, label, note]) => (
+          <div key={label} className='flex flex-col-reverse justify-end gap-1.5'>
+            <dt className='flex flex-col gap-1'>
+              <span className='leading-snug font-semibold'>{label}</span>
+              <span className='text-[13px] leading-snug text-muted-foreground'>{note}</span>
+            </dt>
+            <dd className='font-pixel-ui text-[clamp(30px,3.2vw,44px)] leading-none text-primary'>{value}</dd>
+          </div>
+        ))}
+      </dl>
+      <PixelPal pose='walk' className='pal-stroll' />
+      <span className='absolute inset-x-0 bottom-0 h-px bg-line-strong' aria-hidden='true' />
+    </aside>
   )
 }
 
@@ -508,7 +557,7 @@ function Entry({ when, children }: { when: string; children: React.ReactNode }) 
   )
 }
 
-/** The first three bullets, and the rest behind "N more" so long roles don't bury the page. */
+/** The first two bullets, and the rest behind "N more" so long roles don't bury the page. */
 function Bullets({ items, more }: { items: string[]; more: (count: number) => string }) {
   const row = (text: string, index: number) => (
     <li key={index} className='flex gap-2.5'>
@@ -516,10 +565,10 @@ function Bullets({ items, more }: { items: string[]; more: (count: number) => st
       {text}
     </li>
   )
-  const rest = items.slice(3)
+  const rest = items.slice(2)
   return (
     <div className='flex flex-col gap-1.5 text-[15px] leading-relaxed'>
-      <ul className='flex flex-col gap-1.5'>{items.slice(0, 3).map(row)}</ul>
+      <ul className='flex flex-col gap-1.5'>{items.slice(0, 2).map(row)}</ul>
       {rest.length ? (
         <details className='group/more'>
           <summary className='inline-flex min-h-9 cursor-pointer list-none items-center gap-1.5 text-sm text-primary hover:underline [&::-webkit-details-marker]:hidden'>
@@ -528,7 +577,7 @@ function Bullets({ items, more }: { items: string[]; more: (count: number) => st
             </span>
             {more(rest.length)}
           </summary>
-          <ul className='mt-1.5 flex flex-col gap-1.5'>{rest.map((text, index) => row(text, index + 3))}</ul>
+          <ul className='mt-1.5 flex flex-col gap-1.5'>{rest.map((text, index) => row(text, index + 2))}</ul>
         </details>
       ) : null}
     </div>

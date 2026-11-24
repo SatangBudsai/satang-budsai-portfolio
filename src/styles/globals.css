@@ -780,3 +780,63 @@
 .wordmark:hover span[data-on] {
   background: var(--primary);
 }
+
+/* Pixel pals (pixel-pal.tsx): a sprite strip stepped one frame at a time. */
+@layer components {
+  .pal {
+    display: inline-block;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+}
+
+.pal img {
+  display: block;
+  height: 100%;
+  width: auto;
+  max-width: none;
+  image-rendering: pixelated;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .pal img {
+    animation: pal-run var(--duration) steps(var(--frames)) infinite;
+  }
+}
+
+@keyframes pal-run {
+  to {
+    translate: -100% 0;
+  }
+}
+
+/* The walking pal crosses the proof band and comes back round. */
+.pal-stroll {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .pal-stroll {
+    animation: stroll 18s linear infinite;
+  }
+}
+
+@keyframes stroll {
+  from {
+    translate: -80px 0;
+  }
+  to {
+    translate: calc(100cqw + 20px) 0;
+  }
+}
+
+/* Proof band between Experience and Projects: big numbers on the pixel-dot field. */
+.proof-band {
+  container-type: inline-size;
+  background:
+    radial-gradient(circle at 1px 1px, color-mix(in oklab, var(--primary) 22%, transparent) 1px, transparent 1.5px) 0
+      0 / 14px 14px,
+    linear-gradient(135deg, color-mix(in oklab, var(--primary) 14%, var(--card)), var(--card));
+}
