@@ -514,13 +514,14 @@ function Lead({ text }: { text: string }) {
   )
 }
 
-/** What I'm on right now, as a little terminal — every line backed by a case study. */
+/** What I know well, as a little terminal — every line is work I've shipped (see the case studies). */
 function NowCard() {
   const lines: [string, string][] = [
-    ['building', 'EEC e-Customs payment & scheduling services'],
-    ['shipping', 'Qorstack Report v2.4 · Git Control for Orca v0.12'],
-    ['reviewing', 'merge requests for a team of ~10'],
-    ['exploring', 'real-time multiplayer · a game engine']
+    ['backend', '.NET microservices — payments, webhooks, Hangfire jobs'],
+    ['data', 'PostgreSQL — schema design, migrations, advisory locks'],
+    ['web', 'Next.js — SSO / OIDC sign-in, admin back offices'],
+    ['mobile', 'Flutter — NFC passport reading, face match'],
+    ['testing', 'Playwright end-to-end · k6 load tests']
   ]
   return (
     <div className='now-card overflow-hidden rounded-2xl border border-line bg-card/70 font-mono text-[13px]'>
@@ -528,11 +529,11 @@ function NowCard() {
         <span className='size-2.5 rounded-full bg-[#ff5f57]/80' aria-hidden='true' />
         <span className='size-2.5 rounded-full bg-[#febc2e]/80' aria-hidden='true' />
         <span className='size-2.5 rounded-full bg-[#28c840]/80' aria-hidden='true' />
-        <span className='ml-2 text-[12px] text-muted-foreground'>~/satang — now</span>
+        <span className='ml-2 text-[12px] text-muted-foreground'>~/satang</span>
       </div>
       <dl className='grid gap-1.5 px-4 py-4 sm:px-5'>
         <div className='mb-1 text-muted-foreground'>
-          <span className='text-primary'>$</span> satang --now
+          <span className='text-primary'>$</span> satang --skills
         </div>
         {lines.map(([key, value], index) => (
           <div
