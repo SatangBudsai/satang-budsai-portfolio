@@ -38,7 +38,7 @@ export default async function Home() {
     { id: 'about', label: t('common.cv.about', 'About') },
     { id: 'experience', label: t('common.cv.experience', 'Experience') },
     { id: 'projects', label: t('common.cv.projects', 'Projects') },
-    { id: 'learning', label: t('common.cv.learning', 'Learning') },
+    { id: 'learning', label: t('common.cv.challenges', 'Challenges') },
     { id: 'skills', label: t('common.cv.skills', 'Skills') },
     { id: 'services', label: t('common.cv.services', 'Work with me') }
   ]
@@ -87,7 +87,7 @@ export default async function Home() {
                     experience: t('common.cv.say-experience', 'where I’ve worked ↓'),
                     projects: t('common.cv.say-projects', 'my favourite part: projects'),
                     services: t('common.cv.say-services', 'got a project? let’s talk'),
-                    learning: t('common.cv.say-learning', 'I learn by building things'),
+                    learning: t('common.cv.say-offmap', 'trying what I’ve never built'),
                     skills: t('common.cv.say-skills', 'my everyday toolbox')
                   }}
                   alt={t('common.hero.sprite-alt', 'Pixel-art Satang typing on a laptop')}
@@ -167,9 +167,14 @@ export default async function Home() {
 
         {/* RIGHT: the résumé itself */}
         <div className='flex flex-col gap-16 pb-24 lg:gap-24 lg:pt-12'>
-          <Section id='about' index='01' title={t('common.cv.about', 'About')} accent='me'>
-            <div className='flex flex-col gap-5 text-[17px] leading-[1.75] text-soft'>
-              {['about-1', 'about-2', 'about-3'].map(key => (
+          <Section id='about' index='01' title={t('common.cv.about', 'About')} accent='me' cursor={false}>
+            <p className='mb-8 text-[clamp(28px,3vw,44px)] leading-[1.12] font-semibold tracking-[-0.03em] text-balance'>
+              <Lead text={t('common.cv.about-1', ABOUT['about-1'])} />
+              <span className='title-cursor' aria-hidden='true' />
+            </p>
+            <NowCard />
+            <div className='mt-8 flex flex-col gap-5 text-[17px] leading-[1.75] text-soft'>
+              {['about-2', 'about-3'].map(key => (
                 <p key={key}>
                   <Emphasis text={t(`common.cv.${key}`, ABOUT[key])} />
                 </p>
@@ -338,11 +343,11 @@ ${duration(role.start, role.end)}`}>
             </Link>
           </Section>
 
-          <Section id='learning' index='04' title='Learning by' accent='building'>
+          <Section id='learning' index='04' title='Off the' accent='map'>
             <p className='mb-6 text-[17px] leading-relaxed text-soft'>
               {t(
-                'common.cv.learning-intro',
-                'I learn by building. Two studies in domains I had never worked in — real-time multiplayer and a game engine — built by directing AI coding agents with written rules.'
+                'common.cv.offmap-intro',
+                'Things I had never built before, picked on purpose: real-time multiplayer and a game engine — built by directing AI coding agents with written rules.'
               )}
             </p>
             <ul className='grid gap-3 sm:grid-cols-2'>
@@ -496,6 +501,53 @@ const ABOUT: Record<string, string> = {
     'After hours I ship the **developer tools I use myself**, with AI coding agents under written rules — and I measure before I say anything got faster.'
 }
 
+/** The About opener in display type; **marked** words switch to the serif italic. */
+function Lead({ text }: { text: string }) {
+  return text.split(/(\*\*[^*]+\*\*)/).map((part, index) =>
+    part.startsWith('**') ? (
+      <span key={index} className='accent-serif font-normal text-primary'>
+        {part.slice(2, -2)}
+      </span>
+    ) : (
+      part
+    )
+  )
+}
+
+/** What I'm on right now, as a little terminal — every line backed by a case study. */
+function NowCard() {
+  const lines: [string, string][] = [
+    ['building', 'EEC e-Customs payment & scheduling services'],
+    ['shipping', 'Qorstack Report v2.4 · Git Control for Orca v0.12'],
+    ['reviewing', 'merge requests for a team of ~10'],
+    ['exploring', 'real-time multiplayer · a game engine']
+  ]
+  return (
+    <div className='now-card overflow-hidden rounded-2xl border border-line bg-card/70 font-mono text-[13px]'>
+      <div className='flex items-center gap-2 border-b border-line px-4 py-2.5'>
+        <span className='size-2.5 rounded-full bg-[#ff5f57]/80' aria-hidden='true' />
+        <span className='size-2.5 rounded-full bg-[#febc2e]/80' aria-hidden='true' />
+        <span className='size-2.5 rounded-full bg-[#28c840]/80' aria-hidden='true' />
+        <span className='ml-2 text-[12px] text-muted-foreground'>~/satang — now</span>
+      </div>
+      <dl className='grid gap-1.5 px-4 py-4 sm:px-5'>
+        <div className='mb-1 text-muted-foreground'>
+          <span className='text-primary'>$</span> satang --now
+        </div>
+        {lines.map(([key, value], index) => (
+          <div
+            key={key}
+            className='now-line grid grid-cols-[5.5rem_1fr] gap-2 sm:grid-cols-[6.5rem_1fr]'
+            style={{ '--i': index } as React.CSSProperties}>
+            <dt className='text-primary'>{key}</dt>
+            <dd className='text-soft'>{value}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+  )
+}
+
 /** Renders **bold** spans as bright text, so the key facts can be skimmed. */
 function Emphasis({ text }: { text: string }) {
   return text.split(/(\*\*[^*]+\*\*)/).map((part, index) =>
@@ -515,6 +567,7 @@ function Section({
   index,
   title,
   accent,
+  cursor = true,
   children
 }: {
   id: string
@@ -522,6 +575,8 @@ function Section({
   title: string
   /** One word set in the serif italic, the same voice as the inner pages' headlines. */
   accent?: string
+  /** The blinking block after the title (off where the section has its own). */
+  cursor?: boolean
   children: React.ReactNode
 }) {
   return (
@@ -538,7 +593,7 @@ function Section({
               <span className='accent-serif text-primary'>{accent}</span>
             </>
           ) : null}
-          <span className='title-cursor' aria-hidden='true' />
+          {cursor ? <span className='title-cursor' aria-hidden='true' /> : null}
         </span>
         <span className='section-rule h-px flex-1 bg-line-strong' aria-hidden='true' />
       </h2>

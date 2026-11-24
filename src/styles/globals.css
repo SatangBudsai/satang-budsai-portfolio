@@ -840,3 +840,20 @@
       0 / 14px 14px,
     linear-gradient(135deg, color-mix(in oklab, var(--primary) 14%, var(--card)), var(--card));
 }
+
+/* The "now" terminal under the About opener: lines type in one after another. */
+@media (prefers-reduced-motion: no-preference) {
+  .now-line {
+    animation: now-line 0.5s steps(6, end) both;
+    animation-delay: calc(0.5s + var(--i) * 0.25s);
+  }
+}
+
+@keyframes now-line {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
