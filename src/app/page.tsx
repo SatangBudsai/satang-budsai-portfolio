@@ -489,6 +489,7 @@ function Section({
               <span className='accent-serif text-primary'>{accent}</span>
             </>
           ) : null}
+          <span className='title-cursor' aria-hidden='true' />
         </span>
         <span className='section-rule h-px flex-1 bg-line-strong' aria-hidden='true' />
       </h2>

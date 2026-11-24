@@ -36,7 +36,9 @@ export function Reveal({
           observer.disconnect()
         }
       },
-      { threshold: 0.15 }
+      // Any pixel past the bottom 10% of the screen counts: a ratio threshold can never be
+      // met by a section taller than several screens (Experience on a phone).
+      { threshold: 0, rootMargin: '0px 0px -10% 0px' }
     )
     observer.observe(element)
     return () => observer.disconnect()

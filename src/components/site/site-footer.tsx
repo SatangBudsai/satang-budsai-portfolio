@@ -6,6 +6,7 @@ import { briefHref } from '@/lib/brief'
 import { getI18n } from '@/lib/lang'
 import HideOnHome from './hide-on-home'
 import { PixelItem } from './pixel'
+import PixelWordmark from './pixel-wordmark'
 
 import CopyEmail from './copy-email'
 import { Magnetic, Reveal } from './motion'
@@ -102,6 +103,8 @@ export default async function SiteFooter() {
             </Link>
           </div>
         </Reveal>
+
+        <PixelWordmark />
 
         <div className='flex flex-wrap items-center justify-between gap-6 border-t border-line pt-8 text-sm text-muted-foreground'>
           <div className='flex flex-wrap gap-6'>

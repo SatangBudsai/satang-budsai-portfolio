@@ -742,3 +742,41 @@
     border-color: var(--primary);
   }
 }
+
+/* The block cursor from the S + cursor mark, after each home section title. */
+.title-cursor {
+  display: inline-block;
+  width: 0.42em;
+  height: 0.78em;
+  margin-left: 0.12em;
+  vertical-align: -0.04em;
+  background: var(--primary);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .title-cursor {
+    animation: cursor-blink 1.1s steps(1, end) infinite;
+  }
+}
+
+@keyframes cursor-blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+/* Footer wordmark: dim squares for the letters, a wave of accent on hover. */
+.wordmark span {
+  border-radius: 2px;
+  background: color-mix(in oklab, var(--foreground) 4%, transparent);
+  transition: background-color 0.4s ease;
+  transition-delay: calc(var(--x) * 12ms + var(--y) * 20ms);
+}
+
+.wordmark span[data-on] {
+  background: color-mix(in oklab, var(--primary) 30%, var(--card));
+}
+
+.wordmark:hover span[data-on] {
+  background: var(--primary);
+}

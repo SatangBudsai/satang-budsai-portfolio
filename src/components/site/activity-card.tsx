@@ -4,6 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useMemo, useState, useSyncExternalStore } from 'react'
 
+import { GLYPHS } from '@/lib/pixel-font'
 import { cn } from '@/lib/utils'
 
 type Category = 'work' | 'freelance' | 'own'
@@ -25,14 +26,6 @@ const heat = [
   'color-mix(in oklab, var(--primary) 70%, white)'
 ]
 
-// A 5×7 pixel font for the word the grid spells. Rows run Monday → Sunday.
-const GLYPHS: Record<string, string[]> = {
-  S: ['.###.', '#...#', '#....', '.###.', '....#', '#...#', '.###.'],
-  A: ['.###.', '#...#', '#...#', '#####', '#...#', '#...#', '#...#'],
-  T: ['#####', '..#..', '..#..', '..#..', '..#..', '..#..', '..#..'],
-  N: ['#...#', '##..#', '#.#.#', '#..##', '#...#', '#...#', '#...#'],
-  G: ['.###.', '#...#', '#....', '#.###', '#...#', '#...#', '.####']
-}
 /** Which (week, weekday) cells fall inside the letters of `word`, centred in 53 weeks. */
 function wordMask(word: string) {
   const width = word.length * 6 - 1
