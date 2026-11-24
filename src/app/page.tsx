@@ -54,7 +54,7 @@ export default async function Home() {
           <div className='flex flex-col gap-6 lg:gap-5'>
             <div className='flex items-center justify-between gap-3'>
               <div className='flex flex-wrap items-center gap-3'>
-                <BrandMark className='size-8 shrink-0' />
+                <BrandMark className='hidden size-8 shrink-0 lg:block' />
                 {profile.availability ? (
                   <a
                     href='#contact'
